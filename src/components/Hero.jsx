@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Sparkles, ShieldCheck, ChevronLeft, ChevronRight, ArrowUpRight, Phone } from 'lucide-react';
+import { MessageCircle, Sparkles, ShieldCheck, ChevronLeft, ChevronRight, Phone } from 'lucide-react';
 import { getWhatsAppInquiryUrl, buildProductWhatsAppUrl, getPhoneUrl } from '../utils/whatsapp';
 
 const HERO_SCENES = [
   {
     id: 'living',
     number: '01',
-    category: 'LIVING SUITE',
+    category: 'LIVING ATELIER',
     title: 'Living Suite',
     subtitle: 'Burma Teak Sectional',
     headline: 'FURNITURE, CRAFTED AROUND YOU.',
@@ -112,128 +112,91 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Sophisticated Editorial Vignette Scrim */}
-        <div className="absolute inset-0 bg-gradient-to-r from-obsidian/95 via-obsidian/75 md:via-obsidian/50 to-obsidian/40 z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-obsidian/60 z-10" />
+        {/* Sophisticated Editorial Vignette: Dark Left Side for 100% Contrast, Completely Clear Right Side */}
+        <div className="absolute inset-0 bg-gradient-to-r from-obsidian/95 via-obsidian/80 md:via-obsidian/45 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-obsidian/50 z-10" />
       </div>
 
-      {/* Main Hero Content — Asymmetric Split Layout */}
+      {/* Main Hero Content — Clean Unobstructed Layout */}
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto py-10 md:py-14">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="max-w-2xl lg:max-w-3xl">
           
-          {/* Left Column: Pure Editorial Typography */}
-          <div className="lg:col-span-7 xl:col-span-8">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentScene.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
-              >
-                {/* Refined Minimal Category Indicator */}
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="text-xs uppercase tracking-[0.35em] text-gold font-medium">
-                    BESPOKE ATELIER · Nº {currentScene.number}
-                  </span>
-                  <span className="h-px w-8 bg-gold/40" />
-                  <span className="text-xs uppercase tracking-widest text-ivory-muted/80 font-light hidden sm:inline">
-                    {currentScene.category}
-                  </span>
-                </div>
-
-                {/* Main Headline */}
-                <h1 className="font-display text-4xl sm:text-6xl xl:text-7xl text-ivory tracking-tight leading-[1.06] mb-6 drop-shadow-md">
-                  {currentScene.headline}
-                </h1>
-
-                {/* Subtitle Description */}
-                <p className="font-body text-base sm:text-lg text-ivory-muted max-w-xl leading-relaxed mb-6">
-                  {currentScene.description}
-                </p>
-
-                {/* Understated Material Detail Line */}
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-ivory-muted/90 pt-1">
-                  <span className="text-gold font-medium tracking-wider uppercase text-[11px]">Material:</span>
-                  <span className="text-ivory/90 font-light">{currentScene.material}</span>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Right Column: Repositioned Floating VIP Conversion Card */}
-          <div className="lg:col-span-5 xl:col-span-4">
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentScene.id}
+              initial={{ opacity: 0, x: -35 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="p-6 sm:p-7 rounded-2xl bg-surface/75 backdrop-blur-xl border border-gold/20 shadow-2xl shadow-obsidian/80 relative overflow-hidden group"
+              exit={{ opacity: 0, x: 35 }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Subtle gold ambient glow */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full blur-2xl pointer-events-none" />
-
-              {/* Card Header */}
-              <div className="flex items-center justify-between pb-4 mb-5 border-b border-gold/15">
-                <div>
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-gold font-semibold block">
-                    VIP CONCIERGE
-                  </span>
-                  <span className="font-display text-lg text-ivory">
-                    {currentScene.title}
-                  </span>
-                </div>
-                <span className="text-[11px] text-ivory-muted/80 bg-obsidian/60 px-2.5 py-1 rounded border border-white/5">
-                  {currentScene.timeline}
+              {/* Category Indicator with Gold Hairline */}
+              <div className="flex items-center gap-3 mb-5">
+                <span className="text-xs uppercase tracking-[0.35em] text-gold font-medium">
+                  BESPOKE ATELIER · Nº {currentScene.number}
+                </span>
+                <span className="h-px w-8 bg-gold/40" />
+                <span className="text-xs uppercase tracking-widest text-ivory-muted/80 font-light">
+                  {currentScene.category}
                 </span>
               </div>
 
-              {/* Primary Consultation CTA */}
-              <a
-                href="#bespoke"
-                className="flex items-center justify-center gap-2 w-full py-3.5 px-5 bg-gold text-obsidian font-semibold text-sm tracking-wide rounded hover:bg-gold-hover transition-all duration-300 shadow-md shadow-gold/10 hover:shadow-gold/20 mb-3"
-              >
-                <Sparkles className="w-4 h-4 text-obsidian" />
-                <span>Book Free Consultation</span>
-              </a>
+              {/* Dynamic Main Headline */}
+              <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl text-ivory tracking-tight leading-[1.08] mb-6 drop-shadow-md">
+                {currentScene.headline}
+              </h1>
 
-              {/* WhatsApp Direct CTA */}
-              <a
-                href={buildProductWhatsAppUrl(currentScene.productName, currentScene.material)}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 px-5 bg-surface-elevated/90 border border-gold/30 text-ivory hover:text-gold hover:border-gold font-medium text-sm rounded transition-all duration-300 mb-5"
-              >
-                <MessageCircle className="w-4 h-4 text-green-400" />
-                <span>WhatsApp an Interior Stylist</span>
-              </a>
+              {/* Description Subtext */}
+              <p className="font-body text-base sm:text-lg text-ivory-muted max-w-xl leading-relaxed mb-6">
+                {currentScene.description}
+              </p>
 
-              {/* Trust Reassurance Bullet Points */}
-              <div className="space-y-2 pt-2 border-t border-white/5 text-[11px] text-ivory-muted/90">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-3.5 h-3.5 text-gold shrink-0" />
-                  <span>100% Seasoned Solid Timber (Burma Teak, Gamari, Mahogany)</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-3.5 h-3.5 text-gold shrink-0" />
-                  <span>Free In-Home 3D Laser Measurement in Chattogram</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-3.5 h-3.5 text-gold shrink-0" />
-                  <span>White-Glove Delivery & Installation Included</span>
-                </div>
+              {/* Material Detail Line */}
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-ivory-muted/90 mb-8">
+                <span className="text-gold font-medium tracking-wider uppercase text-[11px]">Material:</span>
+                <span className="text-ivory/90 font-light">{currentScene.material}</span>
+                <span className="text-gold/40 mx-1">·</span>
+                <span className="text-ivory-muted/70 text-[11px]">{currentScene.timeline}</span>
               </div>
 
-              {/* Quick Call Row */}
-              <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px]">
-                <span className="text-ivory-muted">Agrabad Access Road Showroom</span>
-                <a href={getPhoneUrl()} className="text-gold hover:underline font-medium flex items-center gap-1">
-                  <Phone className="w-3 h-3" />
-                  <span>01960-481983</span>
+              {/* Clean CTAs Placed Gracefully in Left Content Column */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-6">
+                <a
+                  href="#bespoke"
+                  className="flex items-center justify-center gap-2.5 bg-gold text-obsidian px-8 py-4 font-semibold text-sm sm:text-base tracking-wide hover:bg-gold-hover transition-all duration-300 shadow-lg shadow-gold/15 hover:shadow-gold/25"
+                >
+                  <Sparkles className="w-4 h-4 text-obsidian" />
+                  <span>Book Free Design Consultation</span>
+                </a>
+                
+                <a
+                  href={buildProductWhatsAppUrl(currentScene.productName, currentScene.material)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-2.5 px-7 py-4 border border-gold/40 text-ivory bg-surface/50 backdrop-blur-md font-semibold text-sm sm:text-base hover:border-gold hover:text-gold transition-all duration-300"
+                >
+                  <MessageCircle className="w-5 h-5 text-green-400" />
+                  <span>WhatsApp Stylist</span>
                 </a>
               </div>
 
+              {/* Quick Trust Guarantees Row */}
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-ivory-muted/80 pt-1">
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-gold" />
+                  <span>100% Solid Seasoned Timber</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-gold" />
+                  <span>Free 3D Laser Measurement</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-gold" />
+                  <span>White-Glove Installation</span>
+                </div>
+              </div>
+
             </motion.div>
-          </div>
+          </AnimatePresence>
 
         </div>
       </div>
@@ -245,7 +208,7 @@ export default function Hero() {
           {/* Top micro row */}
           <div className="flex items-center justify-between mb-2 text-xs">
             <span className="text-[11px] uppercase tracking-[0.2em] text-gold/90 font-medium">
-              Bespoke Suites Collection · Select Scene
+              Bespoke Suites Collection · Select Scene ({activeIdx + 1} / {HERO_SCENES.length})
             </span>
             <div className="flex items-center gap-1.5">
               <button 
@@ -273,7 +236,7 @@ export default function Hero() {
                 <button
                   key={scene.id}
                   onClick={() => setActiveIdx(idx)}
-                  className={`relative text-left p-3 rounded-xl transition-all duration-300 overflow-hidden ${
+                  className={`relative text-left p-3 sm:p-3.5 rounded-xl transition-all duration-300 overflow-hidden ${
                     isActive
                       ? 'bg-surface-elevated/90 border border-gold/60 shadow-lg shadow-gold/5'
                       : 'bg-surface/40 border border-white/5 hover:border-gold/30 hover:bg-surface/60'

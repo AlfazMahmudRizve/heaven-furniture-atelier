@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════
+   HEAVEN FURNITURE MART — LUXURY DESIGN SYSTEM
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  --color-obsidian: #081214;
+  --color-surface: #0F1C1F;
+  --color-surface-elevated: #142628;
+  --color-ivory: #F7F5F0;
+  --color-ivory-muted: #B8B0A4;
+  --color-gold: #C5A880;
+  --color-gold-hover: #D4BA96;
+  --color-gold-dim: #8A7456;
+  --color-teak: #8B5A2B;
+  --color-espresso: #1A1310;
+  --color-brass-glow: rgba(197, 168, 128, 0.15);
+
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* ─── Base ─────────────────────────────────────────────────── */
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-obsidian);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ivory);
+  background-color: var(--color-obsidian);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Custom Scrollbar (Luxury Thin Bar) ───────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-obsidian);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-dim);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* ─── Selection ────────────────────────────────────────── */
+
+::selection {
+  background-color: var(--color-gold);
+  color: var(--color-obsidian);
+}
+
+/* ─── Utility: Ambient Gold Glow ───────────────────────── */
+
+.glow-gold {
+  box-shadow: 0 0 40px rgba(197, 168, 128, 0.08), 0 0 80px rgba(197, 168, 128, 0.04);
+}
+
+.glow-gold-strong {
+  box-shadow: 0 0 30px rgba(197, 168, 128, 0.15), 0 0 60px rgba(197, 168, 128, 0.08);
+}
+
+/* ─── Utility: Glass Card ──────────────────────────────── */
+
+.glass {
+  background: rgba(15, 28, 31, 0.7);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(197, 168, 128, 0.1);
+}
+
+/* ─── Utility: Section Divider ─────────────────────────── */
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold-dim), transparent);
+  opacity: 0.3;
+}

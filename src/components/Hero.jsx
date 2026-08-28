@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Sparkles, ShieldCheck, ChevronLeft, ChevronRight, Phone } from 'lucide-react';
-import { getWhatsAppInquiryUrl, buildProductWhatsAppUrl, getPhoneUrl } from '../utils/whatsapp';
+import { MessageCircle, Sparkles, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
+import { buildProductWhatsAppUrl } from '../utils/whatsapp';
 
 const HERO_SCENES = [
   {
@@ -16,6 +16,7 @@ const HERO_SCENES = [
     timeline: 'Crafted in 14–21 Days',
     image: '/images/hero-living.jpg',
     productName: 'Sovereign Burma Teak Sectional',
+    alignment: 'left',
   },
   {
     id: 'bedroom',
@@ -29,6 +30,7 @@ const HERO_SCENES = [
     timeline: 'Crafted in 18–24 Days',
     image: '/images/hero-bedroom.jpg',
     productName: 'Imperial Burma Teak Bed',
+    alignment: 'right',
   },
   {
     id: 'dining',
@@ -42,6 +44,7 @@ const HERO_SCENES = [
     timeline: 'Crafted in 14–20 Days',
     image: '/images/hero-dining.jpg',
     productName: 'Grand Heritage Sintered Stone Suite',
+    alignment: 'left',
   },
   {
     id: 'executive',
@@ -55,6 +58,7 @@ const HERO_SCENES = [
     timeline: 'Crafted in 16–22 Days',
     image: '/images/hero-executive.jpg',
     productName: 'Presidential Burma Teak Desk',
+    alignment: 'right',
   },
   {
     id: 'bespoke',
@@ -68,6 +72,7 @@ const HERO_SCENES = [
     timeline: 'Tailored to Project Blueprint',
     image: '/images/hero-craftsmanship.jpg',
     productName: 'Custom Bespoke Project',
+    alignment: 'left',
   },
 ];
 
@@ -77,6 +82,7 @@ export default function Hero() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const currentScene = HERO_SCENES[activeIdx];
+  const isRight = currentScene.alignment === 'right';
 
   // Auto-rotation timer
   useEffect(() => {
@@ -112,25 +118,36 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Sophisticated Editorial Vignette: Dark Left Side for 100% Contrast, Completely Clear Right Side */}
-        <div className="absolute inset-0 bg-gradient-to-r from-obsidian/95 via-obsidian/80 md:via-obsidian/45 to-transparent z-10" />
+        {/* Dynamic Directional Scrim: Darkens Left when Left-Aligned, Darkens Right when Right-Aligned */}
+        <div 
+          className={`absolute inset-0 z-10 transition-all duration-700 ${
+            isRight
+              ? 'bg-gradient-to-l from-obsidian/95 via-obsidian/85 md:via-obsidian/55 to-transparent'
+              : 'bg-gradient-to-r from-obsidian/95 via-obsidian/85 md:via-obsidian/55 to-transparent'
+          }`}
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-obsidian/50 z-10" />
       </div>
 
-      {/* Main Hero Content — Clean Unobstructed Layout */}
+      {/* Main Hero Content — Dynamic Alternating Left / Right Position */}
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto py-10 md:py-14">
-        <div className="max-w-2xl lg:max-w-3xl">
+        <div className="w-full flex">
           
           <AnimatePresence mode="wait">
             <motion.div
               key={currentScene.id}
-              initial={{ opacity: 0, x: -35 }}
+              initial={{ opacity: 0, x: isRight ? 40 : -40 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 35 }}
+              exit={{ opacity: 0, x: isRight ? -40 : 40 }}
               transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              className={`max-w-2xl lg:max-w-3xl flex flex-col ${
+                isRight 
+                  ? 'ml-auto text-right items-end' 
+                  : 'mr-auto text-left items-start'
+              }`}
             >
               {/* Category Indicator with Gold Hairline */}
-              <div className="flex items-center gap-3 mb-5">
+              <div className={`flex items-center gap-3 mb-5 ${isRight ? 'flex-row-reverse' : 'flex-row'}`}>
                 <span className="text-xs uppercase tracking-[0.35em] text-gold font-medium">
                   BESPOKE ATELIER · Nº {currentScene.number}
                 </span>
@@ -151,15 +168,15 @@ export default function Hero() {
               </p>
 
               {/* Material Detail Line */}
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-ivory-muted/90 mb-8">
+              <div className={`flex flex-wrap items-center gap-2 text-xs sm:text-sm text-ivory-muted/90 mb-8 ${isRight ? 'justify-end' : 'justify-start'}`}>
                 <span className="text-gold font-medium tracking-wider uppercase text-[11px]">Material:</span>
                 <span className="text-ivory/90 font-light">{currentScene.material}</span>
                 <span className="text-gold/40 mx-1">·</span>
                 <span className="text-ivory-muted/70 text-[11px]">{currentScene.timeline}</span>
               </div>
 
-              {/* Clean CTAs Placed Gracefully in Left Content Column */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-6">
+              {/* Clean Luxury CTAs */}
+              <div className={`flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-6 w-full sm:w-auto ${isRight ? 'sm:justify-end' : 'sm:justify-start'}`}>
                 <a
                   href="#bespoke"
                   className="flex items-center justify-center gap-2.5 bg-gold text-obsidian px-8 py-4 font-semibold text-sm sm:text-base tracking-wide hover:bg-gold-hover transition-all duration-300 shadow-lg shadow-gold/15 hover:shadow-gold/25"
@@ -180,7 +197,7 @@ export default function Hero() {
               </div>
 
               {/* Quick Trust Guarantees Row */}
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-ivory-muted/80 pt-1">
+              <div className={`flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-ivory-muted/80 pt-1 ${isRight ? 'justify-end' : 'justify-start'}`}>
                 <div className="flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-gold" />
                   <span>100% Solid Seasoned Timber</span>
@@ -201,11 +218,11 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Redesigned Sleek Architectural Product Switcher (Bottom Rail) */}
+      {/* Sleek Architectural Product Switcher (Bottom Rail) */}
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-auto">
         <div className="pt-4 border-t border-gold/15">
           
-          {/* Top micro row */}
+          {/* Top micro navigation row */}
           <div className="flex items-center justify-between mb-2 text-xs">
             <span className="text-[11px] uppercase tracking-[0.2em] text-gold/90 font-medium">
               Bespoke Suites Collection · Select Scene ({activeIdx + 1} / {HERO_SCENES.length})

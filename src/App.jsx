@@ -2,15 +2,11 @@ import { useEffect } from 'react'
 import Lenis from 'lenis'
 import Header from './components/Header'
 import Hero from './components/Hero'
-import TrustMarquee from './components/TrustMarquee'
-import Manifesto from './components/Manifesto'
+import ArccaManifesto from './components/ArccaManifesto'
+import ProductShowcase from './components/ProductShowcase'
+import ArccaProjectsGrid from './components/ArccaProjectsGrid'
 import BespokeStudio from './components/BespokeStudio'
-import Collections from './components/Collections'
-import Timeline from './components/Timeline'
-import Showroom from './components/Showroom'
-import CtaBlock from './components/CtaBlock'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
-import MobileActionBar from './components/MobileActionBar'
 import Footer from './components/Footer'
 
 export default function App() {
@@ -31,21 +27,17 @@ export default function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-obsidian text-ivory font-body">
+    <div className="min-h-screen bg-espresso text-linen font-body">
       <Header />
       <main>
         <Hero />
-        <TrustMarquee />
-        <Manifesto />
+        <ArccaManifesto />
+        <ProductShowcase />
+        <ArccaProjectsGrid />
         <BespokeStudio />
-        <Collections />
-        <Timeline />
-        <Showroom />
-        <CtaBlock />
       </main>
       <Footer />
       <FloatingWhatsApp />
-      <MobileActionBar />
     </div>
   )
 }

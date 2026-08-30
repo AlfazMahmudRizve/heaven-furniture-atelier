@@ -1,37 +1,51 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
-   HEAVEN FURNITURE MART — LUXURY DESIGN SYSTEM
+   HEAVEN FURNITURE MART — ARCCA-INSPIRED LUXURY DESIGN SYSTEM
+   Dual-Tone: Warm Linen (#FBF0DA) × Deep Espresso (#1E1005)
    ═══════════════════════════════════════════════════════════════ */
 
 @theme {
-  --color-obsidian: #081214;
-  --color-surface: #0F1C1F;
-  --color-surface-elevated: #142628;
-  --color-ivory: #F7F5F0;
-  --color-ivory-muted: #B8B0A4;
-  --color-gold: #C5A880;
-  --color-gold-hover: #D4BA96;
-  --color-gold-dim: #8A7456;
-  --color-teak: #8B5A2B;
-  --color-espresso: #1A1310;
-  --color-brass-glow: rgba(197, 168, 128, 0.15);
+  /* ── Arcca Dual-Tone Foundation ──────────────────────────── */
+  --color-linen: #FBF0DA;
+  --color-linen-muted: #D6CBBC;
+  --color-linen-dim: #B8A992;
+  --color-espresso: #1E1005;
+  --color-espresso-deep: #332820;
+  --color-espresso-mid: #4A3828;
+  --color-bronze: #9C7443;
+  --color-bronze-light: #CBB295;
+  --color-bronze-glow: rgba(156, 116, 67, 0.15);
 
-  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  /* ── Legacy Aliases (Backwards Compat for Tests) ─────────── */
+  --color-obsidian: #1E1005;
+  --color-surface: #2A1E12;
+  --color-surface-elevated: #362A1C;
+  --color-ivory: #FBF0DA;
+  --color-ivory-muted: #D6CBBC;
+  --color-gold: #9C7443;
+  --color-gold-hover: #B8873F;
+  --color-gold-dim: #7A5C36;
+  --color-teak: #8B5A2B;
+  --color-brass-glow: rgba(156, 116, 67, 0.15);
+
+  /* ── Typography ──────────────────────────────────────────── */
+  --font-display: "Playfair Display", "Cinzel", Georgia, "Times New Roman", serif;
   --font-body: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", "Fira Code", monospace;
 }
 
 /* ─── Base ─────────────────────────────────────────────────── */
 
 html {
   scroll-behavior: smooth;
-  background-color: var(--color-obsidian);
+  background-color: var(--color-espresso);
 }
 
 body {
   font-family: var(--font-body);
-  color: var(--color-ivory);
-  background-color: var(--color-obsidian);
+  color: var(--color-linen);
+  background-color: var(--color-espresso);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -40,49 +54,188 @@ body {
 /* ─── Custom Scrollbar (Luxury Thin Bar) ───────────────── */
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-obsidian);
+  background: var(--color-espresso);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-gold-dim);
+  background: var(--color-bronze);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gold);
+  background: var(--color-bronze-light);
 }
 
 /* ─── Selection ────────────────────────────────────────── */
 
 ::selection {
-  background-color: var(--color-gold);
-  color: var(--color-obsidian);
-}
-
-/* ─── Utility: Ambient Gold Glow ───────────────────────── */
-
-.glow-gold {
-  box-shadow: 0 0 40px rgba(197, 168, 128, 0.08), 0 0 80px rgba(197, 168, 128, 0.04);
-}
-
-.glow-gold-strong {
-  box-shadow: 0 0 30px rgba(197, 168, 128, 0.15), 0 0 60px rgba(197, 168, 128, 0.08);
+  background-color: var(--color-bronze);
+  color: var(--color-linen);
 }
 
 /* ─── Utility: Glass Card ──────────────────────────────── */
 
 .glass {
-  background: rgba(15, 28, 31, 0.7);
+  background: rgba(30, 16, 5, 0.65);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border: 1px solid rgba(156, 116, 67, 0.12);
+}
+
+.glass-linen {
+  background: rgba(251, 240, 218, 0.85);
   backdrop-filter: blur(16px) saturate(1.2);
   -webkit-backdrop-filter: blur(16px) saturate(1.2);
-  border: 1px solid rgba(197, 168, 128, 0.1);
+  border: 1px solid rgba(156, 116, 67, 0.15);
 }
 
 /* ─── Utility: Section Divider ─────────────────────────── */
 
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-gold-dim), transparent);
-  opacity: 0.3;
+  background: linear-gradient(90deg, transparent, var(--color-bronze), transparent);
+  opacity: 0.25;
+}
+
+/* ─── Utility: Arcca-Style Underline Link Hover ────────── */
+
+.arcca-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: color 0.4s ease;
+}
+
+.arcca-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transform: scaleX(1);
+  transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.arcca-link:hover::after {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* ─── Utility: Arcca Creative Button (Fill from Bottom) ── */
+
+.arcca-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border: 1px solid var(--color-bronze);
+  color: var(--color-bronze);
+  background: transparent;
+  overflow: hidden;
+  cursor: pointer;
+  transition: color 0.4s ease;
+}
+
+.arcca-btn::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: var(--color-bronze);
+  z-index: 0;
+  transition: height 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.arcca-btn:hover::after {
+  height: 100%;
+}
+
+.arcca-btn:hover {
+  color: var(--color-linen);
+}
+
+.arcca-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Utility: Mask Reveal (Text Animation) ────────────── */
+
+.mask {
+  overflow: hidden;
+}
+
+/* ─── Utility: Ambient Glow ────────────────────────────── */
+
+.glow-gold {
+  box-shadow: 0 0 40px rgba(156, 116, 67, 0.08), 0 0 80px rgba(156, 116, 67, 0.04);
+}
+
+.glow-gold-strong {
+  box-shadow: 0 0 30px rgba(156, 116, 67, 0.15), 0 0 60px rgba(156, 116, 67, 0.08);
+}
+
+/* ─── Architectural Animated Line Divider ──────────────── */
+
+@keyframes drawLine {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.animated-line {
+  height: 1px;
+  background: var(--color-bronze);
+  transform-origin: left;
+  animation: drawLine 1.2s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+/* ─── Fullscreen Menu Overlay ──────────────────────────── */
+
+.menu-link-hover-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.12);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.menu-link-hover-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-bronze);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+  transition-delay: 0s;
+}
+
+/* ─── Trust Marquee Scroll ─────────────────────────────── */
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }

@@ -19,7 +19,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-espresso-deep text-linen pt-24 pb-8 px-6 md:px-16 relative">
+    <footer id="showroom" className="bg-espresso-deep text-linen pt-24 pb-8 px-6 md:px-16 relative">
       <motion.div
         className="absolute top-0 left-0 w-full h-[1px] bg-bronze origin-left"
         initial={{ scaleX: 0 }}
@@ -109,7 +109,8 @@ export default function Footer() {
 
         <div className="flex flex-col sm:flex-row justify-between items-center text-[10px] font-mono tracking-widest text-linen-muted/60 uppercase gap-4 text-center sm:text-left">
           <a href="#" className="hover:text-linen transition-colors">Privacy Policy</a>
-          <span>© 2025 Heaven Furniture Mart</span>
+          <a href="/admin" className="hover:text-bronze transition-colors">Store Manager CMS ↗</a>
+          <span>© 2026 Heaven Furniture Mart</span>
           <span>Designed in Chattogram</span>
         </div>
       </div>

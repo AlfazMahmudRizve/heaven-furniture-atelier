@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sofa, Bed, Utensils, Briefcase, Phone, MessageSquare } from 'lucide-react';
 import { ROOM_TYPES, TIMBER_OPTIONS, FABRIC_OPTIONS } from '../data/collections';
 import { buildBespokeWhatsAppUrl } from '../utils/whatsapp';
+import { supabase } from '../lib/supabase';
 
 const ROOM_ICONS = {
   living: Sofa,
@@ -198,6 +199,22 @@ export default function BespokeStudio() {
                 href={buildBespokeWhatsAppUrl(currentConfig)}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  try {
+                    supabase.from('bespoke_inquiries').insert([
+                      {
+                        room_type: currentConfig.room,
+                        timber_choice: currentConfig.timber,
+                        fabric_choice: currentConfig.fabric,
+                        dimensions: `${width}' W × ${depth}' D`,
+                        status: 'new',
+                        source: 'website_configurator',
+                      },
+                    ]).then(() => {});
+                  } catch (err) {
+                    console.warn('[BespokeStudio] Lead log error:', err);
+                  }
+                }}
                 className="flex items-center justify-center gap-2 bg-gold text-obsidian w-full py-4 rounded-xl text-lg font-semibold hover:bg-[#D4BA96] transition-colors duration-300 mb-4"
               >
                 <MessageSquare className="w-5 h-5" />

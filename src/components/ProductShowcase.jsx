@@ -97,6 +97,7 @@ function ProductSection({ suite, index }) {
 
   return (
     <section
+      id={index === 0 ? 'craftsmanship' : suite.id}
       ref={sectionRef}
       className={`relative min-h-screen overflow-hidden ${
         isDark ? 'bg-espresso text-linen' : 'bg-linen text-espresso-deep'

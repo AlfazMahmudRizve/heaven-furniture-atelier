@@ -12,6 +12,7 @@ export default function Hero() {
 
   return (
     <section 
+      id="home"
       ref={containerRef}
       className="relative min-h-screen overflow-hidden flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-16"
     >

@@ -1,0 +1,677 @@
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
+import {
+  ShoppingBag,
+  Plus,
+  Search,
+  Filter,
+  CreditCard,
+  Truck,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  Calendar,
+  DollarSign,
+  ChevronRight,
+  Eye,
+  X,
+  FileText,
+  User,
+  Phone,
+  MapPin,
+} from 'lucide-react';
+
+const STATUS_STEPS = [
+  { key: 'pending', label: 'Pending' },
+  { key: 'confirmed', label: 'Confirmed' },
+  { key: 'in_production', label: 'In Production' },
+  { key: 'quality_check', label: 'QC' },
+  { key: 'ready', label: 'Ready' },
+  { key: 'out_for_delivery', label: 'Dispatch' },
+  { key: 'delivered', label: 'Delivered' },
+];
+
+export default function OrderManager() {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [paymentFilter, setPaymentFilter] = useState('all');
+
+  // Selected Order Modal
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [orderItems, setOrderItems] = useState([]);
+  const [payments, setPayments] = useState([]);
+
+  // Create Order Modal
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [newOrderCustomer, setNewOrderCustomer] = useState({ name: '', phone: '', address: '', city: 'Chattogram' });
+  const [newOrderData, setNewOrderData] = useState({
+    product_name: 'Sovereign Corner Sectional',
+    timber_choice: 'Burma Teak',
+    fabric_choice: 'Belgian Velvet',
+    quantity: 1,
+    unit_price: 285000,
+    payment_method: 'bkash',
+    payment_status: 'partial',
+    paid_amount: 100000,
+    delivery_address: 'Agrabad, Chattogram',
+    notes: 'Advance paid via bKash. Delivery requested within 2 weeks.',
+  });
+  const [creating, setCreating] = useState(false);
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  async function fetchOrders() {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*, customers(name, phone, address, city)')
+      .order('created_at', { ascending: false });
+
+    if (!error && data) {
+      setOrders(data);
+    }
+    setLoading(false);
+  }
+
+  const handleSelectOrder = async (order) => {
+    setSelectedOrder(order);
+
+    // Fetch order items & payment records
+    const [itemsRes, paymentsRes] = await Promise.all([
+      supabase.from('order_items').select('*').eq('order_id', order.id),
+      supabase.from('payment_records').select('*').eq('order_id', order.id).order('created_at', { ascending: false }),
+    ]);
+
+    setOrderItems(itemsRes.data || []);
+    setPayments(paymentsRes.data || []);
+  };
+
+  const handleUpdateStatus = async (orderId, nextStatus) => {
+    const { error } = await supabase
+      .from('orders')
+      .update({ status: nextStatus, ...(nextStatus === 'delivered' ? { delivered_at: new Date().toISOString() } : {}) })
+      .eq('id', orderId);
+
+    if (!error) {
+      setOrders((prev) =>
+        prev.map((o) => (o.id === orderId ? { ...o, status: nextStatus } : o))
+      );
+      if (selectedOrder?.id === orderId) {
+        setSelectedOrder((prev) => ({ ...prev, status: nextStatus }));
+      }
+    }
+  };
+
+  const handleCreateOrder = async (e) => {
+    e.preventDefault();
+    setCreating(true);
+
+    try {
+      // 1. Create or fetch customer
+      let customerId = null;
+      if (newOrderCustomer.name && newOrderCustomer.phone) {
+        const { data: cust } = await supabase
+          .from('customers')
+          .insert([
+            {
+              name: newOrderCustomer.name,
+              phone: newOrderCustomer.phone,
+              address: newOrderCustomer.address,
+              city: newOrderCustomer.city,
+              source: 'walk_in',
+            },
+          ])
+          .select()
+          .single();
+        if (cust) customerId = cust.id;
+      }
+
+      // 2. Create order
+      const totalAmount = Number(newOrderData.unit_price) * Number(newOrderData.quantity);
+      const { data: order, error: orderErr } = await supabase
+        .from('orders')
+        .insert([
+          {
+            customer_id: customerId,
+            status: 'confirmed',
+            subtotal_bdt: totalAmount,
+            total_bdt: totalAmount,
+            payment_method: newOrderData.payment_method,
+            payment_status: newOrderData.payment_status,
+            paid_amount_bdt: Number(newOrderData.paid_amount) || 0,
+            delivery_address: newOrderData.delivery_address || newOrderCustomer.address,
+            delivery_city: newOrderCustomer.city,
+            notes: newOrderData.notes,
+          },
+        ])
+        .select()
+        .single();
+
+      if (orderErr) throw orderErr;
+
+      // 3. Create order item
+      await supabase.from('order_items').insert([
+        {
+          order_id: order.id,
+          product_name: newOrderData.product_name,
+          timber_choice: newOrderData.timber_choice,
+          fabric_choice: newOrderData.fabric_choice,
+          quantity: Number(newOrderData.quantity),
+          unit_price_bdt: Number(newOrderData.unit_price),
+          total_bdt: totalAmount,
+        },
+      ]);
+
+      // 4. Create payment record if advance was paid
+      if (Number(newOrderData.paid_amount) > 0) {
+        await supabase.from('payment_records').insert([
+          {
+            order_id: order.id,
+            amount_bdt: Number(newOrderData.paid_amount),
+            method: newOrderData.payment_method,
+            notes: 'Advance deposit on order placement',
+          },
+        ]);
+      }
+
+      setIsCreateModalOpen(false);
+      fetchOrders();
+    } catch (err) {
+      alert(`Error creating order: ${err.message}`);
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  const filteredOrders = orders.filter((o) => {
+    const matchesSearch =
+      o.order_number?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      o.customers?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      o.customers?.phone?.includes(searchQuery);
+    const matchesStatus = statusFilter === 'all' || o.status === statusFilter;
+    const matchesPayment = paymentFilter === 'all' || o.payment_status === paymentFilter;
+    return matchesSearch && matchesStatus && matchesPayment;
+  });
+
+  return (
+    <div className="space-y-6">
+      
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="font-display text-2xl md:text-3xl text-linen">Order Tracking & Financials</h1>
+          <p className="text-xs font-mono text-linen-muted mt-1">
+            End-to-end production workflow, bKash/Nagad/Bank reconciliation, and white-glove dispatch.
+          </p>
+        </div>
+
+        <button
+          onClick={() => setIsCreateModalOpen(true)}
+          className="px-4 py-2.5 bg-bronze hover:bg-bronze-light text-linen hover:text-espresso font-mono text-xs uppercase tracking-wider rounded-lg font-semibold flex items-center gap-2 transition-all shadow-lg cursor-pointer"
+        >
+          <Plus className="w-4 h-4" />
+          <span>New Showroom Order</span>
+        </button>
+      </div>
+
+      {/* Filters */}
+      <div className="bg-surface border border-bronze/15 rounded-xl p-4 flex flex-col md:flex-row gap-4 justify-between items-center">
+        <div className="relative w-full md:w-80">
+          <Search className="w-4 h-4 text-linen-muted/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by order #, client name, phone..."
+            className="w-full pl-10 pr-4 py-2 bg-surface-elevated border border-bronze/15 rounded-lg text-xs font-mono text-linen placeholder-linen-muted/40 focus:outline-none focus:border-bronze"
+          />
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="px-3 py-2 bg-surface-elevated border border-bronze/15 rounded-lg text-xs font-mono text-linen focus:outline-none focus:border-bronze"
+          >
+            <option value="all">All Statuses</option>
+            {STATUS_STEPS.map((s) => (
+              <option key={s.key} value={s.key}>
+                {s.label}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={paymentFilter}
+            onChange={(e) => setPaymentFilter(e.target.value)}
+            className="px-3 py-2 bg-surface-elevated border border-bronze/15 rounded-lg text-xs font-mono text-linen focus:outline-none focus:border-bronze"
+          >
+            <option value="all">All Payments</option>
+            <option value="paid">Paid in Full</option>
+            <option value="partial">Partial / Advance</option>
+            <option value="unpaid">Unpaid</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Order List Table */}
+      <div className="bg-surface border border-bronze/15 rounded-xl overflow-hidden shadow-xl">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-bronze/15 bg-surface-elevated/60 text-[10px] font-mono uppercase tracking-widest text-linen-muted">
+                <th className="p-4">Order # & Date</th>
+                <th className="p-4">Client</th>
+                <th className="p-4">Amount & Payment</th>
+                <th className="p-4">Workflow Status</th>
+                <th className="p-4">Quick Progress</th>
+                <th className="p-4 text-right">Details</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-bronze/10 text-xs font-mono">
+              {loading ? (
+                <tr>
+                  <td colSpan="6" className="p-8 text-center text-linen-muted">
+                    Loading orders telemetry from Supabase...
+                  </td>
+                </tr>
+              ) : filteredOrders.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="p-8 text-center text-linen-muted">
+                    No orders found. Click "+ New Showroom Order" to create one.
+                  </td>
+                </tr>
+              ) : (
+                filteredOrders.map((order) => (
+                  <tr key={order.id} className="hover:bg-surface-elevated/40 transition-colors">
+                    <td className="p-4">
+                      <span className="font-mono text-xs text-bronze block font-bold">
+                        {order.order_number}
+                      </span>
+                      <span className="text-[10px] text-linen-muted/60">
+                        {new Date(order.created_at).toLocaleDateString('en-GB')}
+                      </span>
+                    </td>
+
+                    <td className="p-4">
+                      <span className="font-display text-sm text-linen block">
+                        {order.customers?.name || 'Walk-in Client'}
+                      </span>
+                      <span className="text-[10px] text-linen-muted">
+                        {order.customers?.phone || order.delivery_city}
+                      </span>
+                    </td>
+
+                    <td className="p-4">
+                      <span className="font-semibold text-linen block">
+                        ৳{Number(order.total_bdt || 0).toLocaleString('en-IN')}
+                      </span>
+                      <span
+                        className={`inline-block text-[9px] uppercase px-1.5 py-0.5 rounded font-mono mt-0.5 ${
+                          order.payment_status === 'paid'
+                            ? 'bg-emerald-950 text-emerald-300 border border-emerald-800/40'
+                            : order.payment_status === 'partial'
+                            ? 'bg-amber-950 text-amber-300 border border-amber-800/40'
+                            : 'bg-red-950 text-red-300 border border-red-800/40'
+                        }`}
+                      >
+                        {order.payment_status} ({order.payment_method})
+                      </span>
+                    </td>
+
+                    <td className="p-4">
+                      <span className="px-2.5 py-1 rounded bg-surface-elevated border border-bronze/20 text-bronze-light text-[10px] font-mono uppercase tracking-wider">
+                        {order.status?.replace('_', ' ')}
+                      </span>
+                    </td>
+
+                    {/* Step Advance Button */}
+                    <td className="p-4">
+                      {order.status !== 'delivered' && order.status !== 'cancelled' && (
+                        <button
+                          onClick={() => {
+                            const curIdx = STATUS_STEPS.findIndex((s) => s.key === order.status);
+                            if (curIdx < STATUS_STEPS.length - 1) {
+                              handleUpdateStatus(order.id, STATUS_STEPS[curIdx + 1].key);
+                            }
+                          }}
+                          className="px-2.5 py-1 bg-surface-elevated hover:bg-bronze text-linen-muted hover:text-linen rounded border border-bronze/20 text-[10px] font-mono uppercase tracking-wider flex items-center gap-1 transition-colors cursor-pointer"
+                        >
+                          <span>Advance</span>
+                          <ChevronRight className="w-3 h-3" />
+                        </button>
+                      )}
+                    </td>
+
+                    <td className="p-4 text-right">
+                      <button
+                        onClick={() => handleSelectOrder(order)}
+                        className="p-1.5 rounded hover:bg-surface-elevated text-bronze hover:text-linen transition-colors cursor-pointer"
+                        title="View Full Spec & Invoice"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Selected Order Detail Modal */}
+      {selectedOrder && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-surface border border-bronze/30 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl">
+            
+            <div className="flex items-center justify-between pb-4 border-b border-bronze/15 mb-6">
+              <div>
+                <span className="text-[10px] font-mono uppercase text-bronze tracking-widest block">
+                  Order Telemetry & Production Status
+                </span>
+                <h2 className="font-display text-2xl text-linen mt-0.5">{selectedOrder.order_number}</h2>
+              </div>
+              <button
+                onClick={() => setSelectedOrder(null)}
+                className="p-1 text-linen-muted hover:text-linen cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Status Workflow Stepper */}
+            <div className="mb-8 p-4 bg-surface-elevated rounded-lg border border-bronze/15">
+              <span className="block text-[10px] font-mono uppercase tracking-widest text-bronze-light mb-3">
+                Production & Delivery Stepper
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+                {STATUS_STEPS.map((step, idx) => {
+                  const isCurrent = selectedOrder.status === step.key;
+                  const stepIndex = STATUS_STEPS.findIndex((s) => s.key === selectedOrder.status);
+                  const isDone = stepIndex >= idx;
+
+                  return (
+                    <button
+                      key={step.key}
+                      onClick={() => handleUpdateStatus(selectedOrder.id, step.key)}
+                      className={`p-2 rounded text-center font-mono text-[10px] transition-all cursor-pointer ${
+                        isCurrent
+                          ? 'bg-bronze text-linen font-bold shadow-md'
+                          : isDone
+                          ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-800/40'
+                          : 'bg-espresso/50 text-linen-muted/50 border border-bronze/10 hover:text-linen'
+                      }`}
+                    >
+                      <span>{step.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Order Items & Customer Split */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              
+              {/* Customer Box */}
+              <div className="p-4 bg-surface-elevated rounded-lg border border-bronze/15 text-xs font-mono space-y-2">
+                <span className="text-[10px] uppercase text-bronze-light block font-bold mb-2">
+                  Client & Dispatch Address
+                </span>
+                <div className="flex items-center gap-2 text-linen">
+                  <User className="w-3.5 h-3.5 text-bronze" />
+                  <span>{selectedOrder.customers?.name || 'Walk-in Client'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-linen-muted">
+                  <Phone className="w-3.5 h-3.5 text-bronze" />
+                  <span>{selectedOrder.customers?.phone || 'No phone recorded'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-linen-muted">
+                  <MapPin className="w-3.5 h-3.5 text-bronze" />
+                  <span>{selectedOrder.delivery_address || selectedOrder.delivery_city}</span>
+                </div>
+              </div>
+
+              {/* Financials Box */}
+              <div className="p-4 bg-surface-elevated rounded-lg border border-bronze/15 text-xs font-mono space-y-2">
+                <span className="text-[10px] uppercase text-bronze-light block font-bold mb-2">
+                  Payment Reconciliation
+                </span>
+                <div className="flex justify-between text-linen">
+                  <span>Total Payable:</span>
+                  <span className="font-bold">৳{Number(selectedOrder.total_bdt).toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex justify-between text-emerald-400">
+                  <span>Advance Paid:</span>
+                  <span>৳{Number(selectedOrder.paid_amount_bdt || 0).toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex justify-between text-amber-400 font-bold pt-1 border-t border-bronze/15">
+                  <span>Balance Due:</span>
+                  <span>
+                    ৳{Math.max(0, Number(selectedOrder.total_bdt) - Number(selectedOrder.paid_amount_bdt || 0)).toLocaleString('en-IN')}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Ordered Line Items */}
+            <div className="mb-6">
+              <span className="block text-[10px] font-mono uppercase tracking-widest text-bronze-light mb-3">
+                Commissioned Items
+              </span>
+              <div className="bg-surface-elevated rounded-lg border border-bronze/15 overflow-hidden">
+                <table className="w-full text-left text-xs font-mono">
+                  <thead className="bg-espresso text-[10px] text-linen-muted uppercase border-b border-bronze/10">
+                    <tr>
+                      <th className="p-3">Item Specification</th>
+                      <th className="p-3">Timber / Fabric</th>
+                      <th className="p-3 text-center">Qty</th>
+                      <th className="p-3 text-right">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-bronze/10">
+                    {orderItems.map((item) => (
+                      <tr key={item.id}>
+                        <td className="p-3 text-linen font-medium">{item.product_name}</td>
+                        <td className="p-3 text-linen-muted">
+                          {item.timber_choice} · {item.fabric_choice}
+                        </td>
+                        <td className="p-3 text-center text-linen">{item.quantity}</td>
+                        <td className="p-3 text-right text-linen font-bold">
+                          ৳{Number(item.total_bdt).toLocaleString('en-IN')}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {selectedOrder.notes && (
+              <div className="p-3 bg-espresso rounded-lg border border-bronze/10 text-xs font-mono text-linen-muted mb-6">
+                <span className="text-[10px] text-bronze uppercase block mb-1">Production Notes:</span>
+                <p>{selectedOrder.notes}</p>
+              </div>
+            )}
+
+            <div className="flex justify-end pt-4 border-t border-bronze/15">
+              <button
+                onClick={() => setSelectedOrder(null)}
+                className="px-6 py-2.5 bg-bronze text-linen font-mono text-xs uppercase tracking-wider rounded-lg font-semibold hover:bg-bronze-light hover:text-espresso transition-colors cursor-pointer"
+              >
+                Close Spec
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* New Order Modal */}
+      {isCreateModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-surface border border-bronze/30 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl">
+            
+            <div className="flex items-center justify-between pb-4 border-b border-bronze/15 mb-6">
+              <h2 className="font-display text-xl text-linen">Record New Showroom Order</h2>
+              <button
+                onClick={() => setIsCreateModalOpen(false)}
+                className="p-1 text-linen-muted hover:text-linen cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateOrder} className="space-y-4 text-xs font-mono">
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-linen-muted mb-1 uppercase">Client Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={newOrderCustomer.name}
+                    onChange={(e) => setNewOrderCustomer({ ...newOrderCustomer, name: e.target.value })}
+                    placeholder="e.g. Dr. Salman Chowdhury"
+                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-linen-muted mb-1 uppercase">Client Phone *</label>
+                  <input
+                    type="tel"
+                    required
+                    value={newOrderCustomer.phone}
+                    onChange={(e) => setNewOrderCustomer({ ...newOrderCustomer, phone: e.target.value })}
+                    placeholder="+880 1819-XXXXXX"
+                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-linen-muted mb-1 uppercase">Piece Commissioned</label>
+                  <input
+                    type="text"
+                    value={newOrderData.product_name}
+                    onChange={(e) => setNewOrderData({ ...newOrderData, product_name: e.target.value })}
+                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-linen-muted mb-1 uppercase">Timber Species</label>
+                  <input
+                    type="text"
+                    value={newOrderData.timber_choice}
+                    onChange={(e) => setNewOrderData({ ...newOrderData, timber_choice: e.target.value })}
+                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-linen-muted mb-1 uppercase">Total Price (BDT) *</label>
+                  <input
+                    type="number"
+                    required
+                    value={newOrderData.unit_price}
+                    onChange={(e) => setNewOrderData({ ...newOrderData, unit_price: e.target.value })}
+                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-linen-muted mb-1 uppercase">Payment Channel</label>
+                  <select
+                    value={newOrderData.payment_method}
+                    onChange={(e) => setNewOrderData({ ...newOrderData, payment_method: e.target.value })}
+                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  >
+                    <option value="bkash">bKash Merchant</option>
+                    <option value="nagad">Nagad</option>
+                    <option value="bank_transfer">Bank Transfer</option>
+                    <option value="cash">Cash Showroom</option>
+                    <option value="card">POS Card</option>
+                    <option value="emi">0% EMI</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-linen-muted mb-1 uppercase">Payment Status</label>
+                  <select
+                    value={newOrderData.payment_status}
+                    onChange={(e) => setNewOrderData({ ...newOrderData, payment_status: e.target.value })}
+                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  >
+                    <option value="partial">Partial Advance</option>
+                    <option value="paid">Paid in Full</option>
+                    <option value="unpaid">Unpaid</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-linen-muted mb-1 uppercase">Advance Paid (BDT)</label>
+                  <input
+                    type="number"
+                    value={newOrderData.paid_amount}
+                    onChange={(e) => setNewOrderData({ ...newOrderData, paid_amount: e.target.value })}
+                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-linen-muted mb-1 uppercase">Delivery Address in Chattogram</label>
+                <input
+                  type="text"
+                  value={newOrderData.delivery_address}
+                  onChange={(e) => setNewOrderData({ ...newOrderData, delivery_address: e.target.value })}
+                  placeholder="e.g. House 14, Road 3, Nasirabad Housing Society"
+                  className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                />
+              </div>
+
+              <div>
+                <label className="block text-linen-muted mb-1 uppercase">Production & Joinery Notes</label>
+                <textarea
+                  rows="2"
+                  value={newOrderData.notes}
+                  onChange={(e) => setNewOrderData({ ...newOrderData, notes: e.target.value })}
+                  className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-bronze/15">
+                <button
+                  type="button"
+                  onClick={() => setIsCreateModalOpen(false)}
+                  className="px-4 py-2.5 rounded-lg border border-bronze/20 text-linen-muted hover:text-linen cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={creating}
+                  className="px-6 py-2.5 bg-bronze hover:bg-bronze-light text-linen hover:text-espresso rounded-lg font-semibold transition-colors disabled:opacity-50 cursor-pointer"
+                >
+                  {creating ? 'Recording...' : 'Create Order & Invoice'}
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}

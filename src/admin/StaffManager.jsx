@@ -167,7 +167,7 @@ export default function StaffManager() {
               {loading ? (
                 <tr>
                   <td colSpan="5" className="p-8 text-center text-[#7A6A5A]">
-                    Loading staff directory from Supabase...
+                    Loading staff directory...
                   </td>
                 </tr>
               ) : staffList.length === 0 ? (
@@ -250,7 +250,7 @@ export default function StaffManager() {
             </thead>
             <tbody className="divide-y divide-[#E8DFD3]">
               <tr>
-                <td className="p-3 text-[#1E1005]">Product Catalog CRUD (Add, Edit, Price, Specs)</td>
+                <td className="p-3 text-[#1E1005]">Product Catalog Management (Add, Edit, Pricing, Specs)</td>
                 <td className="p-3 text-center text-emerald-700 font-semibold">✓ Full Access</td>
                 <td className="p-3 text-center text-emerald-700 font-semibold">✓ Full Access</td>
                 <td className="p-3 text-center text-[#8A7563]">Read-Only</td>

@@ -99,7 +99,7 @@ export default function DashboardOverview() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl md:text-3xl text-[#1E1005]">
-            Store Performance & Telemetry
+            Store Performance & Overview
           </h1>
           <p className="text-xs font-mono text-[#7A6A5A] mt-1">
             Real-time analytics for Agrabad Atelier showroom, timber inventory, and online commissions.

@@ -292,7 +292,7 @@ export default function ProductManager() {
               {loading ? (
                 <tr>
                   <td colSpan="7" className="p-8 text-center text-[#7A6A5A]">
-                    Loading inventory telemetry from Supabase...
+                    Loading inventory catalog...
                   </td>
                 </tr>
               ) : filteredProducts.length === 0 ? (

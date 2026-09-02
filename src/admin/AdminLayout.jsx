@@ -304,9 +304,9 @@ export default function AdminLayout() {
           </div>
 
           <div className="hidden sm:flex items-center gap-4">
-            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
-              <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-              <span>PostgreSQL Secured (Tokyo)</span>
+            <div className="flex items-center gap-2 text-[10px] font-mono text-[#8A7563]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Encrypted Cloud Database</span>
             </div>
             <div className="text-xs font-mono text-[#7A6A5A]">
               Role: <strong className="text-[#1E1005] capitalize">{role.replace('_', ' ')}</strong>

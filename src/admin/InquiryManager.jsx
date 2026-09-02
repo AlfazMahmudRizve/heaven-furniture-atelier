@@ -210,7 +210,7 @@ export default function InquiryManager() {
               {loading ? (
                 <tr>
                   <td colSpan="6" className="p-8 text-center text-[#7A6A5A]">
-                    Loading bespoke inquiries from Supabase...
+                    Loading bespoke inquiries...
                   </td>
                 </tr>
               ) : filteredInquiries.length === 0 ? (

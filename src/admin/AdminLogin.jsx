@@ -72,7 +72,7 @@ export default function AdminLogin() {
           <div className="mb-6">
             <h2 className="font-display text-xl text-[#1E1005]">Staff Authentication</h2>
             <p className="text-xs text-[#7A6A5A] font-mono mt-1">
-              Protected by PostgreSQL Row-Level Security (RLS) & BCrypt password hashing.
+              Protected by encrypted staff authentication & access control.
             </p>
           </div>
 
@@ -205,7 +205,7 @@ export default function AdminLogin() {
         {/* Security badge */}
         <div className="text-center mt-6 text-[10px] font-mono text-[#8A7663] uppercase tracking-widest flex items-center justify-center gap-2">
           <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
-          <span>PostgreSQL BCrypt Hash Verification Enabled</span>
+          <span>Encrypted Staff Verification Active</span>
         </div>
 
       </div>

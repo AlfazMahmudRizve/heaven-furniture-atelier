@@ -136,7 +136,7 @@ export default function CustomerManager() {
               {loading ? (
                 <tr>
                   <td colSpan="6" className="p-8 text-center text-[#7A6A5A]">
-                    Loading client profiles from Supabase...
+                    Loading client directory...
                   </td>
                 </tr>
               ) : filteredCustomers.length === 0 ? (

@@ -278,7 +278,7 @@ export default function OrderManager() {
               {loading ? (
                 <tr>
                   <td colSpan="6" className="p-8 text-center text-[#7A6A5A]">
-                    Loading orders telemetry from Supabase...
+                    Loading client orders...
                   </td>
                 </tr>
               ) : filteredOrders.length === 0 ? (
@@ -374,7 +374,7 @@ export default function OrderManager() {
             <div className="flex items-center justify-between pb-4 border-b border-[#E8DFD3] mb-6">
               <div>
                 <span className="text-[10px] font-mono uppercase text-[#9C7443] tracking-widest block font-medium">
-                  Order Telemetry & Production Status
+                  Order Details & Production Status
                 </span>
                 <h2 className="font-display text-2xl text-[#1E1005] mt-0.5">{selectedOrder.order_number}</h2>
               </div>

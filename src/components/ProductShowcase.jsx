@@ -308,8 +308,8 @@ function ProductSection({ suite, index }) {
                       : 'text-espresso-deep/70 hover:text-espresso-deep'
                   }`}
                 >
-                  <MessageCircle className="w-4 h-4 text-green-500" />
-                  WhatsApp Stylist
+                  <MessageCircle className="w-4 h-4 text-emerald-400" />
+                  WhatsApp Concierge
                 </a>
               </motion.div>
 

@@ -4,31 +4,58 @@ import { Sparkles, MessageCircle, ShieldCheck, ArrowUpRight, Check, SlidersHoriz
 import { supabase } from '../lib/supabase';
 import { buildProductWhatsAppUrl } from '../utils/whatsapp';
 
-// Fallback catalog if Supabase is offline or loading
+// Explicit mapping of each product slug to its unique, handcrafted photograph
+const PRODUCT_IMAGE_MAP = {
+  // Living Room
+  'sovereign-corner-sectional': '/images/products/sovereign-corner-sectional.jpg',
+  'royal-chesterfield-suite': '/images/products/royal-chesterfield-suite.jpg',
+  'fluted-teak-coffee-table': '/images/products/fluted-teak-coffee-table.jpg',
+  'sintered-stone-tv-console': '/images/products/sintered-stone-tv-console.jpg',
+
+  // Master Bedroom
+  'imperial-burma-teak-king-bed': '/images/products/imperial-burma-teak-king-bed.jpg',
+  'floating-platform-bed': '/images/products/floating-platform-bed.jpg',
+  'floor-to-ceiling-wardrobe': '/images/products/floor-to-ceiling-wardrobe.jpg',
+  'vanity-dressing-station': '/images/products/vanity-dressing-station.jpg',
+
+  // Royal Dining
+  'grand-heritage-8-seater': '/images/products/grand-heritage-8-seater.jpg',
+  'sculptural-round-pedestal': '/images/products/sculptural-round-pedestal.jpg',
+  'display-credenza': '/images/products/display-credenza.jpg',
+  'ergonomic-dining-chairs': '/images/products/ergonomic-dining-chairs.jpg',
+
+  // Executive & Study
+  'executive-conference-table': '/images/products/executive-conference-table.jpg',
+  'architectural-library-bookshelf': '/images/products/architectural-library-bookshelf.jpg',
+  'presidential-executive-desk': '/images/products/presidential-executive-desk.jpg',
+  'modular-workstation': '/images/products/modular-workstation.jpg',
+};
+
+// Fallback catalog with 100% unique handcrafted images
 const FALLBACK_PRODUCTS = [
   // Living Room
-  { id: '1', name: 'Sovereign Corner Sectional', category: 'living', category_name: 'Living Room', timber_type: 'Burma Teak', upholstery: 'Belgian Velvet', price_bdt: 285000, stock_quantity: 3, lead_time: '14-21 Days', image: '/images/hero-living.jpg' },
-  { id: '2', name: 'Royal Chesterfield Suite', category: 'living', category_name: 'Living Room', timber_type: 'Solid Wood', upholstery: 'Italian Leather', price_bdt: 350000, stock_quantity: 2, lead_time: '18-24 Days', image: '/images/floating-sofa.jpg' },
-  { id: '3', name: 'Fluted Teak Coffee Table', category: 'living', category_name: 'Living Room', timber_type: 'Solid Burma Teak', upholstery: 'Fluted Pedestal', price_bdt: 45000, stock_quantity: 5, lead_time: '7-10 Days', image: '/images/timber-macro.jpg' },
-  { id: '4', name: 'Sintered Stone TV Console', category: 'living', category_name: 'Living Room', timber_type: 'Teak', upholstery: 'Calacatta Stone', price_bdt: 78000, stock_quantity: 4, lead_time: '10-14 Days', image: '/images/hero-penthouse.jpg' },
+  { id: '1', name: 'Sovereign Corner Sectional', slug: 'sovereign-corner-sectional', category: 'living', category_name: 'Living Room', timber_type: 'Burma Teak', upholstery: 'Belgian Ivory Velvet', price_bdt: 285000, stock_quantity: 3, lead_time: '14-21 Days', image: '/images/products/sovereign-corner-sectional.jpg' },
+  { id: '2', name: 'Royal Chesterfield Suite', slug: 'royal-chesterfield-suite', category: 'living', category_name: 'Living Room', timber_type: 'Solid Hardwood', upholstery: 'Italian Tan Leather', price_bdt: 350000, stock_quantity: 2, lead_time: '18-24 Days', image: '/images/products/royal-chesterfield-suite.jpg' },
+  { id: '3', name: 'Fluted Teak Coffee Table', slug: 'fluted-teak-coffee-table', category: 'living', category_name: 'Living Room', timber_type: 'Solid Burma Teak', upholstery: 'Fluted Pedestal Base', price_bdt: 45000, stock_quantity: 5, lead_time: '7-10 Days', image: '/images/products/fluted-teak-coffee-table.jpg' },
+  { id: '4', name: 'Sintered Stone TV Console', slug: 'sintered-stone-tv-console', category: 'living', category_name: 'Living Room', timber_type: 'Solid Burma Teak', upholstery: 'Calacatta Sintered Stone', price_bdt: 78000, stock_quantity: 4, lead_time: '10-14 Days', image: '/images/products/sintered-stone-tv-console.jpg' },
 
   // Bedroom
-  { id: '5', name: 'Imperial Burma Teak King Bed', category: 'bedroom', category_name: 'Master Bedroom', timber_type: 'Solid Burma Teak', upholstery: 'Hydraulic Storage (800L)', price_bdt: 195000, stock_quantity: 3, lead_time: '18-24 Days', image: '/images/hero-bedroom.jpg' },
-  { id: '6', name: 'Floating Platform Bed', category: 'bedroom', category_name: 'Master Bedroom', timber_type: 'Teak', upholstery: 'LED Ambient Glow', price_bdt: 165000, stock_quantity: 2, lead_time: '14-18 Days', image: '/images/floating-bed.jpg' },
-  { id: '7', name: 'Floor-to-Ceiling Wardrobe', category: 'bedroom', category_name: 'Master Bedroom', timber_type: 'Custom Hardwood', upholstery: 'Smart Organizers', price_bdt: 220000, stock_quantity: 1, lead_time: '21-28 Days', image: '/images/floating-craft.jpg' },
-  { id: '8', name: 'Vanity Dressing Station', category: 'bedroom', category_name: 'Master Bedroom', timber_type: 'Teak', upholstery: 'Concealed Drawers', price_bdt: 55000, stock_quantity: 4, lead_time: '10-14 Days', image: '/images/sofa-assembled.jpg' },
+  { id: '5', name: 'Imperial Burma Teak King Bed', slug: 'imperial-burma-teak-king-bed', category: 'bedroom', category_name: 'Master Bedroom', timber_type: 'Solid Burma Teak', upholstery: 'Fluted Headboard & Nightstands', price_bdt: 195000, stock_quantity: 3, lead_time: '18-24 Days', image: '/images/products/imperial-burma-teak-king-bed.jpg' },
+  { id: '6', name: 'Floating Platform Bed', slug: 'floating-platform-bed', category: 'bedroom', category_name: 'Master Bedroom', timber_type: 'Seasoned Teak', upholstery: 'Integrated Underbed LED Glow', price_bdt: 165000, stock_quantity: 2, lead_time: '14-18 Days', image: '/images/products/floating-platform-bed.jpg' },
+  { id: '7', name: 'Floor-to-Ceiling Wardrobe', slug: 'floor-to-ceiling-wardrobe', category: 'bedroom', category_name: 'Master Bedroom', timber_type: 'Burma Teak', upholstery: 'Fluted Glass & Interior LEDs', price_bdt: 220000, stock_quantity: 1, lead_time: '21-28 Days', image: '/images/products/floor-to-ceiling-wardrobe.jpg' },
+  { id: '8', name: 'Vanity Dressing Station', slug: 'vanity-dressing-station', category: 'bedroom', category_name: 'Master Bedroom', timber_type: 'Solid Teak', upholstery: 'Backlit Mirror & Bouclé Ottoman', price_bdt: 55000, stock_quantity: 4, lead_time: '10-14 Days', image: '/images/products/vanity-dressing-station.jpg' },
 
   // Dining
-  { id: '9', name: 'Grand Heritage 8-Seater', category: 'dining', category_name: 'Royal Dining', timber_type: 'Mahogany', upholstery: 'Sintered Stone Top', price_bdt: 320000, stock_quantity: 2, lead_time: '14-20 Days', image: '/images/hero-dining.jpg' },
-  { id: '10', name: 'Sculptural Round Pedestal', category: 'dining', category_name: 'Royal Dining', timber_type: 'Solid Teak', upholstery: 'Turned Base (6-Seat)', price_bdt: 145000, stock_quantity: 3, lead_time: '14-18 Days', image: '/images/floating-dining.jpg' },
-  { id: '11', name: 'Display Credenza', category: 'dining', category_name: 'Royal Dining', timber_type: 'Teak', upholstery: 'Fluted Glass Doors', price_bdt: 95000, stock_quantity: 3, lead_time: '12-16 Days', image: '/images/sofa-exploded.jpg' },
-  { id: '12', name: 'Ergonomic Dining Chairs', category: 'dining', category_name: 'Royal Dining', timber_type: 'Mahogany', upholstery: 'Ivory Bouclé (Set/Each)', price_bdt: 18000, stock_quantity: 20, lead_time: '7-10 Days', image: '/images/hero-living-exploded.jpg' },
+  { id: '9', name: 'Grand Heritage 8-Seater', slug: 'grand-heritage-8-seater', category: 'dining', category_name: 'Royal Dining', timber_type: 'Solid Mahogany', upholstery: 'Sintered Stone & 8 Bouclé Chairs', price_bdt: 320000, stock_quantity: 2, lead_time: '14-20 Days', image: '/images/products/grand-heritage-8-seater.jpg' },
+  { id: '10', name: 'Sculptural Round Pedestal', slug: 'sculptural-round-pedestal', category: 'dining', category_name: 'Royal Dining', timber_type: 'Solid Burma Teak', upholstery: 'Hand-Turned Fluted 6-Seater', price_bdt: 145000, stock_quantity: 3, lead_time: '14-18 Days', image: '/images/products/sculptural-round-pedestal.jpg' },
+  { id: '11', name: 'Display Credenza', slug: 'display-credenza', category: 'dining', category_name: 'Royal Dining', timber_type: 'Solid Burma Teak', upholstery: 'Reeded Fluted Glass & LEDs', price_bdt: 95000, stock_quantity: 3, lead_time: '12-16 Days', image: '/images/products/display-credenza.jpg' },
+  { id: '12', name: 'Ergonomic Dining Chairs', slug: 'ergonomic-dining-chairs', category: 'dining', category_name: 'Royal Dining', timber_type: 'Solid Mahogany', upholstery: 'Curved Frame & Ivory Bouclé', price_bdt: 18000, stock_quantity: 20, lead_time: '7-10 Days', image: '/images/products/ergonomic-dining-chairs.jpg' },
 
   // Executive
-  { id: '13', name: 'Executive Conference Table', category: 'executive', category_name: 'Executive & Study', timber_type: 'Solid Mahogany', upholstery: 'Monumental 10-Seater', price_bdt: 450000, stock_quantity: 1, lead_time: '21-30 Days', image: '/images/hero-executive.jpg' },
-  { id: '14', name: 'Architectural Library Bookshelf', category: 'executive', category_name: 'Executive & Study', timber_type: 'Solid Wood', upholstery: 'Ladder Rail System', price_bdt: 265000, stock_quantity: 1, lead_time: '21-28 Days', image: '/images/floating-desk.jpg' },
-  { id: '15', name: 'Presidential Executive Desk', category: 'executive', category_name: 'Executive & Study', timber_type: 'Burma Teak', upholstery: 'Tuscan Leather Inlay', price_bdt: 185000, stock_quantity: 2, lead_time: '16-22 Days', image: '/images/hero-executive.jpg' },
-  { id: '16', name: 'Modular Workstation', category: 'executive', category_name: 'Executive & Study', timber_type: 'Teak', upholstery: 'Concealed Tech Ports', price_bdt: 95000, stock_quantity: 4, lead_time: '12-16 Days', image: '/images/floating-desk.jpg' },
+  { id: '13', name: 'Executive Conference Table', slug: 'executive-conference-table', category: 'executive', category_name: 'Executive & Study', timber_type: 'Solid Red Mahogany', upholstery: 'Monumental 10-Seater Live Edge', price_bdt: 450000, stock_quantity: 1, lead_time: '21-30 Days', image: '/images/products/executive-conference-table.jpg' },
+  { id: '14', name: 'Architectural Library Bookshelf', slug: 'architectural-library-bookshelf', category: 'executive', category_name: 'Executive & Study', timber_type: 'Burma Teak', upholstery: 'Rolling Brass Ladder & LED Shelves', price_bdt: 265000, stock_quantity: 1, lead_time: '21-28 Days', image: '/images/products/architectural-library-bookshelf.jpg' },
+  { id: '15', name: 'Presidential Executive Desk', slug: 'presidential-executive-desk', category: 'executive', category_name: 'Executive & Study', timber_type: 'Burma Teak', upholstery: 'Tuscan Leather Writing Inlay', price_bdt: 185000, stock_quantity: 2, lead_time: '16-22 Days', image: '/images/products/presidential-executive-desk.jpg' },
+  { id: '16', name: 'Modular Workstation', slug: 'modular-workstation', category: 'executive', category_name: 'Executive & Study', timber_type: 'Burma Teak', upholstery: 'L-Shaped Return & Cable Raceways', price_bdt: 95000, stock_quantity: 4, lead_time: '12-16 Days', image: '/images/products/modular-workstation.jpg' },
 ];
 
 const CATEGORIES = [
@@ -53,20 +80,23 @@ export default function ArccaProjectsGrid() {
           .order('price_bdt', { ascending: false });
 
         if (!error && data && data.length > 0) {
-          // Map images to available assets
-          const mapped = data.map((p, idx) => {
-            const fallback = FALLBACK_PRODUCTS.find((f) => f.name.toLowerCase() === p.name.toLowerCase());
+          const mapped = data.map((p) => {
+            const fallback = FALLBACK_PRODUCTS.find((f) => f.slug === p.slug || f.name.toLowerCase() === p.name.toLowerCase());
+            const productSlug = p.slug || fallback?.slug;
+            const uniqueImage = PRODUCT_IMAGE_MAP[productSlug] || fallback?.image || '/images/products/sovereign-corner-sectional.jpg';
+
             return {
               ...p,
-              category: p.categories?.slug || 'living',
-              category_name: p.categories?.name || 'Heirloom Piece',
-              image: fallback?.image || FALLBACK_PRODUCTS[idx % FALLBACK_PRODUCTS.length].image,
+              category: p.categories?.slug || fallback?.category || 'living',
+              category_name: p.categories?.name || fallback?.category_name || 'Heirloom Piece',
+              image: uniqueImage,
+              upholstery: p.upholstery || fallback?.upholstery || 'Handcrafted Joinery',
             };
           });
           setProducts(mapped);
         }
       } catch (err) {
-        console.warn('[ArccaProjectsGrid] Loading fallback catalog', err);
+        console.warn('[ArccaProjectsGrid] Using fallback catalog with unique images', err);
       }
     }
 
@@ -137,7 +167,7 @@ export default function ArccaProjectsGrid() {
           </div>
         </div>
 
-        {/* ── PRODUCT CARDS GRID (16 PIECES) ── */}
+        {/* ── PRODUCT CARDS GRID (16 UNIQUE PIECES) ── */}
         <motion.div 
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
@@ -151,16 +181,16 @@ export default function ArccaProjectsGrid() {
 
               return (
                 <motion.div
-                  key={product.id}
+                  key={product.id || product.slug}
                   layout
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.4 }}
-                  className="bg-white rounded-xl border border-espresso-deep/10 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-500 group flex flex-col justify-between"
+                  className="bg-white rounded-2xl border border-espresso-deep/10 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-500 group flex flex-col justify-between"
                 >
-                  {/* Product Image Box */}
-                  <div className="relative aspect-[4/3] overflow-hidden bg-espresso/5">
+                  {/* Product Image Box with 4:3 Aspect Ratio */}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#F5EFEB]">
                     <img
                       src={product.image}
                       alt={product.name}
@@ -170,12 +200,12 @@ export default function ArccaProjectsGrid() {
                     <div className="absolute inset-0 bg-gradient-to-t from-espresso/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     {/* Category Tag */}
-                    <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-espresso-deep text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-md shadow-xs">
+                    <span className="absolute top-3.5 left-3.5 bg-white/95 backdrop-blur-md text-espresso-deep text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-md shadow-xs font-medium">
                       {product.category_name}
                     </span>
 
                     {/* Stock status pill */}
-                    <span className="absolute top-3 right-3 bg-espresso/80 backdrop-blur-md text-linen text-[9px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-md">
+                    <span className="absolute top-3.5 right-3.5 bg-espresso/85 backdrop-blur-md text-linen text-[9px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-md">
                       {product.stock_quantity > 0 ? `${product.stock_quantity} in Atelier` : 'Bespoke Order'}
                     </span>
                   </div>
@@ -183,19 +213,19 @@ export default function ArccaProjectsGrid() {
                   {/* Product Details Box */}
                   <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 className="font-display text-lg text-espresso-deep group-hover:text-bronze transition-colors font-medium leading-snug">
+                      <h3 className="font-display text-lg text-espresso-deep group-hover:text-bronze transition-colors font-semibold leading-snug">
                         {product.name}
                       </h3>
 
-                      <div className="mt-2 space-y-1 text-xs font-mono text-espresso-deep/70">
+                      <div className="mt-2.5 space-y-1.5 text-xs font-mono text-espresso-deep/70">
                         <div className="flex items-center justify-between">
                           <span className="text-[10px] text-bronze uppercase">Timber:</span>
-                          <span className="font-semibold text-espresso-deep">{product.timber_type}</span>
+                          <span className="font-medium text-espresso-deep">{product.timber_type}</span>
                         </div>
                         {product.upholstery && (
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] text-bronze uppercase">Feature:</span>
-                            <span className="truncate max-w-[140px] text-right">{product.upholstery}</span>
+                            <span className="text-[10px] text-bronze uppercase">Spec:</span>
+                            <span className="truncate max-w-[150px] text-right font-medium text-espresso-deep/90">{product.upholstery}</span>
                           </div>
                         )}
                         <div className="flex items-center justify-between">
@@ -220,11 +250,11 @@ export default function ArccaProjectsGrid() {
                         href={whatsappUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2.5 rounded-lg bg-espresso text-linen hover:bg-bronze transition-colors duration-300 flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider"
+                        className="px-3.5 py-2 rounded-xl bg-espresso text-linen hover:bg-bronze transition-colors duration-300 flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider font-semibold shadow-xs"
                         title="Customize & Order on WhatsApp"
                       >
-                        <MessageCircle className="w-3.5 h-3.5 text-emerald-300" />
-                        <span className="hidden sm:inline text-[10px]">Inquire</span>
+                        <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-[11px]">Inquire</span>
                       </a>
                     </div>
 

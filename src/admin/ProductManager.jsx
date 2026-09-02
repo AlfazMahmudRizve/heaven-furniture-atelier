@@ -305,10 +305,20 @@ export default function ProductManager() {
                 filteredProducts.map((p) => (
                   <tr key={p.id} className="hover:bg-[#FAF8F5] transition-colors">
                     <td className="p-4">
-                      <span className="font-display text-sm text-[#1E1005] block font-medium">{p.name}</span>
-                      <span className="text-[10px] text-[#8A7056] block mt-0.5">
-                        {p.categories?.name || 'Unassigned Category'}
-                      </span>
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={`/images/products/${p.slug}.jpg`}
+                          alt={p.name}
+                          onError={(e) => { e.target.style.display = 'none'; }}
+                          className="w-10 h-10 object-cover rounded-lg border border-[#DED4C5] shrink-0 bg-[#FAF8F5]"
+                        />
+                        <div>
+                          <span className="font-display text-sm text-[#1E1005] block font-medium">{p.name}</span>
+                          <span className="text-[10px] text-[#8A7056] block mt-0.5">
+                            {p.categories?.name || 'Unassigned Category'}
+                          </span>
+                        </div>
+                      </div>
                     </td>
 
                     <td className="p-4 text-[#6B5C4E]">

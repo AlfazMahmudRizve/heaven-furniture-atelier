@@ -4,133 +4,97 @@ import { supabase } from '../lib/supabase';
 const AdminAuthContext = createContext(null);
 
 export function AdminAuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [staffProfile, setStaffProfile] = useState(null);
+  const [staffMember, setStaffMember] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check active Supabase session or localStorage demo session
+  // Initialize from persisted secure session
   useEffect(() => {
-    async function loadSession() {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
-          setUser(session.user);
-          // Fetch staff profile from DB
-          const { data: staffData } = await supabase
-            .from('staff')
-            .select('*')
-            .eq('auth_user_id', session.user.id)
-            .single();
-
-          if (staffData) {
-            setStaffProfile(staffData);
-          } else {
-            // Default staff profile for authenticated user
-            setStaffProfile({
-              name: session.user.email?.split('@')[0] || 'Staff Manager',
-              email: session.user.email,
-              role: 'admin',
-              is_active: true,
-            });
-          }
-        } else {
-          // Check for demo session in localStorage
-          const savedDemo = localStorage.getItem('hfm_admin_demo_session');
-          if (savedDemo) {
-            const parsed = JSON.parse(savedDemo);
-            setUser({ id: 'demo-admin-id', email: parsed.email });
-            setStaffProfile(parsed);
-          }
+    try {
+      const stored = localStorage.getItem('hfm_authenticated_staff');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed && parsed.id && parsed.role) {
+          setStaffMember(parsed);
         }
-      } catch (err) {
-        console.warn('[AdminAuth] Error checking session:', err);
-      } finally {
-        setLoading(false);
       }
+    } catch (e) {
+      console.error('[AdminAuth] Failed to load session', e);
+    } finally {
+      setLoading(false);
     }
-
-    loadSession();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (session?.user) {
-        setUser(session.user);
-        const { data: staffData } = await supabase
-          .from('staff')
-          .select('*')
-          .eq('auth_user_id', session.user.id)
-          .single();
-
-        setStaffProfile(staffData || {
-          name: session.user.email?.split('@')[0] || 'Staff Manager',
-          email: session.user.email,
-          role: 'admin',
-          is_active: true,
-        });
-      } else {
-        const savedDemo = localStorage.getItem('hfm_admin_demo_session');
-        if (!savedDemo) {
-          setUser(null);
-          setStaffProfile(null);
-        }
-      }
-    });
-
-    return () => subscription?.unsubscribe();
   }, []);
 
-  const loginWithSupabase = async (email, password) => {
+  // Secure staff authentication via Supabase stored procedure
+  const loginStaff = async (email, password) => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      if (!email || !password) {
+        return { success: false, error: 'Please provide both email and password.' };
+      }
+
+      // Call the authenticate_staff RPC function in PostgreSQL
+      const { data, error } = await supabase.rpc('authenticate_staff', {
+        p_email: email.trim().toLowerCase(),
+        p_password: password,
       });
-      if (error) throw error;
-      localStorage.removeItem('hfm_admin_demo_session');
-      return { success: true, user: data.user };
-    } catch (error) {
-      return { success: false, error: error.message };
+
+      if (error) {
+        console.error('[AdminAuth] RPC Error:', error);
+        return { success: false, error: error.message || 'Authentication query failed.' };
+      }
+
+      if (!data || data.length === 0) {
+        return { success: false, error: 'Invalid staff credentials. Access denied.' };
+      }
+
+      const user = data[0];
+      if (!user.is_active) {
+        return { success: false, error: 'Staff account is deactivated. Contact administrator.' };
+      }
+
+      const sessionObj = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role, // 'admin' | 'manager' | 'sales_rep'
+        phone: user.phone,
+        authenticated_at: new Date().toISOString(),
+      };
+
+      localStorage.setItem('hfm_authenticated_staff', JSON.stringify(sessionObj));
+      setStaffMember(sessionObj);
+      return { success: true, user: sessionObj };
+    } catch (err) {
+      console.error('[AdminAuth] Unexpected error:', err);
+      return { success: false, error: err.message || 'Unexpected login error.' };
     } finally {
       setLoading(false);
     }
   };
 
-  const loginWithDemoRole = (role = 'admin', name = 'Alfaz Mahmud Rizve') => {
-    const demoProfile = {
-      id: 'demo-staff-id',
-      name,
-      email: role === 'admin' ? 'admin@heavenfurniture.com' : `${role}@heavenfurniture.com`,
-      role,
-      phone: '+880 1960-481983',
-      is_active: true,
-    };
-    localStorage.setItem('hfm_admin_demo_session', JSON.stringify(demoProfile));
-    setUser({ id: 'demo-admin-id', email: demoProfile.email });
-    setStaffProfile(demoProfile);
-    return { success: true };
+  const logout = () => {
+    localStorage.removeItem('hfm_authenticated_staff');
+    setStaffMember(null);
   };
 
-  const logout = async () => {
-    localStorage.removeItem('hfm_admin_demo_session');
-    setUser(null);
-    setStaffProfile(null);
-    try {
-      await supabase.auth.signOut();
-    } catch {
-      // Ignore if not logged into Supabase
-    }
+  // Helper permission checkers
+  const hasRole = (allowedRoles = []) => {
+    if (!staffMember) return false;
+    if (staffMember.role === 'admin') return true; // Superadmin has all access
+    return allowedRoles.includes(staffMember.role);
   };
 
   return (
     <AdminAuthContext.Provider
       value={{
-        user,
-        staffProfile,
+        staffMember,
+        staffProfile: staffMember, // Alias for backward compatibility
         loading,
-        loginWithSupabase,
-        loginWithDemoRole,
+        isAuthenticated: !!staffMember,
+        role: staffMember?.role,
+        loginStaff,
         logout,
-        isAuthenticated: !!user,
+        hasRole,
       }}
     >
       {children}

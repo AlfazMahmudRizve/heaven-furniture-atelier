@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
+import { useAdminAuth } from './AdminAuthContext';
 import {
   ShoppingBag,
   Plus,
@@ -32,6 +33,7 @@ const STATUS_STEPS = [
 ];
 
 export default function OrderManager() {
+  const { role } = useAdminAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -203,15 +205,15 @@ export default function OrderManager() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-display text-2xl md:text-3xl text-linen">Order Tracking & Financials</h1>
-          <p className="text-xs font-mono text-linen-muted mt-1">
-            End-to-end production workflow, bKash/Nagad/Bank reconciliation, and white-glove dispatch.
+          <h1 className="font-display text-2xl md:text-3xl text-[#1E1005]">Order Tracking & Financials</h1>
+          <p className="text-xs font-mono text-[#7A6A5A] mt-1">
+            Production workflow stepper, bKash/Nagad/Bank payment reconciliation, and white-glove delivery scheduling.
           </p>
         </div>
 
         <button
           onClick={() => setIsCreateModalOpen(true)}
-          className="px-4 py-2.5 bg-bronze hover:bg-bronze-light text-linen hover:text-espresso font-mono text-xs uppercase tracking-wider rounded-lg font-semibold flex items-center gap-2 transition-all shadow-lg cursor-pointer"
+          className="px-4 py-2.5 bg-[#1E1005] hover:bg-[#9C7443] text-[#FBF0DA] hover:text-white font-mono text-xs uppercase tracking-wider rounded-xl font-semibold flex items-center gap-2 transition-all shadow-md cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>New Showroom Order</span>
@@ -219,15 +221,15 @@ export default function OrderManager() {
       </div>
 
       {/* Filters */}
-      <div className="bg-surface border border-bronze/15 rounded-xl p-4 flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-white border border-[#E8DFD3] rounded-2xl p-4 flex flex-col md:flex-row gap-4 justify-between items-center shadow-xs">
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-linen-muted/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#8A7563] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by order #, client name, phone..."
-            className="w-full pl-10 pr-4 py-2 bg-surface-elevated border border-bronze/15 rounded-lg text-xs font-mono text-linen placeholder-linen-muted/40 focus:outline-none focus:border-bronze"
+            className="w-full pl-10 pr-4 py-2 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-xs font-mono text-[#1E1005] placeholder-[#9E9080] focus:outline-none focus:border-[#9C7443] focus:bg-white"
           />
         </div>
 
@@ -235,7 +237,7 @@ export default function OrderManager() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 bg-surface-elevated border border-bronze/15 rounded-lg text-xs font-mono text-linen focus:outline-none focus:border-bronze"
+            className="px-3 py-2 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-xs font-mono text-[#1E1005] focus:outline-none focus:border-[#9C7443]"
           >
             <option value="all">All Statuses</option>
             {STATUS_STEPS.map((s) => (
@@ -248,7 +250,7 @@ export default function OrderManager() {
           <select
             value={paymentFilter}
             onChange={(e) => setPaymentFilter(e.target.value)}
-            className="px-3 py-2 bg-surface-elevated border border-bronze/15 rounded-lg text-xs font-mono text-linen focus:outline-none focus:border-bronze"
+            className="px-3 py-2 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-xs font-mono text-[#1E1005] focus:outline-none focus:border-[#9C7443]"
           >
             <option value="all">All Payments</option>
             <option value="paid">Paid in Full</option>
@@ -259,64 +261,64 @@ export default function OrderManager() {
       </div>
 
       {/* Order List Table */}
-      <div className="bg-surface border border-bronze/15 rounded-xl overflow-hidden shadow-xl">
+      <div className="bg-white border border-[#E8DFD3] rounded-2xl overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-bronze/15 bg-surface-elevated/60 text-[10px] font-mono uppercase tracking-widest text-linen-muted">
+              <tr className="border-b border-[#E8DFD3] bg-[#FBF9F5] text-[10px] font-mono uppercase tracking-widest text-[#7A6A5A]">
                 <th className="p-4">Order # & Date</th>
                 <th className="p-4">Client</th>
                 <th className="p-4">Amount & Payment</th>
                 <th className="p-4">Workflow Status</th>
-                <th className="p-4">Quick Progress</th>
+                <th className="p-4">Step Control</th>
                 <th className="p-4 text-right">Details</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-bronze/10 text-xs font-mono">
+            <tbody className="divide-y divide-[#E8DFD3] text-xs font-mono">
               {loading ? (
                 <tr>
-                  <td colSpan="6" className="p-8 text-center text-linen-muted">
+                  <td colSpan="6" className="p-8 text-center text-[#7A6A5A]">
                     Loading orders telemetry from Supabase...
                   </td>
                 </tr>
               ) : filteredOrders.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="p-8 text-center text-linen-muted">
+                  <td colSpan="6" className="p-8 text-center text-[#7A6A5A]">
                     No orders found. Click "+ New Showroom Order" to create one.
                   </td>
                 </tr>
               ) : (
                 filteredOrders.map((order) => (
-                  <tr key={order.id} className="hover:bg-surface-elevated/40 transition-colors">
+                  <tr key={order.id} className="hover:bg-[#FAF8F5] transition-colors">
                     <td className="p-4">
-                      <span className="font-mono text-xs text-bronze block font-bold">
+                      <span className="font-mono text-xs text-[#9C7443] block font-bold">
                         {order.order_number}
                       </span>
-                      <span className="text-[10px] text-linen-muted/60">
+                      <span className="text-[10px] text-[#8A7563]">
                         {new Date(order.created_at).toLocaleDateString('en-GB')}
                       </span>
                     </td>
 
                     <td className="p-4">
-                      <span className="font-display text-sm text-linen block">
+                      <span className="font-display text-sm text-[#1E1005] block font-medium">
                         {order.customers?.name || 'Walk-in Client'}
                       </span>
-                      <span className="text-[10px] text-linen-muted">
+                      <span className="text-[10px] text-[#7A6A5A]">
                         {order.customers?.phone || order.delivery_city}
                       </span>
                     </td>
 
                     <td className="p-4">
-                      <span className="font-semibold text-linen block">
+                      <span className="font-semibold text-[#1E1005] block">
                         ৳{Number(order.total_bdt || 0).toLocaleString('en-IN')}
                       </span>
                       <span
-                        className={`inline-block text-[9px] uppercase px-1.5 py-0.5 rounded font-mono mt-0.5 ${
+                        className={`inline-block text-[9px] uppercase px-1.5 py-0.5 rounded-md font-mono mt-0.5 font-medium border ${
                           order.payment_status === 'paid'
-                            ? 'bg-emerald-950 text-emerald-300 border border-emerald-800/40'
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                             : order.payment_status === 'partial'
-                            ? 'bg-amber-950 text-amber-300 border border-amber-800/40'
-                            : 'bg-red-950 text-red-300 border border-red-800/40'
+                            ? 'bg-amber-50 text-amber-800 border-amber-200'
+                            : 'bg-red-50 text-red-800 border-red-200'
                         }`}
                       >
                         {order.payment_status} ({order.payment_method})
@@ -324,7 +326,7 @@ export default function OrderManager() {
                     </td>
 
                     <td className="p-4">
-                      <span className="px-2.5 py-1 rounded bg-surface-elevated border border-bronze/20 text-bronze-light text-[10px] font-mono uppercase tracking-wider">
+                      <span className="px-2.5 py-1 rounded-md bg-[#FAF8F5] border border-[#DED4C5] text-[#705026] text-[10px] font-mono uppercase tracking-wider font-medium">
                         {order.status?.replace('_', ' ')}
                       </span>
                     </td>
@@ -339,7 +341,7 @@ export default function OrderManager() {
                               handleUpdateStatus(order.id, STATUS_STEPS[curIdx + 1].key);
                             }
                           }}
-                          className="px-2.5 py-1 bg-surface-elevated hover:bg-bronze text-linen-muted hover:text-linen rounded border border-bronze/20 text-[10px] font-mono uppercase tracking-wider flex items-center gap-1 transition-colors cursor-pointer"
+                          className="px-2.5 py-1 bg-[#FAF8F5] hover:bg-[#1E1005] text-[#1E1005] hover:text-[#FBF0DA] rounded-lg border border-[#DED4C5] text-[10px] font-mono uppercase tracking-wider flex items-center gap-1 transition-colors cursor-pointer shadow-2xs"
                         >
                           <span>Advance</span>
                           <ChevronRight className="w-3 h-3" />
@@ -350,7 +352,7 @@ export default function OrderManager() {
                     <td className="p-4 text-right">
                       <button
                         onClick={() => handleSelectOrder(order)}
-                        className="p-1.5 rounded hover:bg-surface-elevated text-bronze hover:text-linen transition-colors cursor-pointer"
+                        className="p-1.5 rounded-lg hover:bg-[#F2ECE1] text-[#9C7443] hover:text-[#1E1005] transition-colors cursor-pointer"
                         title="View Full Spec & Invoice"
                       >
                         <Eye className="w-4 h-4" />
@@ -366,27 +368,27 @@ export default function OrderManager() {
 
       {/* Selected Order Detail Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface border border-bronze/30 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white border border-[#E8DFD3] rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl">
             
-            <div className="flex items-center justify-between pb-4 border-b border-bronze/15 mb-6">
+            <div className="flex items-center justify-between pb-4 border-b border-[#E8DFD3] mb-6">
               <div>
-                <span className="text-[10px] font-mono uppercase text-bronze tracking-widest block">
+                <span className="text-[10px] font-mono uppercase text-[#9C7443] tracking-widest block font-medium">
                   Order Telemetry & Production Status
                 </span>
-                <h2 className="font-display text-2xl text-linen mt-0.5">{selectedOrder.order_number}</h2>
+                <h2 className="font-display text-2xl text-[#1E1005] mt-0.5">{selectedOrder.order_number}</h2>
               </div>
               <button
                 onClick={() => setSelectedOrder(null)}
-                className="p-1 text-linen-muted hover:text-linen cursor-pointer"
+                className="p-1 text-[#7A6A5A] hover:text-[#1E1005] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Status Workflow Stepper */}
-            <div className="mb-8 p-4 bg-surface-elevated rounded-lg border border-bronze/15">
-              <span className="block text-[10px] font-mono uppercase tracking-widest text-bronze-light mb-3">
+            <div className="mb-8 p-4 bg-[#FAF8F5] rounded-xl border border-[#EDE4D8]">
+              <span className="block text-[10px] font-mono uppercase tracking-widest text-[#8A7056] mb-3 font-medium">
                 Production & Delivery Stepper
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
@@ -399,12 +401,12 @@ export default function OrderManager() {
                     <button
                       key={step.key}
                       onClick={() => handleUpdateStatus(selectedOrder.id, step.key)}
-                      className={`p-2 rounded text-center font-mono text-[10px] transition-all cursor-pointer ${
+                      className={`p-2 rounded-lg text-center font-mono text-[10px] transition-all cursor-pointer ${
                         isCurrent
-                          ? 'bg-bronze text-linen font-bold shadow-md'
+                          ? 'bg-[#1E1005] text-[#FBF0DA] font-bold shadow-sm'
                           : isDone
-                          ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-800/40'
-                          : 'bg-espresso/50 text-linen-muted/50 border border-bronze/10 hover:text-linen'
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium'
+                          : 'bg-white text-[#8A7563] border border-[#E0D4C3] hover:text-[#1E1005]'
                       }`}
                     >
                       <span>{step.label}</span>
@@ -418,38 +420,38 @@ export default function OrderManager() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               
               {/* Customer Box */}
-              <div className="p-4 bg-surface-elevated rounded-lg border border-bronze/15 text-xs font-mono space-y-2">
-                <span className="text-[10px] uppercase text-bronze-light block font-bold mb-2">
+              <div className="p-4 bg-[#FAF8F5] rounded-xl border border-[#EDE4D8] text-xs font-mono space-y-2">
+                <span className="text-[10px] uppercase text-[#8A7056] block font-bold mb-2">
                   Client & Dispatch Address
                 </span>
-                <div className="flex items-center gap-2 text-linen">
-                  <User className="w-3.5 h-3.5 text-bronze" />
-                  <span>{selectedOrder.customers?.name || 'Walk-in Client'}</span>
+                <div className="flex items-center gap-2 text-[#1E1005]">
+                  <User className="w-3.5 h-3.5 text-[#9C7443]" />
+                  <span className="font-medium">{selectedOrder.customers?.name || 'Walk-in Client'}</span>
                 </div>
-                <div className="flex items-center gap-2 text-linen-muted">
-                  <Phone className="w-3.5 h-3.5 text-bronze" />
+                <div className="flex items-center gap-2 text-[#6B5C4E]">
+                  <Phone className="w-3.5 h-3.5 text-[#9C7443]" />
                   <span>{selectedOrder.customers?.phone || 'No phone recorded'}</span>
                 </div>
-                <div className="flex items-center gap-2 text-linen-muted">
-                  <MapPin className="w-3.5 h-3.5 text-bronze" />
+                <div className="flex items-center gap-2 text-[#6B5C4E]">
+                  <MapPin className="w-3.5 h-3.5 text-[#9C7443]" />
                   <span>{selectedOrder.delivery_address || selectedOrder.delivery_city}</span>
                 </div>
               </div>
 
               {/* Financials Box */}
-              <div className="p-4 bg-surface-elevated rounded-lg border border-bronze/15 text-xs font-mono space-y-2">
-                <span className="text-[10px] uppercase text-bronze-light block font-bold mb-2">
+              <div className="p-4 bg-[#FAF8F5] rounded-xl border border-[#EDE4D8] text-xs font-mono space-y-2">
+                <span className="text-[10px] uppercase text-[#8A7056] block font-bold mb-2">
                   Payment Reconciliation
                 </span>
-                <div className="flex justify-between text-linen">
+                <div className="flex justify-between text-[#1E1005]">
                   <span>Total Payable:</span>
                   <span className="font-bold">৳{Number(selectedOrder.total_bdt).toLocaleString('en-IN')}</span>
                 </div>
-                <div className="flex justify-between text-emerald-400">
+                <div className="flex justify-between text-emerald-700">
                   <span>Advance Paid:</span>
                   <span>৳{Number(selectedOrder.paid_amount_bdt || 0).toLocaleString('en-IN')}</span>
                 </div>
-                <div className="flex justify-between text-amber-400 font-bold pt-1 border-t border-bronze/15">
+                <div className="flex justify-between text-amber-700 font-bold pt-1 border-t border-[#E0D4C3]">
                   <span>Balance Due:</span>
                   <span>
                     ৳{Math.max(0, Number(selectedOrder.total_bdt) - Number(selectedOrder.paid_amount_bdt || 0)).toLocaleString('en-IN')}
@@ -461,12 +463,12 @@ export default function OrderManager() {
 
             {/* Ordered Line Items */}
             <div className="mb-6">
-              <span className="block text-[10px] font-mono uppercase tracking-widest text-bronze-light mb-3">
+              <span className="block text-[10px] font-mono uppercase tracking-widest text-[#8A7056] mb-3 font-medium">
                 Commissioned Items
               </span>
-              <div className="bg-surface-elevated rounded-lg border border-bronze/15 overflow-hidden">
+              <div className="bg-white rounded-xl border border-[#E8DFD3] overflow-hidden">
                 <table className="w-full text-left text-xs font-mono">
-                  <thead className="bg-espresso text-[10px] text-linen-muted uppercase border-b border-bronze/10">
+                  <thead className="bg-[#FAF8F5] text-[10px] text-[#7A6A5A] uppercase border-b border-[#E8DFD3]">
                     <tr>
                       <th className="p-3">Item Specification</th>
                       <th className="p-3">Timber / Fabric</th>
@@ -474,15 +476,15 @@ export default function OrderManager() {
                       <th className="p-3 text-right">Price</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-bronze/10">
+                  <tbody className="divide-y divide-[#E8DFD3]">
                     {orderItems.map((item) => (
                       <tr key={item.id}>
-                        <td className="p-3 text-linen font-medium">{item.product_name}</td>
-                        <td className="p-3 text-linen-muted">
+                        <td className="p-3 text-[#1E1005] font-medium">{item.product_name}</td>
+                        <td className="p-3 text-[#6B5C4E]">
                           {item.timber_choice} · {item.fabric_choice}
                         </td>
-                        <td className="p-3 text-center text-linen">{item.quantity}</td>
-                        <td className="p-3 text-right text-linen font-bold">
+                        <td className="p-3 text-center text-[#1E1005]">{item.quantity}</td>
+                        <td className="p-3 text-right text-[#1E1005] font-bold">
                           ৳{Number(item.total_bdt).toLocaleString('en-IN')}
                         </td>
                       </tr>
@@ -493,16 +495,16 @@ export default function OrderManager() {
             </div>
 
             {selectedOrder.notes && (
-              <div className="p-3 bg-espresso rounded-lg border border-bronze/10 text-xs font-mono text-linen-muted mb-6">
-                <span className="text-[10px] text-bronze uppercase block mb-1">Production Notes:</span>
+              <div className="p-3.5 bg-[#FAF8F5] rounded-xl border border-[#EDE4D8] text-xs font-mono text-[#6B5C4E] mb-6">
+                <span className="text-[10px] text-[#8A7056] uppercase block mb-1 font-semibold">Production Notes:</span>
                 <p>{selectedOrder.notes}</p>
               </div>
             )}
 
-            <div className="flex justify-end pt-4 border-t border-bronze/15">
+            <div className="flex justify-end pt-4 border-t border-[#E8DFD3]">
               <button
                 onClick={() => setSelectedOrder(null)}
-                className="px-6 py-2.5 bg-bronze text-linen font-mono text-xs uppercase tracking-wider rounded-lg font-semibold hover:bg-bronze-light hover:text-espresso transition-colors cursor-pointer"
+                className="px-6 py-2.5 bg-[#1E1005] text-[#FBF0DA] font-mono text-xs uppercase tracking-wider rounded-xl font-semibold hover:bg-[#9C7443] hover:text-white transition-colors cursor-pointer"
               >
                 Close Spec
               </button>
@@ -514,14 +516,14 @@ export default function OrderManager() {
 
       {/* New Order Modal */}
       {isCreateModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface border border-bronze/30 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white border border-[#E8DFD3] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl">
             
-            <div className="flex items-center justify-between pb-4 border-b border-bronze/15 mb-6">
-              <h2 className="font-display text-xl text-linen">Record New Showroom Order</h2>
+            <div className="flex items-center justify-between pb-4 border-b border-[#E8DFD3] mb-6">
+              <h2 className="font-display text-xl text-[#1E1005]">Record Showroom Order</h2>
               <button
                 onClick={() => setIsCreateModalOpen(false)}
-                className="p-1 text-linen-muted hover:text-linen cursor-pointer"
+                className="p-1 text-[#7A6A5A] hover:text-[#1E1005] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -531,70 +533,70 @@ export default function OrderManager() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-linen-muted mb-1 uppercase">Client Name *</label>
+                  <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Client Name *</label>
                   <input
                     type="text"
                     required
                     value={newOrderCustomer.name}
                     onChange={(e) => setNewOrderCustomer({ ...newOrderCustomer, name: e.target.value })}
                     placeholder="e.g. Dr. Salman Chowdhury"
-                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                    className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-linen-muted mb-1 uppercase">Client Phone *</label>
+                  <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Client Phone *</label>
                   <input
                     type="tel"
                     required
                     value={newOrderCustomer.phone}
                     onChange={(e) => setNewOrderCustomer({ ...newOrderCustomer, phone: e.target.value })}
                     placeholder="+880 1819-XXXXXX"
-                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                    className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-linen-muted mb-1 uppercase">Piece Commissioned</label>
+                  <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Piece Commissioned</label>
                   <input
                     type="text"
                     value={newOrderData.product_name}
                     onChange={(e) => setNewOrderData({ ...newOrderData, product_name: e.target.value })}
-                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                    className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-linen-muted mb-1 uppercase">Timber Species</label>
+                  <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Timber Species</label>
                   <input
                     type="text"
                     value={newOrderData.timber_choice}
                     onChange={(e) => setNewOrderData({ ...newOrderData, timber_choice: e.target.value })}
-                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                    className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-linen-muted mb-1 uppercase">Total Price (BDT) *</label>
+                  <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Total Price (BDT) *</label>
                   <input
                     type="number"
                     required
                     value={newOrderData.unit_price}
                     onChange={(e) => setNewOrderData({ ...newOrderData, unit_price: e.target.value })}
-                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                    className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-linen-muted mb-1 uppercase">Payment Channel</label>
+                  <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Payment Channel</label>
                   <select
                     value={newOrderData.payment_method}
                     onChange={(e) => setNewOrderData({ ...newOrderData, payment_method: e.target.value })}
-                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                    className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                   >
                     <option value="bkash">bKash Merchant</option>
                     <option value="nagad">Nagad</option>
@@ -606,11 +608,11 @@ export default function OrderManager() {
                 </div>
 
                 <div>
-                  <label className="block text-linen-muted mb-1 uppercase">Payment Status</label>
+                  <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Payment Status</label>
                   <select
                     value={newOrderData.payment_status}
                     onChange={(e) => setNewOrderData({ ...newOrderData, payment_status: e.target.value })}
-                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                    className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                   >
                     <option value="partial">Partial Advance</option>
                     <option value="paid">Paid in Full</option>
@@ -619,49 +621,49 @@ export default function OrderManager() {
                 </div>
 
                 <div>
-                  <label className="block text-linen-muted mb-1 uppercase">Advance Paid (BDT)</label>
+                  <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Advance Paid (BDT)</label>
                   <input
                     type="number"
                     value={newOrderData.paid_amount}
                     onChange={(e) => setNewOrderData({ ...newOrderData, paid_amount: e.target.value })}
-                    className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                    className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-linen-muted mb-1 uppercase">Delivery Address in Chattogram</label>
+                <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Delivery Address in Chattogram</label>
                 <input
                   type="text"
                   value={newOrderData.delivery_address}
                   onChange={(e) => setNewOrderData({ ...newOrderData, delivery_address: e.target.value })}
                   placeholder="e.g. House 14, Road 3, Nasirabad Housing Society"
-                  className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                 />
               </div>
 
               <div>
-                <label className="block text-linen-muted mb-1 uppercase">Production & Joinery Notes</label>
+                <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Production & Joinery Notes</label>
                 <textarea
                   rows="2"
                   value={newOrderData.notes}
                   onChange={(e) => setNewOrderData({ ...newOrderData, notes: e.target.value })}
-                  className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-bronze/15">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#E8DFD3]">
                 <button
                   type="button"
                   onClick={() => setIsCreateModalOpen(false)}
-                  className="px-4 py-2.5 rounded-lg border border-bronze/20 text-linen-muted hover:text-linen cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl border border-[#DED4C5] text-[#7A6A5A] hover:text-[#1E1005] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={creating}
-                  className="px-6 py-2.5 bg-bronze hover:bg-bronze-light text-linen hover:text-espresso rounded-lg font-semibold transition-colors disabled:opacity-50 cursor-pointer"
+                  className="px-6 py-2.5 bg-[#1E1005] hover:bg-[#9C7443] text-[#FBF0DA] hover:text-white rounded-xl font-semibold transition-colors disabled:opacity-50 cursor-pointer shadow-sm"
                 >
                   {creating ? 'Recording...' : 'Create Order & Invoice'}
                 </button>

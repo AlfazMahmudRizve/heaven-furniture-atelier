@@ -146,33 +146,33 @@ export default function InquiryManager() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-display text-2xl md:text-3xl text-linen">
+          <h1 className="font-display text-2xl md:text-3xl text-[#1E1005]">
             Bespoke Customizer Leads Funnel
           </h1>
-          <p className="text-xs font-mono text-linen-muted mt-1">
+          <p className="text-xs font-mono text-[#7A6A5A] mt-1">
             Real-time submissions from the 3D Atelier Configurator with one-click WhatsApp concierge & order conversion.
           </p>
         </div>
 
         <button
           onClick={fetchInquiries}
-          className="px-3 py-2 bg-surface border border-bronze/20 rounded-lg text-xs font-mono text-linen flex items-center gap-2 hover:border-bronze transition-colors cursor-pointer"
+          className="px-3 py-2 bg-white border border-[#DED4C5] rounded-xl text-xs font-mono text-[#1E1005] flex items-center gap-2 hover:border-[#9C7443] transition-colors cursor-pointer shadow-2xs"
         >
-          <RefreshCw className="w-3.5 h-3.5 text-bronze" />
+          <RefreshCw className="w-3.5 h-3.5 text-[#9C7443]" />
           <span>Refresh Leads</span>
         </button>
       </div>
 
       {/* Filter & Search */}
-      <div className="bg-surface border border-bronze/15 rounded-xl p-4 flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-white border border-[#E8DFD3] rounded-2xl p-4 flex flex-col md:flex-row gap-4 justify-between items-center shadow-xs">
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-linen-muted/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#8A7563] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search leads by client name, room, timber..."
-            className="w-full pl-10 pr-4 py-2 bg-surface-elevated border border-bronze/15 rounded-lg text-xs font-mono text-linen placeholder-linen-muted/40 focus:outline-none focus:border-bronze"
+            className="w-full pl-10 pr-4 py-2 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-xs font-mono text-[#1E1005] placeholder-[#9E9080] focus:outline-none focus:border-[#9C7443] focus:bg-white"
           />
         </div>
 
@@ -180,7 +180,7 @@ export default function InquiryManager() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 bg-surface-elevated border border-bronze/15 rounded-lg text-xs font-mono text-linen focus:outline-none focus:border-bronze"
+            className="px-3 py-2 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-xs font-mono text-[#1E1005] focus:outline-none focus:border-[#9C7443]"
           >
             <option value="all">All Inquiry Statuses</option>
             <option value="new">New Submissions</option>
@@ -193,11 +193,11 @@ export default function InquiryManager() {
       </div>
 
       {/* Inquiries Grid / Table */}
-      <div className="bg-surface border border-bronze/15 rounded-xl overflow-hidden shadow-xl">
+      <div className="bg-white border border-[#E8DFD3] rounded-2xl overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-bronze/15 bg-surface-elevated/60 text-[10px] font-mono uppercase tracking-widest text-linen-muted">
+              <tr className="border-b border-[#E8DFD3] bg-[#FBF9F5] text-[10px] font-mono uppercase tracking-widest text-[#7A6A5A]">
                 <th className="p-4">Submission Date</th>
                 <th className="p-4">Client</th>
                 <th className="p-4">Bespoke Spec (Room & Timber)</th>
@@ -206,64 +206,64 @@ export default function InquiryManager() {
                 <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-bronze/10 text-xs font-mono">
+            <tbody className="divide-y divide-[#E8DFD3] text-xs font-mono">
               {loading ? (
                 <tr>
-                  <td colSpan="6" className="p-8 text-center text-linen-muted">
+                  <td colSpan="6" className="p-8 text-center text-[#7A6A5A]">
                     Loading bespoke inquiries from Supabase...
                   </td>
                 </tr>
               ) : filteredInquiries.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="p-8 text-center text-linen-muted">
+                  <td colSpan="6" className="p-8 text-center text-[#7A6A5A]">
                     No inquiries recorded yet. Submissions from the public website Bespoke Studio will appear here live.
                   </td>
                 </tr>
               ) : (
                 filteredInquiries.map((inq) => (
-                  <tr key={inq.id} className="hover:bg-surface-elevated/40 transition-colors">
-                    <td className="p-4 text-linen-muted">
-                      <span className="block text-linen">
+                  <tr key={inq.id} className="hover:bg-[#FAF8F5] transition-colors">
+                    <td className="p-4 text-[#6B5C4E]">
+                      <span className="block text-[#1E1005] font-medium">
                         {new Date(inq.created_at).toLocaleDateString('en-GB')}
                       </span>
-                      <span className="text-[10px] text-linen-muted/60">
+                      <span className="text-[10px] text-[#8A7663]">
                         {new Date(inq.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </td>
 
                     <td className="p-4">
-                      <span className="font-display text-sm text-linen block">
+                      <span className="font-display text-sm text-[#1E1005] block font-medium">
                         {inq.customer_name || 'Website Visitor'}
                       </span>
-                      <span className="text-[10px] text-bronze-light">
+                      <span className="text-[10px] text-[#8A7056]">
                         {inq.customer_phone || inq.customer_email || 'Web Session'}
                       </span>
                     </td>
 
                     <td className="p-4">
-                      <span className="text-linen block font-medium capitalize">{inq.room_type} Room</span>
-                      <span className="text-[10px] text-linen-muted">{inq.timber_choice}</span>
+                      <span className="text-[#1E1005] block font-medium capitalize">{inq.room_type} Room</span>
+                      <span className="text-[10px] text-[#7A6A5A]">{inq.timber_choice}</span>
                     </td>
 
-                    <td className="p-4 text-linen-muted">
-                      <span className="block text-linen">{inq.dimensions || 'Standard Blueprint'}</span>
-                      <span className="text-[10px] text-linen-muted/60">{inq.fabric_choice || 'Natural Finish'}</span>
+                    <td className="p-4 text-[#6B5C4E]">
+                      <span className="block text-[#1E1005]">{inq.dimensions || 'Standard Blueprint'}</span>
+                      <span className="text-[10px] text-[#8A7663]">{inq.fabric_choice || 'Natural Finish'}</span>
                     </td>
 
                     <td className="p-4">
                       <select
                         value={inq.status}
                         onChange={(e) => handleUpdateStatus(inq.id, e.target.value)}
-                        className={`px-2.5 py-1 rounded text-[10px] uppercase font-mono tracking-wider focus:outline-none border ${
+                        className={`px-2.5 py-1 rounded-md text-[10px] uppercase font-mono tracking-wider focus:outline-none border font-medium ${
                           inq.status === 'new'
-                            ? 'bg-purple-950 text-purple-300 border-purple-800/40'
+                            ? 'bg-purple-50 text-purple-800 border-purple-200'
                             : inq.status === 'contacted'
-                            ? 'bg-blue-950 text-blue-300 border-blue-800/40'
+                            ? 'bg-blue-50 text-blue-800 border-blue-200'
                             : inq.status === 'quoted'
-                            ? 'bg-amber-950 text-amber-300 border-amber-800/40'
+                            ? 'bg-amber-50 text-amber-800 border-amber-200'
                             : inq.status === 'converted'
-                            ? 'bg-emerald-950 text-emerald-300 border-emerald-800/40'
-                            : 'bg-zinc-800 text-zinc-400 border-zinc-700'
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                            : 'bg-zinc-100 text-zinc-600 border-zinc-300'
                         }`}
                       >
                         <option value="new">New</option>
@@ -283,7 +283,7 @@ export default function InquiryManager() {
                             )}
                             target="_blank"
                             rel="noreferrer"
-                            className="p-1.5 rounded bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 hover:bg-emerald-900/60 transition-colors"
+                            className="p-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition-colors"
                             title="Chat on WhatsApp"
                           >
                             <MessageCircle className="w-3.5 h-3.5" />
@@ -295,7 +295,7 @@ export default function InquiryManager() {
                             setSelectedInquiry(inq);
                             setQuotePrice('250000');
                           }}
-                          className="px-2.5 py-1 bg-surface-elevated hover:bg-bronze text-linen-muted hover:text-linen rounded border border-bronze/20 text-[10px] font-mono uppercase tracking-wider transition-colors cursor-pointer"
+                          className="px-2.5 py-1 bg-[#FAF8F5] hover:bg-[#1E1005] text-[#1E1005] hover:text-[#FBF0DA] rounded-lg border border-[#DED4C5] text-[10px] font-mono uppercase tracking-wider transition-colors cursor-pointer shadow-2xs"
                         >
                           Convert →
                         </button>
@@ -311,51 +311,51 @@ export default function InquiryManager() {
 
       {/* Convert Inquiry Modal */}
       {selectedInquiry && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-surface border border-bronze/30 rounded-xl max-w-lg w-full p-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white border border-[#E8DFD3] rounded-2xl max-w-lg w-full p-6 shadow-2xl">
             
-            <div className="flex items-center justify-between pb-4 border-b border-bronze/15 mb-4">
-              <h3 className="font-display text-lg text-linen">Convert Bespoke Inquiry to Order</h3>
+            <div className="flex items-center justify-between pb-4 border-b border-[#E8DFD3] mb-4">
+              <h3 className="font-display text-lg text-[#1E1005]">Convert Bespoke Inquiry to Order</h3>
               <button
                 onClick={() => setSelectedInquiry(null)}
-                className="p-1 text-linen-muted hover:text-linen cursor-pointer"
+                className="p-1 text-[#7A6A5A] hover:text-[#1E1005] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="space-y-4 text-xs font-mono">
-              <div className="p-3 bg-surface-elevated rounded-lg border border-bronze/15 space-y-1">
-                <span className="text-[10px] text-bronze uppercase block font-bold">Inquiry Specification:</span>
-                <p className="text-linen">
+              <div className="p-3 bg-[#FAF8F5] rounded-xl border border-[#EDE4D8] space-y-1">
+                <span className="text-[10px] text-[#8A7056] uppercase block font-bold">Inquiry Specification:</span>
+                <p className="text-[#1E1005] font-medium">
                   {selectedInquiry.room_type} · {selectedInquiry.timber_choice} · {selectedInquiry.fabric_choice}
                 </p>
-                <p className="text-linen-muted text-[11px]">
+                <p className="text-[#7A6A5A] text-[11px]">
                   Dimensions: {selectedInquiry.dimensions || 'Bespoke room floorplan'}
                 </p>
               </div>
 
               <div>
-                <label className="block text-linen-muted mb-1 uppercase">Quoted / Final Price (BDT) *</label>
+                <label className="block text-[#6B5A4B] mb-1 uppercase font-medium">Quoted / Final Price (BDT) *</label>
                 <input
                   type="number"
                   required
                   value={quotePrice}
                   onChange={(e) => setQuotePrice(e.target.value)}
                   placeholder="250000"
-                  className="w-full p-2.5 bg-espresso border border-bronze/20 rounded-lg text-linen focus:outline-none focus:border-bronze"
+                  className="w-full p-2.5 bg-[#FAF8F5] border border-[#DED4C5] rounded-xl text-[#1E1005] focus:outline-none focus:border-[#9C7443] focus:bg-white"
                 />
               </div>
 
-              <div className="p-3 bg-espresso rounded-lg border border-bronze/10 text-[11px] text-linen-muted">
+              <div className="p-3 bg-[#FAF8F5] rounded-xl border border-[#EDE4D8] text-[11px] text-[#7A6A5A]">
                 This will automatically create a new customer record, generate an official order invoice (`HFM-2026-XXXX`), log line items, and mark this lead as converted.
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-bronze/15">
+              <div className="flex justify-end gap-3 pt-4 border-t border-[#E8DFD3]">
                 <button
                   type="button"
                   onClick={() => setSelectedInquiry(null)}
-                  className="px-4 py-2 rounded-lg border border-bronze/20 text-linen-muted hover:text-linen cursor-pointer"
+                  className="px-4 py-2 rounded-xl border border-[#DED4C5] text-[#7A6A5A] hover:text-[#1E1005] cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -363,7 +363,7 @@ export default function InquiryManager() {
                   type="button"
                   disabled={converting}
                   onClick={() => handleConvertToOrder(selectedInquiry)}
-                  className="px-5 py-2 bg-bronze hover:bg-bronze-light text-linen hover:text-espresso rounded-lg font-semibold transition-colors disabled:opacity-50 cursor-pointer"
+                  className="px-5 py-2 bg-[#1E1005] hover:bg-[#9C7443] text-[#FBF0DA] hover:text-white rounded-xl font-semibold transition-colors disabled:opacity-50 cursor-pointer shadow-sm"
                 >
                   {converting ? 'Converting...' : 'Generate Confirmed Order'}
                 </button>

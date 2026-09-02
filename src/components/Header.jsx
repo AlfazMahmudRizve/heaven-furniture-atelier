@@ -66,6 +66,12 @@ export default function Header() {
     e.preventDefault();
     setIsMenuOpen(false);
 
+    // If on subpage (e.g. /collections/...), navigate to root with hash
+    if (window.location.pathname !== '/') {
+      window.location.href = `/${link.href}`;
+      return;
+    }
+
     // Wait for menu exit animation before smooth scrolling
     setTimeout(() => {
       if (link.href === '#home') {

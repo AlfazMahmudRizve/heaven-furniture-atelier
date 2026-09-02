@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 
 // Public Atelier Components
@@ -12,6 +12,9 @@ import BespokeStudio from './components/BespokeStudio';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import Footer from './components/Footer';
 
+// Dedicated Suite Category Page
+import CategoryPage from './pages/CategoryPage';
+
 // Admin CMS & Store Manager Portal
 import { AdminAuthProvider } from './admin/AdminAuthContext';
 import AdminLayout from './admin/AdminLayout';
@@ -22,6 +25,14 @@ import OrderManager from './admin/OrderManager';
 import InquiryManager from './admin/InquiryManager';
 import CustomerManager from './admin/CustomerManager';
 import StaffManager from './admin/StaffManager';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 function PublicWebsite() {
   useEffect(() => {
@@ -60,9 +71,13 @@ export default function App() {
   return (
     <AdminAuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/* Public Website */}
           <Route path="/" element={<PublicWebsite />} />
+
+          {/* Dedicated Category Suite Portals */}
+          <Route path="/collections/:slug" element={<CategoryPage />} />
 
           {/* Admin Authentication */}
           <Route path="/admin/login" element={<AdminLogin />} />

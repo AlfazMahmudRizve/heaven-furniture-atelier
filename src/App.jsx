@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 
 // Dedicated Suite Category Page
 import CategoryPage from './pages/CategoryPage';
+import DesignDemoPage from './pages/DesignDemoPage';
 
 // Admin CMS & Store Manager Portal
 import { AdminAuthProvider } from './admin/AdminAuthContext';
@@ -78,6 +79,9 @@ export default function App() {
 
           {/* Dedicated Category Suite Portals */}
           <Route path="/collections/:slug" element={<CategoryPage />} />
+
+          {/* Interactive Hackathon Innovation Demo */}
+          <Route path="/demo" element={<DesignDemoPage />} />
 
           {/* Admin Authentication */}
           <Route path="/admin/login" element={<AdminLogin />} />

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { MessageCircle, ShieldCheck, MapPin, Sparkles } from 'lucide-react';
+import { MessageCircle, ArrowRight, ArrowDown } from 'lucide-react';
 import { getWhatsAppInquiryUrl } from '../utils/whatsapp';
 
 export default function Hero() {
@@ -10,130 +10,136 @@ export default function Hero() {
     offset: ['start start', 'end start']
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+
+  const suites = [
+    { num: '01', title: 'LIVING SYSTEMS', href: '#craftsmanship' },
+    { num: '02', title: 'SLEEP SANCTUARY', href: '#craftsmanship' },
+    { num: '03', title: 'ROYAL DINING', href: '#craftsmanship' },
+    { num: '04', title: 'EXECUTIVE STUDY', href: '#craftsmanship' },
+  ];
 
   return (
     <section 
       id="home"
       ref={containerRef}
-      className="relative min-h-screen overflow-hidden flex flex-col justify-end pb-12 md:pb-20 px-6 md:px-16"
+      className="relative min-h-[100svh] flex flex-col justify-between pt-28 pb-8 px-6 lg:px-14 bg-[#160F0A] overflow-hidden"
     >
-      {/* Background Image with Ken Burns Parallax Zoom */}
+      {/* Cinematic Full-Bleed Architectural Photography with Smooth Ken Burns */}
       <motion.div 
         style={{ scale }}
         className="absolute inset-0 z-0"
       >
         <img 
           src="/images/hero-living.jpg" 
-          alt="Heaven Furniture Mart — Bespoke Handcrafted Burma Teak Furniture in Chattogram"
-          className="w-full h-full object-cover"
+          alt="Heaven Atelier — Poliform-Inspired Minimalist Living Space in Chattogram"
+          className="w-full h-full object-cover brightness-[0.78] contrast-[1.05]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/50 to-transparent pointer-events-none" />
+        {/* Subtle Architectural Wood Cove Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#160F0A] via-[#160F0A]/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#160F0A]/75 via-transparent to-transparent pointer-events-none" />
       </motion.div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-start gap-6 mt-auto">
-        
-        {/* Editorial Text Reveal */}
+      {/* Top Spacer for Nav Alignment */}
+      <div className="relative z-10 w-full" />
+
+      {/* Center/Bottom: Poliform Editorial Hero Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto my-auto py-12 lg:py-16">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={{
             hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } }
+            visible: { transition: { staggerChildren: 0.12 } }
           }}
-          className="max-w-3xl flex flex-col gap-4"
+          className="max-w-3xl space-y-6"
         >
-          {/* Tagline & Location Pill */}
+          {/* Subtle Category Eyebrow */}
           <motion.div 
             variants={{
               hidden: { y: 20, opacity: 0 },
               visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } }
             }}
-            className="flex flex-wrap items-center gap-2"
+            className="flex items-center gap-3"
           >
-            <span className="font-mono text-[10px] md:text-[11px] text-bronze uppercase tracking-[0.35em] bg-surface/80 px-3 py-1 rounded-full border border-bronze/20 backdrop-blur-md">
-              Bespoke Furniture Atelier · Agrabad, Chattogram
+            <span className="font-mono text-[11px] text-[#C6A75E] uppercase tracking-[0.35em]">
+              01 — THE ARCHITECTURE OF LIVING
             </span>
-            <span className="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-3 py-1 rounded-full backdrop-blur-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Flagship Open Sat–Thu
-            </span>
+            <div className="h-px w-12 bg-[#C6A75E]/40" />
           </motion.div>
           
-          {/* Main H1 Headline: Explicit Craft & Value Proposition */}
+          {/* Main Monolithic Poliform Headline */}
           <motion.h1
             variants={{
               hidden: { y: 30, opacity: 0 },
               visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } }
             }}
-            className="font-display text-3xl sm:text-5xl lg:text-6xl text-linen leading-[1.1] tracking-tight"
+            className="font-display text-4xl sm:text-6xl lg:text-7xl xl:text-8xl text-[#F5EFEB] tracking-tight font-light leading-[1.05]"
           >
-            Custom Handcrafted Hardwood Furniture & Bespoke Interiors.
+            Timeless <br />
+            <span className="font-normal italic text-[#E8DCC8]">Architectural</span> Woodcraft.
           </motion.h1>
 
-          {/* Subheading with Timber Provenance & 30-Second Clarity */}
+          {/* Editorial Subheading */}
           <motion.p
             variants={{
               hidden: { y: 20, opacity: 0 },
               visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: "easeOut" } }
             }}
-            className="font-body text-sm sm:text-base lg:text-lg text-linen-muted leading-relaxed max-w-2xl"
+            className="font-body text-sm sm:text-base lg:text-lg text-[#E8DCC8]/85 leading-relaxed max-w-xl font-light pt-1"
           >
-            We sculpt heirloom living suites, master beds, and royal dining tables from 100% seasoned Burma Teak (বার্মা সেগুন) and solid Mahogany. Tailored to your home’s exact dimensions — never pulled from a shelf.
+            Handcrafted from 100% seasoned Burma Teak heartwood and Red Mahogany. Master mortise-and-tenon joinery with zero screws, calibrated to 8.5% equilibrium moisture for coastal homes.
           </motion.p>
-        </motion.div>
 
-        {/* Primary Conversion CTAs */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto pt-2"
-        >
-          {/* Primary CTA: WhatsApp Stylist with Pre-populated Spec */}
-          <a 
-            href={getWhatsAppInquiryUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="arcca-btn bg-bronze text-linen font-mono text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 py-3.5 px-6 shadow-xl hover:bg-bronze-light hover:text-espresso transition-all"
+          {/* Primary Minimalist CTAs */}
+          <motion.div
+            variants={{
+              hidden: { y: 20, opacity: 0 },
+              visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: "easeOut" } }
+            }}
+            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4"
           >
-            <MessageCircle className="w-4 h-4 text-emerald-300" />
-            <span>Discuss Custom Build on WhatsApp</span>
-          </a>
+            {/* Soft Gold Action Button */}
+            <a 
+              href={getWhatsAppInquiryUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#160F0A] font-mono text-xs uppercase tracking-widest font-bold inline-flex items-center justify-center gap-2.5 py-4 px-8 rounded-full shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+            >
+              <MessageCircle className="w-4 h-4 text-[#160F0A]" />
+              <span>Consult Atelier</span>
+              <span className="text-sm">↗</span>
+            </a>
 
-          {/* Secondary CTA: Explore Collections Link */}
-          <a 
-            href="#collections"
-            className="flex items-center justify-center gap-2 text-linen-muted hover:text-linen text-xs font-mono uppercase tracking-widest py-3 px-5 transition-colors"
-          >
-            <span>Explore Suites</span>
-            <svg className="w-4 h-4 text-bronze" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-            </svg>
-          </a>
+            {/* Subtle Editorial Link */}
+            <a 
+              href="#collections"
+              className="inline-flex items-center justify-center gap-2 text-[#E8DCC8] hover:text-[#C6A75E] text-xs font-mono uppercase tracking-widest py-4 px-6 rounded-full border border-[#E8DCC8]/20 hover:border-[#C6A75E] transition-all duration-300 backdrop-blur-sm"
+            >
+              <span>Explore Suites</span>
+              <ArrowDown className="w-3.5 h-3.5 text-[#C6A75E]" />
+            </a>
+          </motion.div>
         </motion.div>
+      </div>
 
-        {/* Above-the-Fold Local Trust Triggers Strip */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2 pt-4 border-t border-linen/10 w-full text-[10px] sm:text-[11px] font-mono text-linen-muted/80"
-        >
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-3.5 h-3.5 text-bronze shrink-0" />
-            <span>100% Kiln-Seasoned Teak</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin className="w-3.5 h-3.5 text-bronze shrink-0" />
-            <span>Agrabad Showroom & Workshop</span>
-          </div>
-          <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
-            <Sparkles className="w-3.5 h-3.5 text-bronze shrink-0" />
-            <span>Free 3D Laser Measurement</span>
-          </div>
-        </motion.div>
-
+      {/* Bottom Poliform Architectural Suite Ticker */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto border-t border-[#E8DCC8]/15 pt-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-mono">
+          {suites.map((suite, idx) => (
+            <a
+              key={suite.num}
+              href={suite.href}
+              className="group flex flex-col gap-1 py-2 px-1 border-l border-[#E8DCC8]/10 hover:border-[#C6A75E] transition-colors"
+            >
+              <span className="text-[10px] text-[#C6A75E] tracking-widest">{suite.num}</span>
+              <div className="flex items-center justify-between text-[#E8DCC8]/80 group-hover:text-[#F5EFEB] transition-colors">
+                <span className="tracking-wider uppercase text-[11px] font-medium">{suite.title}</span>
+                <span className="text-[#C6A75E] opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   );

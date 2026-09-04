@@ -1,118 +1,129 @@
+import React from 'react';
 import { motion } from 'framer-motion';
+import { MapPin, Phone, Mail, Clock, ArrowRight, ShieldCheck } from 'lucide-react';
 import { COMPANY } from '../data/company';
 import { getWhatsAppInquiryUrl } from '../utils/whatsapp';
 
 export default function Footer() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
-
   return (
-    <footer id="showroom" className="bg-espresso-deep text-linen pt-24 pb-8 px-6 md:px-16 relative">
-      <motion.div
-        className="absolute top-0 left-0 w-full h-[1px] bg-bronze origin-left"
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, ease: "easeInOut" }}
-      />
-      
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div>
-            <h2 className="font-display text-4xl tracking-[0.3em] text-linen mb-2">
-              HEAVEN
-            </h2>
-            <p className="font-mono text-[10px] tracking-[0.5em] text-bronze-light mb-8 uppercase">
-              FURNITURE MART
+    <footer id="showroom" className="bg-[#160F0A] text-[#E8DCC8] pt-24 pb-14 px-6 lg:px-14 border-t border-[#E8DCC8]/15">
+      <div className="max-w-7xl mx-auto space-y-16">
+        
+        {/* Top Grand Architectural Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          
+          {/* Brand & Provenance Statement (5 cols) */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="flex items-center gap-3.5">
+              <span className="w-10 h-10 rounded-full border border-[#C6A75E] flex items-center justify-center font-display text-sm font-bold text-[#E8DCC8] bg-[#23180F]">
+                H
+              </span>
+              <div>
+                <h2 className="font-display text-2xl lg:text-3xl tracking-[0.25em] text-[#F5EFEB] font-bold">
+                  HEAVEN
+                </h2>
+                <span className="text-[9px] tracking-[0.35em] text-[#C6A75E] font-mono uppercase block">
+                  ATELIER · CHATTOGRAM · EST. 2020
+                </span>
+              </div>
+            </div>
+
+            <p className="font-body text-xs sm:text-sm text-[#E8DCC8]/80 leading-relaxed font-light max-w-sm">
+              Interior architecture and generational Burma Teak furniture handcrafted in Chattogram. Zero screws, 8.5% vacuum-seasoned timber, and lifetime heirloom provenance.
             </p>
-            <p className="font-body text-linen-muted text-sm italic mb-6 max-w-sm">
-              {COMPANY.tagline}
-            </p>
-            <a 
-              href={getWhatsAppInquiryUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="arcca-btn inline-flex items-center"
-            >
-              <span>Book Consultation</span>
-            </a>
+
+            <div className="pt-2">
+              <a 
+                href={getWhatsAppInquiryUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#160F0A] font-mono text-xs uppercase tracking-widest font-bold transition-all shadow-md cursor-pointer"
+              >
+                <span>Book Atelier Consultation</span>
+                <span className="text-sm">↗</span>
+              </a>
+            </div>
           </div>
 
-          <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-          >
-            <motion.div variants={itemVariants}>
-              <h4 className="font-mono text-[10px] tracking-[0.3em] text-bronze uppercase mb-2">EMAIL</h4>
-              <a href={`mailto:${COMPANY.email}`} className="text-sm text-linen-muted hover:text-linen transition-colors">
-                {COMPANY.email}
-              </a>
-            </motion.div>
+          {/* 4 Architectural Columns (7 cols) */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-8 text-xs font-mono">
             
-            <motion.div variants={itemVariants}>
-              <h4 className="font-mono text-[10px] tracking-[0.3em] text-bronze uppercase mb-2">ADDRESS</h4>
-              <p className="text-sm text-linen-muted">
-                {COMPANY.address}<br />
-                <span className="text-linen-muted/70 text-xs mt-1 block">{COMPANY.landmark}</span>
-              </p>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <h4 className="font-mono text-[10px] tracking-[0.3em] text-bronze uppercase mb-2">PHONE</h4>
-              <a href={`tel:${COMPANY.phone.replace(/\s+/g, '')}`} className="text-sm text-linen-muted hover:text-linen transition-colors block w-fit">
-                {COMPANY.phone}
-              </a>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <h4 className="font-mono text-[10px] tracking-[0.3em] text-bronze uppercase mb-2">HOURS</h4>
-              <p className="text-sm text-linen-muted">
-                {COMPANY.hours}
-              </p>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="sm:col-span-2">
-              <h4 className="font-mono text-[10px] tracking-[0.3em] text-bronze uppercase mb-2">SOCIAL</h4>
-              <div className="flex space-x-6">
-                {COMPANY.socials && Object.entries(COMPANY.socials).map(([platform, url]) => (
-                  <a 
-                    key={platform}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-linen-muted hover:text-linen transition-colors capitalize"
-                  >
-                    {platform}
-                  </a>
-                ))}
+            <div className="space-y-2.5 p-5 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15">
+              <div className="flex items-center gap-2 text-[#C6A75E] font-semibold uppercase tracking-wider text-[10px]">
+                <MapPin className="w-3.5 h-3.5" />
+                <span>Flagship Showroom & Kiln</span>
               </div>
-            </motion.div>
-          </motion.div>
+              <p className="text-[#F5EFEB] leading-relaxed">
+                Agrabad Access Road,<br />
+                Opposite RAK Ceramics,<br />
+                Chattogram, Bangladesh
+              </p>
+              <span className="text-[10px] text-[#C6A75E] block pt-1">
+                Complimentary Parking on Site
+              </span>
+            </div>
+
+            <div className="space-y-2.5 p-5 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15">
+              <div className="flex items-center gap-2 text-[#C6A75E] font-semibold uppercase tracking-wider text-[10px]">
+                <Clock className="w-3.5 h-3.5" />
+                <span>Visiting Hours</span>
+              </div>
+              <p className="text-[#F5EFEB] leading-relaxed">
+                Saturday – Thursday<br />
+                9:00 AM – 9:30 PM<br />
+                <span className="text-[#C6A75E] text-[10px]">Friday: Closed for Master Joinery</span>
+              </p>
+            </div>
+
+            <div className="space-y-2.5 p-5 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15">
+              <div className="flex items-center gap-2 text-[#C6A75E] font-semibold uppercase tracking-wider text-[10px]">
+                <Phone className="w-3.5 h-3.5" />
+                <span>Direct Concierge Line</span>
+              </div>
+              <a href="tel:+8801960481983" className="text-[#F5EFEB] hover:text-[#C6A75E] transition-colors block text-sm font-bold">
+                +880 1960-481983
+              </a>
+              <span className="text-[10px] text-[#E8DCC8]/60 block">
+                Direct WhatsApp Available 24/7
+              </span>
+            </div>
+
+            <div className="space-y-2.5 p-5 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15">
+              <div className="flex items-center gap-2 text-[#C6A75E] font-semibold uppercase tracking-wider text-[10px]">
+                <Mail className="w-3.5 h-3.5" />
+                <span>Executive Correspondence</span>
+              </div>
+              <a href="mailto:heavenfurnituremart@gmail.com" className="text-[#F5EFEB] hover:text-[#C6A75E] transition-colors block truncate">
+                heavenfurnituremart@gmail.com
+              </a>
+              <span className="text-[10px] text-[#E8DCC8]/60 block">
+                3D CAD Blueprints & Invoicing
+              </span>
+            </div>
+
+          </div>
+
         </div>
 
-        <div className="h-[1px] w-full bg-bronze/20 my-12" />
-
-        <div className="flex flex-col sm:flex-row justify-between items-center text-[10px] font-mono tracking-widest text-linen-muted/60 uppercase gap-4 text-center sm:text-left">
-          <a href="#" className="hover:text-linen transition-colors">Privacy Policy</a>
-          <a href="/admin" className="hover:text-bronze transition-colors">Store Manager CMS ↗</a>
-          <span>© 2026 Heaven Furniture Mart</span>
-          <span>Designed in Chattogram</span>
+        {/* Poliform Giant Typographic Signature */}
+        <div className="pt-10 border-t border-[#E8DCC8]/15 text-center">
+          <span className="font-display text-4xl sm:text-7xl lg:text-8xl tracking-[0.25em] text-[#E8DCC8]/10 font-bold block select-none">
+            HEAVEN ATELIER
+          </span>
         </div>
+
+        {/* Bottom Credits Bar */}
+        <div className="pt-6 border-t border-[#E8DCC8]/10 flex flex-col sm:flex-row justify-between items-center text-[10px] font-mono tracking-widest text-[#E8DCC8]/50 uppercase gap-4">
+          <span>© 2026 HEAVEN FURNITURE MART</span>
+          <div className="flex items-center gap-6">
+            <a href="/collections/living-room" className="hover:text-[#C6A75E] transition-colors">Suites</a>
+            <a href="#manifesto" className="hover:text-[#C6A75E] transition-colors">Craftsmanship</a>
+            <a href="#bespoke" className="hover:text-[#C6A75E] transition-colors">Bespoke</a>
+            <a href="/admin" className="text-[#C6A75E] hover:underline">Store Manager CMS ↗</a>
+          </div>
+          <span>CHATTOGRAM, BANGLADESH</span>
+        </div>
+
       </div>
     </footer>
   );

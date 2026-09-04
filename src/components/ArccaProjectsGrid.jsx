@@ -103,37 +103,26 @@ export default function ArccaProjectsGrid() {
     : products.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="collections" className="bg-linen text-espresso-deep py-24 md:py-32 px-6 md:px-16 relative">
-      {/* Animated Top Border */}
-      <motion.div
-        className="absolute top-0 left-0 w-full h-px bg-espresso-deep/20 origin-left"
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, ease: 'easeInOut' }}
-      />
-      
-      <div className="max-w-7xl mx-auto">
+    <section id="collections" className="bg-[#160F0A] text-[#E8DCC8] py-24 lg:py-32 px-6 lg:px-14 relative border-t border-[#E8DCC8]/15">
+      <div className="max-w-7xl mx-auto space-y-16">
         
-        {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-3.5 h-3.5 border border-bronze rotate-45 inline-block" />
-              <span className="font-mono text-[11px] tracking-[0.35em] text-bronze uppercase">
-                THE ATELIER CATALOG
-              </span>
-            </div>
-            <h2 className="font-display text-3xl sm:text-5xl text-espresso-deep leading-tight">
-              Curated Flagship Pieces.
+        {/* Editorial Section Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[#E8DCC8]/15">
+          <div className="max-w-2xl space-y-3">
+            <span className="font-mono text-[11px] text-[#C6A75E] uppercase tracking-[0.35em] block">
+              04 / ATELIER CATALOG
+            </span>
+            <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-[#F5EFEB] tracking-tight font-light leading-tight">
+              Curated <br />
+              <span className="italic font-normal text-[#E8DCC8]">Flagship Pieces.</span>
             </h2>
-            <p className="text-espresso-deep/80 text-sm md:text-base font-body mt-4 leading-relaxed">
-              Featuring 2 hallmark heirlooms from each architectural suite. Explore dedicated suite pages for deep timber briefs, dimensional blueprints, and our 6-phase white-glove commissioning protocol.
+            <p className="text-[#E8DCC8]/80 text-sm md:text-base font-body pt-1 leading-relaxed font-light">
+              Featuring 2 hallmark heirlooms from each architectural suite. Visit dedicated suite portals for complete product specifications, dimensional blueprints, and our white-glove commissioning protocol.
             </p>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap gap-2">
+          {/* Poliform Minimalist Category Filters */}
+          <div className="flex flex-wrap gap-3 font-mono text-xs">
             {CATEGORIES.map((cat) => {
               const isActive = activeCategory === cat.id;
 
@@ -141,17 +130,15 @@ export default function ArccaProjectsGrid() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`px-4 py-2 rounded-full text-xs font-mono tracking-wider transition-all duration-300 cursor-pointer flex items-center gap-1.5 ${
+                  className={`py-2 px-3.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                     isActive
-                      ? 'bg-espresso text-linen shadow-md font-semibold'
-                      : 'bg-white/80 border border-espresso-deep/15 text-espresso-deep hover:bg-espresso-deep hover:text-linen'
+                      ? 'bg-[#C6A75E] text-[#160F0A] font-bold shadow-md'
+                      : 'border border-[#E8DCC8]/20 text-[#E8DCC8]/70 hover:border-[#C6A75E] hover:text-[#F5EFEB]'
                   }`}
                 >
                   <span>{cat.label}</span>
-                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                    isActive ? 'bg-bronze text-linen' : 'bg-espresso-deep/10 text-espresso-deep'
-                  }`}>
-                    {cat.count}
+                  <span className={`text-[10px] ${isActive ? 'text-[#160F0A]' : 'text-[#C6A75E]'}`}>
+                    ({cat.count})
                   </span>
                 </button>
               );
@@ -159,26 +146,10 @@ export default function ArccaProjectsGrid() {
           </div>
         </div>
 
-        {/* Active Category Suite Deep-Dive Banner */}
-        {activeCategory !== 'all' && (
-          <div className="mb-8 p-4 rounded-2xl bg-white/70 border border-espresso-deep/10 flex items-center justify-between">
-            <span className="text-xs font-mono text-espresso-deep/80">
-              Viewing 2 featured heirlooms from <strong className="text-espresso-deep">{CATEGORIES.find((c) => c.id === activeCategory)?.label}</strong>.
-            </span>
-            <Link
-              to={`/collections/${activeCategory}`}
-              className="text-xs font-mono uppercase tracking-wider text-bronze hover:text-espresso-deep flex items-center gap-1 font-semibold group"
-            >
-              <span>Explore Full 4-Piece Suite & Technical Briefs</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-        )}
-
-        {/* ── 8 CURATED PRODUCT CARDS (2 PER CATEGORY) ── */}
+        {/* ── 8 CURATED PRODUCT CARDS (POLIFORM MINIMALIST GALLERY) ── */}
         <motion.div 
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10"
         >
           <AnimatePresence>
             {filteredProducts.map((product) => {
@@ -191,68 +162,52 @@ export default function ArccaProjectsGrid() {
                 <motion.div
                   key={product.id || product.slug}
                   layout
-                  initial={{ opacity: 0, scale: 0.96 }}
+                  initial={{ opacity: 0, scale: 0.97 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-white rounded-2xl border border-espresso-deep/10 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-500 group flex flex-col justify-between"
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.35 }}
+                  className="group flex flex-col justify-between space-y-4"
                 >
-                  {/* Product Image Box with 4:3 Aspect Ratio */}
-                  <div className="relative aspect-[4/3] overflow-hidden bg-[#F5EFEB]">
+                  {/* Clean Framed Photography Viewport */}
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-[#23180F] border border-[#E8DCC8]/15">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover brightness-[0.92] transition-transform duration-700 ease-out group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-espresso/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#160F0A]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
-                    {/* Category Tag */}
-                    <Link
-                      to={`/collections/${product.category}`}
-                      className="absolute top-3.5 left-3.5 bg-white/95 backdrop-blur-md text-espresso-deep text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-md shadow-xs font-medium hover:bg-espresso hover:text-linen transition-colors"
-                    >
+                    {/* Minimal Category Eyebrow in Corner */}
+                    <div className="absolute top-3 left-3 bg-[#160F0A]/90 backdrop-blur-md text-[#C6A75E] text-[9px] font-mono uppercase tracking-widest px-2.5 py-1 rounded border border-[#E8DCC8]/15">
                       {product.category_name}
-                    </Link>
+                    </div>
 
-                    {/* Stock status pill */}
-                    <span className="absolute top-3.5 right-3.5 bg-espresso/85 backdrop-blur-md text-linen text-[9px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-md">
+                    {/* Stock pill */}
+                    <span className="absolute bottom-3 right-3 bg-[#160F0A]/85 backdrop-blur-md text-[#E8DCC8] border border-[#E8DCC8]/15 text-[9px] font-mono uppercase tracking-wider px-2 py-0.5 rounded">
                       {product.stock_quantity > 0 ? `${product.stock_quantity} in Atelier` : 'Bespoke Order'}
                     </span>
                   </div>
 
-                  {/* Product Details Box */}
-                  <div className="p-5 flex-1 flex flex-col justify-between">
+                  {/* Clean Editorial Meta Below Image */}
+                  <div className="space-y-2 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 className="font-display text-lg text-espresso-deep group-hover:text-bronze transition-colors font-semibold leading-snug">
+                      <h3 className="font-display text-lg text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors leading-snug">
                         {product.name}
                       </h3>
 
-                      <div className="mt-2.5 space-y-1.5 text-xs font-mono text-espresso-deep/70">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-bronze uppercase">Timber:</span>
-                          <span className="font-medium text-espresso-deep">{product.timber_type}</span>
-                        </div>
-                        {product.upholstery && (
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10px] text-bronze uppercase">Spec:</span>
-                            <span className="truncate max-w-[150px] text-right font-medium text-espresso-deep/90">{product.upholstery}</span>
-                          </div>
-                        )}
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-bronze uppercase">Lead Time:</span>
-                          <span>{product.lead_time || '14–21 Days'}</span>
-                        </div>
-                      </div>
+                      <p className="text-xs font-mono text-[#E8DCC8]/70 mt-1 truncate">
+                        {product.timber_type} {product.upholstery ? `· ${product.upholstery}` : ''}
+                      </p>
                     </div>
 
-                    {/* Pricing & Inquire Footer */}
-                    <div className="mt-5 pt-4 border-t border-espresso-deep/10 flex items-center justify-between">
-                      <div>
-                        <span className="text-[9px] font-mono text-espresso-deep/60 uppercase block">
+                    {/* Pricing & Inquiry Row with Hairline */}
+                    <div className="pt-3 border-t border-[#E8DCC8]/15 flex items-center justify-between">
+                      <div className="flex flex-col">
+                        <span className="text-[9px] font-mono uppercase tracking-wider text-[#E8DCC8]/50">
                           Investment
                         </span>
-                        <span className="font-display text-base text-espresso-deep font-bold">
+                        <span className="font-display text-sm font-semibold text-[#C6A75E]">
                           ৳{Number(product.price_bdt).toLocaleString('en-IN')}
                         </span>
                       </div>
@@ -260,8 +215,8 @@ export default function ArccaProjectsGrid() {
                       <div className="flex items-center gap-2">
                         <Link
                           to={`/collections/${product.category}`}
-                          className="p-2 rounded-xl border border-espresso-deep/15 hover:border-espresso text-espresso-deep text-xs font-mono uppercase"
-                          title="View Full Category Specs"
+                          className="p-1.5 rounded-full border border-[#E8DCC8]/20 hover:border-[#C6A75E] text-[#E8DCC8] hover:text-[#C6A75E] transition-colors"
+                          title="View Category Suite"
                         >
                           <ArrowUpRight className="w-3.5 h-3.5" />
                         </Link>
@@ -270,15 +225,13 @@ export default function ArccaProjectsGrid() {
                           href={whatsappUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-3 py-2 rounded-xl bg-espresso text-linen hover:bg-bronze transition-colors duration-300 flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider font-semibold shadow-xs"
-                          title="Customize & Order on WhatsApp"
+                          className="px-3 py-1.5 rounded-full bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#160F0A] transition-colors duration-300 flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold cursor-pointer"
                         >
-                          <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-                          <span className="text-[10px]">Inquire</span>
+                          <MessageCircle className="w-3 h-3 text-[#160F0A]" />
+                          <span>Inquire</span>
                         </a>
                       </div>
                     </div>
-
                   </div>
                 </motion.div>
               );
@@ -286,31 +239,33 @@ export default function ArccaProjectsGrid() {
           </AnimatePresence>
         </motion.div>
 
-        {/* ── 4 DEDICATED SUITE PORTALS BANNER ── */}
-        <div className="mt-16 p-8 md:p-12 rounded-3xl bg-[#1E1005] text-linen border border-bronze/20 shadow-xl">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs font-mono text-bronze uppercase tracking-[0.3em] block mb-2 font-semibold">
-              COMPLETE RESIDENCE BLUEPRINTS
-            </span>
-            <h3 className="font-display text-2xl sm:text-4xl text-linen leading-tight">
-              Explore Dedicated Category Suites.
-            </h3>
-            <p className="text-xs sm:text-sm font-mono text-linen/70 mt-3 leading-relaxed">
-              Every room has its own dimensional logic. Visit our dedicated suite portals for complete 4-piece catalog briefs, vacuum kiln-seasoning reports, and the 6-phase white-glove delivery system.
+        {/* ── POLIFORM DEDICATED SUITE PORTALS STRIP ── */}
+        <div className="pt-16 border-t border-[#E8DCC8]/15 space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <span className="text-[11px] font-mono text-[#C6A75E] uppercase tracking-[0.3em] block mb-1 font-semibold">
+                COMPLETE RESIDENCE BLUEPRINTS
+              </span>
+              <h3 className="font-display text-2xl sm:text-3xl text-[#F5EFEB] font-light">
+                Explore Dedicated Suite Portals.
+              </h3>
+            </div>
+            <p className="text-xs font-mono text-[#E8DCC8]/70 max-w-md">
+              Complete 4-piece catalog briefs, vacuum kiln-seasoning reports, and the 6-phase white-glove delivery system for each room.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link
               to="/collections/living-room"
-              className="p-5 rounded-2xl bg-surface/80 border border-bronze/20 hover:border-bronze transition-all group flex flex-col justify-between"
+              className="p-6 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15 hover:border-[#C6A75E] transition-all group flex flex-col justify-between space-y-4"
             >
               <div>
-                <span className="text-[9px] font-mono uppercase text-bronze tracking-widest block mb-1">Suite 01</span>
-                <h4 className="font-display text-lg text-linen group-hover:text-bronze transition-colors">Living Room</h4>
-                <p className="text-[11px] text-linen/60 font-mono mt-1">Sectionals, Chesterfield, Coffee Tables, TV Consoles</p>
+                <span className="text-[10px] font-mono uppercase text-[#C6A75E] tracking-widest block mb-1">01 / SUITE</span>
+                <h4 className="font-display text-lg text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors font-medium">Living Room</h4>
+                <p className="text-[11px] text-[#E8DCC8]/70 font-mono mt-1">Sectionals, Chesterfields, Coffee Tables, TV Consoles</p>
               </div>
-              <div className="mt-4 flex items-center gap-1 text-[11px] font-mono text-bronze uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#C6A75E] uppercase tracking-wider">
                 <span>View 4 Pieces</span>
                 <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
               </div>
@@ -318,14 +273,14 @@ export default function ArccaProjectsGrid() {
 
             <Link
               to="/collections/master-bedroom"
-              className="p-5 rounded-2xl bg-surface/80 border border-bronze/20 hover:border-bronze transition-all group flex flex-col justify-between"
+              className="p-6 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15 hover:border-[#C6A75E] transition-all group flex flex-col justify-between space-y-4"
             >
               <div>
-                <span className="text-[9px] font-mono uppercase text-bronze tracking-widest block mb-1">Suite 02</span>
-                <h4 className="font-display text-lg text-linen group-hover:text-bronze transition-colors">Master Bedroom</h4>
-                <p className="text-[11px] text-linen/60 font-mono mt-1">Hydraulic Beds, Wardrobes, Floating Frames, Vanities</p>
+                <span className="text-[10px] font-mono uppercase text-[#C6A75E] tracking-widest block mb-1">02 / SUITE</span>
+                <h4 className="font-display text-lg text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors font-medium">Master Bedroom</h4>
+                <p className="text-[11px] text-[#E8DCC8]/70 font-mono mt-1">Hydraulic Beds, Wardrobes, Floating Frames, Vanities</p>
               </div>
-              <div className="mt-4 flex items-center gap-1 text-[11px] font-mono text-bronze uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#C6A75E] uppercase tracking-wider">
                 <span>View 4 Pieces</span>
                 <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
               </div>
@@ -333,14 +288,14 @@ export default function ArccaProjectsGrid() {
 
             <Link
               to="/collections/royal-dining"
-              className="p-5 rounded-2xl bg-surface/80 border border-bronze/20 hover:border-bronze transition-all group flex flex-col justify-between"
+              className="p-6 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15 hover:border-[#C6A75E] transition-all group flex flex-col justify-between space-y-4"
             >
               <div>
-                <span className="text-[9px] font-mono uppercase text-bronze tracking-widest block mb-1">Suite 03</span>
-                <h4 className="font-display text-lg text-linen group-hover:text-bronze transition-colors">Royal Dining</h4>
-                <p className="text-[11px] text-linen/60 font-mono mt-1">8-Seater Trestles, Pedestals, Credenzas, Bouclé Chairs</p>
+                <span className="text-[10px] font-mono uppercase text-[#C6A75E] tracking-widest block mb-1">03 / SUITE</span>
+                <h4 className="font-display text-lg text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors font-medium">Royal Dining</h4>
+                <p className="text-[11px] text-[#E8DCC8]/70 font-mono mt-1">8-Seater Trestles, Pedestals, Credenzas, Bouclé Chairs</p>
               </div>
-              <div className="mt-4 flex items-center gap-1 text-[11px] font-mono text-bronze uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#C6A75E] uppercase tracking-wider">
                 <span>View 4 Pieces</span>
                 <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
               </div>
@@ -348,14 +303,14 @@ export default function ArccaProjectsGrid() {
 
             <Link
               to="/collections/executive-study"
-              className="p-5 rounded-2xl bg-surface/80 border border-bronze/20 hover:border-bronze transition-all group flex flex-col justify-between"
+              className="p-6 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15 hover:border-[#C6A75E] transition-all group flex flex-col justify-between space-y-4"
             >
               <div>
-                <span className="text-[9px] font-mono uppercase text-bronze tracking-widest block mb-1">Suite 04</span>
-                <h4 className="font-display text-lg text-linen group-hover:text-bronze transition-colors">Executive Study</h4>
-                <p className="text-[11px] text-linen/60 font-mono mt-1">Conference Slabs, Library Walls, Biometric Desks</p>
+                <span className="text-[10px] font-mono uppercase text-[#C6A75E] tracking-widest block mb-1">04 / SUITE</span>
+                <h4 className="font-display text-lg text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors font-medium">Executive Study</h4>
+                <p className="text-[11px] text-[#E8DCC8]/70 font-mono mt-1">Conference Slabs, Library Walls, Biometric Desks</p>
               </div>
-              <div className="mt-4 flex items-center gap-1 text-[11px] font-mono text-bronze uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#C6A75E] uppercase tracking-wider">
                 <span>View 4 Pieces</span>
                 <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
               </div>

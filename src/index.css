@@ -6,33 +6,49 @@
    ═══════════════════════════════════════════════════════════════ */
 
 @theme {
-  /* ── Arcca Dual-Tone Foundation ──────────────────────────── */
-  --color-linen: #FBF0DA;
-  --color-linen-muted: #D6CBBC;
-  --color-linen-dim: #B8A992;
-  --color-espresso: #1E1005;
-  --color-espresso-deep: #332820;
-  --color-espresso-mid: #4A3828;
-  --color-bronze: #9C7443;
-  --color-bronze-light: #CBB295;
-  --color-bronze-glow: rgba(156, 116, 67, 0.15);
+  /* ── 60-30-10 Royal Wood, Beige & Gold System ────────────── */
+  /* 60% Dominant Wood / Teak Heartwood */
+  --color-wood: #160F0A;
+  --color-wood-deep: #100A06;
+  --color-wood-surface: #23180F;
+  --color-wood-mid: #332216;
 
-  /* ── Legacy Aliases (Backwards Compat for Tests) ─────────── */
-  --color-obsidian: #1E1005;
-  --color-surface: #2A1E12;
-  --color-surface-elevated: #362A1C;
-  --color-ivory: #FBF0DA;
-  --color-ivory-muted: #D6CBBC;
-  --color-gold: #9C7443;
-  --color-gold-hover: #B8873F;
-  --color-gold-dim: #7A5C36;
+  /* 30% Secondary Warm Beige / Cream Alabaster */
+  --color-beige: #E8DCC8;
+  --color-beige-light: #F5EFEB;
+  --color-beige-muted: #C8BAA5;
+  --color-beige-dim: #9E907C;
+
+  /* 10% Accent Soft Gold / Burnished Gold */
+  --color-gold: #C6A75E;
+  --color-gold-hover: #D4B56C;
+  --color-gold-dim: #8F753A;
+  --color-gold-glow: rgba(198, 167, 94, 0.22);
+
+  /* ── System Mappings & Backwards Compatibility ───────────── */
+  --color-espresso: #160F0A;
+  --color-espresso-deep: #100A06;
+  --color-espresso-mid: #23180F;
+  --color-linen: #F5EFEB;
+  --color-linen-muted: #E8DCC8;
+  --color-linen-dim: #C8BAA5;
+  --color-bronze: #C6A75E;
+  --color-bronze-light: #D4B56C;
+  --color-bronze-glow: rgba(198, 167, 94, 0.22);
+
+  /* Legacy Aliases */
+  --color-obsidian: #160F0A;
+  --color-surface: #23180F;
+  --color-surface-elevated: #2E1F14;
+  --color-ivory: #F5EFEB;
+  --color-ivory-muted: #E8DCC8;
   --color-teak: #8B5A2B;
-  --color-brass-glow: rgba(156, 116, 67, 0.15);
+  --color-brass-glow: rgba(198, 167, 94, 0.22);
 
   /* ── Typography ──────────────────────────────────────────── */
-  --font-display: "Playfair Display", "Cinzel", Georgia, "Times New Roman", serif;
-  --font-body: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "IBM Plex Mono", "Fira Code", monospace;
+  --font-display: "Cinzel", "Playfair Display", Georgia, serif;
+  --font-body: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
 }
 
 /* ─── Base ─────────────────────────────────────────────────── */

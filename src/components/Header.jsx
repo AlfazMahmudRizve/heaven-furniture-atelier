@@ -94,26 +94,8 @@ export default function Header() {
       >
         <div className="container mx-auto px-6 lg:px-12 flex justify-between items-center">
           
-          {/* Left: Collections Button (Desktop Only) */}
-          <div className="hidden lg:flex w-1/3">
-            <a 
-              href="#collections" 
-              onClick={(e) => {
-                e.preventDefault();
-                if (window.location.pathname !== '/') {
-                  window.location.href = '/#collections';
-                } else {
-                  document.querySelector('#collections')?.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              className="arcca-btn"
-            >
-              <span className="relative z-10 text-xs font-mono tracking-[0.2em] uppercase">Our Collections</span>
-            </a>
-          </div>
-
-          {/* Center: Brand Logo */}
-          <div className="w-auto lg:w-1/3 flex flex-col items-center justify-center">
+          {/* Left: Brand Monogram & Title */}
+          <div className="flex items-center gap-4">
             <a 
               href="#home" 
               onClick={(e) => {
@@ -124,30 +106,96 @@ export default function Header() {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
               }}
-              className="flex flex-col items-center text-center cursor-pointer"
+              className="flex items-center gap-3 cursor-pointer group"
             >
-              <span className="font-display text-2xl lg:text-3xl tracking-[0.3em] text-linen font-bold">
-                HEAVEN
+              <span className="w-8 h-8 rounded-full border border-[#C6A75E]/60 flex items-center justify-center font-display text-xs font-bold text-[#E8DCC8] bg-[#160F0A]/80 transition-all group-hover:border-[#C6A75E]">
+                H
               </span>
-              <span className="text-[9px] tracking-[0.4em] text-bronze-light font-mono mt-1 uppercase">
-                FURNITURE MART
-              </span>
+              <div className="flex flex-col">
+                <span className="font-display text-lg lg:text-xl tracking-[0.25em] text-[#F5EFEB] font-bold">
+                  HEAVEN
+                </span>
+                <span className="text-[8px] tracking-[0.35em] text-[#C6A75E] font-mono uppercase">
+                  ATELIER · CHATTOGRAM
+                </span>
+              </div>
             </a>
           </div>
 
-          {/* Right: EST Text & Hamburger */}
-          <div className="w-auto lg:w-1/3 flex justify-end items-center gap-8">
-            <span className="hidden lg:block font-mono text-[10px] tracking-widest text-bronze-light">
-              EST — 2020
-            </span>
+          {/* Center: Poliform-Style Editorial Navigation Links (Desktop) */}
+          <nav className="hidden lg:flex items-center gap-8 font-mono text-[11px] tracking-[0.2em] uppercase text-[#E8DCC8]/70">
+            <a 
+              href="#collections" 
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#collections')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="hover:text-[#C6A75E] transition-colors duration-300"
+            >
+              Collections
+            </a>
+            <a 
+              href="#manifesto" 
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#manifesto')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="hover:text-[#C6A75E] transition-colors duration-300"
+            >
+              Philosophy
+            </a>
+            <a 
+              href="#craftsmanship" 
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#craftsmanship')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="hover:text-[#C6A75E] transition-colors duration-300"
+            >
+              Suites
+            </a>
+            <a 
+              href="#bespoke" 
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#bespoke')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="hover:text-[#C6A75E] transition-colors duration-300"
+            >
+              Bespoke
+            </a>
+            <a 
+              href="#showroom" 
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#showroom')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="hover:text-[#C6A75E] transition-colors duration-300"
+            >
+              Showroom
+            </a>
+          </nav>
+
+          {/* Right: Enquire CTA & Menu Toggle */}
+          <div className="flex items-center gap-5">
+            <a
+              href={getWhatsAppInquiryUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C6A75E]/40 hover:border-[#C6A75E] text-[#C6A75E] hover:text-[#160F0A] hover:bg-[#C6A75E] font-mono text-[10px] tracking-widest uppercase transition-all duration-300"
+            >
+              <span>Enquire</span>
+              <span className="text-xs">↗</span>
+            </a>
+
             <button 
               onClick={() => setIsMenuOpen(true)}
               className="group flex flex-col justify-center items-end gap-1.5 h-10 w-10 cursor-pointer"
               aria-label="Open Menu"
             >
-              <div className="h-[1px] w-8 bg-linen transition-transform origin-right group-hover:scale-x-75"></div>
-              <div className="h-[1px] w-8 bg-linen"></div>
-              <div className="h-[1px] w-8 bg-linen transition-transform origin-right group-hover:scale-x-75"></div>
+              <div className="h-[1px] w-7 bg-[#E8DCC8] transition-transform origin-right group-hover:scale-x-75"></div>
+              <div className="h-[1px] w-7 bg-[#E8DCC8]"></div>
+              <div className="h-[1px] w-5 bg-[#C6A75E] transition-transform origin-right group-hover:w-7"></div>
             </button>
           </div>
           
@@ -165,10 +213,10 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="lg:hidden flex flex-col h-full bg-[#1E1005] text-linen overflow-y-auto"
+              className="lg:hidden flex flex-col h-full bg-[#160F0A] text-linen overflow-y-auto"
             >
               {/* Sticky Top Bar with Close Button */}
-              <div className="sticky top-0 z-30 bg-[#1E1005]/95 backdrop-blur-md px-6 py-4 border-b border-linen/10 flex items-center justify-between">
+              <div className="sticky top-0 z-30 bg-[#160F0A]/95 backdrop-blur-md px-6 py-4 border-b border-linen/10 flex items-center justify-between">
                 <div>
                   <span className="font-display text-lg tracking-[0.2em] text-linen block font-bold">
                     HEAVEN

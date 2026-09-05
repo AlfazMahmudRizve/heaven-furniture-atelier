@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, MessageCircle, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Sparkles, MessageCircle, ShieldCheck, ArrowRight, ShoppingBag } from 'lucide-react';
 import { buildProductWhatsAppUrl } from '../utils/whatsapp';
+import { useCart } from '../context/CartContext';
 
 const SUITES = [
   {
@@ -87,6 +88,7 @@ const SUITES = [
 ];
 
 export default function ProductShowcase() {
+  const { addItem } = useCart();
   const [activeIdx, setActiveIdx] = useState(0);
   const suite = SUITES[activeIdx];
 
@@ -216,14 +218,34 @@ export default function ProductShowcase() {
 
               {/* Minimalist Actions */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    addItem({
+                      id: `suite-${suite.id}`,
+                      title: suite.title,
+                      category: suite.label,
+                      wood: suite.timber,
+                      finish: suite.upholstery,
+                      dimensions: suite.dimensions,
+                      priceDisplay: 'Valuation on Consultation',
+                      image: suite.heroImage,
+                    });
+                  }}
+                  className="px-6 py-3.5 rounded-full bg-[#C6A75E] hover:bg-[#D4B975] text-[#241A14] font-mono text-xs uppercase tracking-wider font-bold transition-colors duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <ShoppingBag className="w-3.5 h-3.5" />
+                  <span>Add Suite to Tray</span>
+                </button>
+
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-6 py-3.5 rounded-full bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#241A14] font-mono text-xs uppercase tracking-wider font-bold transition-colors duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="px-6 py-3.5 rounded-full border border-[#C6A75E]/40 hover:border-[#C6A75E] text-[#C6A75E] hover:bg-[#C6A75E]/10 font-mono text-xs uppercase tracking-wider font-semibold transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <MessageCircle className="w-3.5 h-3.5 text-[#241A14]" />
-                  <span>Inquire on WhatsApp</span>
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>Inquire WhatsApp</span>
                   <span>↗</span>
                 </a>
 

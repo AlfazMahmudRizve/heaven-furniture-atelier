@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowRight, Phone, MessageCircle } from 'lucide-react';
+import { X, ArrowRight, Phone, MessageCircle, ShoppingBag } from 'lucide-react';
 import { COMPANY } from '../data/company';
 import { getWhatsAppInquiryUrl } from '../utils/whatsapp';
+import { useCart } from '../context/CartContext';
 
 export default function Header() {
+  const { itemCount, openDrawer } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [hoveredNavIndex, setHoveredNavIndex] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,15 +50,102 @@ export default function Header() {
     };
   }, [isMenuOpen]);
 
+  // Close menu on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+    if (isMenuOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMenuOpen]);
+
+  // Close when tapping anywhere outside interactive buttons/links
+  const handleOverlayClick = useCallback((e) => {
+    if (e.target.closest('a, button, input, textarea, select, [role="button"], [data-interactive="true"]')) {
+      return;
+    }
+    setIsMenuOpen(false);
+  }, []);
+
   const navLinks = [
-    { num: '1', title: 'Home', href: '#home', isExternal: false },
-    { num: '2', title: 'Real Room Settings', href: '#composition', isExternal: false },
-    { num: '3', title: 'Wood & Craftsmanship', href: '#manifesto', isExternal: false },
-    { num: '4', title: 'Furniture Collections', href: '#collections', isExternal: false },
-    { num: '5', title: 'Custom Furniture', href: '#bespoke', isExternal: false },
-    { num: '6', title: 'Room Suites', href: '#craftsmanship', isExternal: false },
-    { num: '7', title: 'Agrabad Showroom', href: '#showroom', isExternal: false },
-    { num: '8', title: 'WhatsApp Us', href: getWhatsAppInquiryUrl(), isExternal: true }
+    {
+      num: '01',
+      title: 'Home',
+      tagline: 'Flagship Living Composition',
+      href: '#home',
+      isExternal: false,
+      image: '/images/hero-living.jpg',
+      caption: 'The Sovereign Living Suite handcrafted from seasoned Burma Teak.',
+    },
+    {
+      num: '02',
+      title: 'Real Room Settings',
+      tagline: 'In-Situ Living Compositions',
+      href: '#composition',
+      isExternal: false,
+      image: '/images/storefront-living.jpg',
+      caption: 'Architectural room arrangements with interactive inspection hotspots.',
+    },
+    {
+      num: '03',
+      title: 'Wood & Craftsmanship',
+      tagline: 'Kiln-Dried Timber & Joinery',
+      href: '#manifesto',
+      isExternal: false,
+      image: '/images/timber-macro.jpg',
+      caption: 'Mortise & tenon structural joints with zero visible fasteners.',
+    },
+    {
+      num: '04',
+      title: 'Furniture Collections',
+      tagline: 'Heirloom Furniture Suites',
+      href: '#collections',
+      isExternal: false,
+      image: '/images/hero-dining.jpg',
+      caption: 'Curated 8-seater dining suites, platform beds & vitrines.',
+    },
+    {
+      num: '05',
+      title: 'Custom Furniture',
+      tagline: 'Interactive 3D Blueprinting',
+      href: '#bespoke',
+      isExternal: false,
+      image: '/images/hero-craftsmanship.jpg',
+      caption: 'Tailored dimensions, wood species, and fabric selection.',
+    },
+    {
+      num: '06',
+      title: 'Room Suites',
+      tagline: 'Living, Bedroom & Dining Portals',
+      href: '#craftsmanship',
+      isExternal: false,
+      image: '/images/hero-bedroom.jpg',
+      caption: 'The Imperial Master Bedroom with 800L silent hydraulic storage.',
+    },
+    {
+      num: '07',
+      title: 'Agrabad Showroom',
+      tagline: 'Flagship Studio in Chattogram',
+      href: '#showroom',
+      isExternal: false,
+      image: '/images/storefront-living.jpg',
+      caption: 'Agrabad Access Road (Opposite RAK Ceramics), Chattogram.',
+    },
+    {
+      num: '08',
+      title: 'WhatsApp Us',
+      tagline: 'Instant Concierge & Quotes',
+      href: getWhatsAppInquiryUrl(),
+      isExternal: true,
+      image: '/images/warranty-handover.jpg',
+      caption: 'Direct showroom WhatsApp desk for availability and custom blueprints.',
+    },
   ];
 
   const handleNavClick = useCallback((e, link) => {
@@ -205,6 +295,21 @@ export default function Header() {
               <span className="text-xs">↗</span>
             </a>
 
+            {/* Consultation & Quotation Tray Button */}
+            <button
+              type="button"
+              onClick={openDrawer}
+              className="relative flex items-center justify-center w-9 h-9 rounded-full border border-[#C6A75E]/40 hover:border-[#C6A75E] text-[#C6A75E] hover:bg-[#C6A75E] hover:text-[#241A14] transition-colors"
+              aria-label={`Open Consultation Tray with ${itemCount} items`}
+            >
+              <ShoppingBag className="w-4 h-4" />
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-[#C6A75E] text-[#241A14] font-mono text-[9px] font-bold flex items-center justify-center shadow-md animate-pulse">
+                  {itemCount}
+                </span>
+              )}
+            </button>
+
             <button 
               onClick={() => setIsMenuOpen(true)}
               className="group flex flex-col justify-center items-end gap-1.5 h-10 w-10 cursor-pointer"
@@ -222,7 +327,10 @@ export default function Header() {
       {/* FULLSCREEN RESPONSIVE OVERLAY MENU */}
       <AnimatePresence>
         {isMenuOpen && (
-          <div className="fixed inset-0 z-[99] w-full h-[100svh] overflow-hidden">
+          <div 
+            className="fixed inset-0 z-[99] w-full h-[100svh] overflow-hidden"
+            onClick={handleOverlayClick}
+          >
             
             {/* ── MOBILE OVERLAY (< lg screens: unified scrollable drawer, zero overlap) ── */}
             <motion.div
@@ -364,118 +472,249 @@ export default function Header() {
                 animate={{ x: 0 }}
                 exit={{ x: '-100%' }}
                 transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-                className="bg-linen text-espresso-deep relative flex flex-col justify-center h-full z-10"
+                className="bg-linen text-espresso-deep relative flex flex-col justify-center h-full z-10 border-r border-espresso-deep/10"
               >
-                <div className="w-full max-w-2xl mx-auto px-8 lg:px-20 py-12 flex flex-col h-full overflow-y-auto">
-                  <nav className="flex flex-col mt-auto mb-auto gap-0">
-                    {navLinks.map((link) => (
-                      <a
-                        key={link.num}
-                        href={link.href}
-                        target={link.isExternal ? '_blank' : undefined}
-                        rel={link.isExternal ? 'noopener noreferrer' : undefined}
-                        onClick={(e) => handleNavClick(e, link)}
-                        className="group relative flex items-center border-b border-espresso-deep/30 py-5 lg:py-7 overflow-hidden cursor-pointer"
-                      >
-                        {/* Hover Fill Background */}
-                        <div className="absolute inset-0 bg-espresso-deep origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-400 ease-[0.76,0,0.24,1] z-0"></div>
-                        
-                        {/* Content */}
-                        <div className="relative z-10 flex items-center w-full transition-colors duration-400 group-hover:text-linen">
-                          <span className="font-mono text-xs lg:text-sm mr-5 lg:mr-6 opacity-60">({link.num})</span>
-                          <span className="font-display uppercase tracking-widest text-lg lg:text-2xl transition-transform duration-400 group-hover:translate-x-3">
-                            {link.title}
-                          </span>
-                        </div>
+                <div className="w-full max-w-2xl mx-auto px-8 lg:px-16 py-10 flex flex-col h-full justify-between overflow-y-auto">
+                  <div className="pt-2">
+                    <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#8F753A] font-semibold block">
+                      Atelier Index · 2026
+                    </span>
+                    <h3 className="font-display text-2xl text-espresso-deep font-light">
+                      Navigate Collections &amp; Craft
+                    </h3>
+                  </div>
 
-                        {/* Bronze Accent Line on Hover */}
-                        <div className="absolute left-0 bottom-0 w-3 h-[3px] bg-bronze origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-400 delay-75 z-20"></div>
-                      </a>
-                    ))}
+                  <nav className="flex flex-col my-auto divide-y divide-espresso-deep/15">
+                    {navLinks.map((link, index) => {
+                      const isHovered = hoveredNavIndex === index;
+                      return (
+                        <a
+                          key={link.num}
+                          href={link.href}
+                          target={link.isExternal ? '_blank' : undefined}
+                          rel={link.isExternal ? 'noopener noreferrer' : undefined}
+                          onClick={(e) => handleNavClick(e, link)}
+                          onMouseEnter={() => setHoveredNavIndex(index)}
+                          className="group relative flex items-center justify-between py-3.5 lg:py-4.5 overflow-hidden cursor-pointer"
+                        >
+                          {/* Hover Fill Background */}
+                          <div className="absolute inset-0 bg-espresso-deep origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-400 ease-[0.76,0,0.24,1] z-0"></div>
+                          
+                          {/* Content */}
+                          <div className="relative z-10 flex items-center gap-4 transition-colors duration-400 group-hover:text-linen">
+                            <span className="font-mono text-xs lg:text-sm text-[#8F753A] group-hover:text-[#C6A75E] font-semibold">
+                              ({link.num})
+                            </span>
+                            <div>
+                              <span className="font-display uppercase tracking-widest text-base lg:text-xl block transition-transform duration-400 group-hover:translate-x-2">
+                                {link.title}
+                              </span>
+                              <span className="font-mono text-[10px] text-espresso-deep/60 group-hover:text-linen/60 block transition-colors">
+                                {link.tagline}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Arrow Indicator */}
+                          <ArrowRight className="relative z-10 w-4 h-4 text-espresso-deep/40 group-hover:text-[#C6A75E] group-hover:translate-x-1 transition-all duration-300 mr-2" />
+
+                          {/* Bronze Accent Line on Hover */}
+                          <div className="absolute left-0 bottom-0 w-4 h-[2px] bg-[#C6A75E] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-400 delay-75 z-20"></div>
+                        </a>
+                      );
+                    })}
                   </nav>
+
+                  <div className="pt-4 border-t border-espresso-deep/15 flex items-center justify-between text-[10px] font-mono text-espresso-deep/60 uppercase">
+                    <span>Chattogram Atelier</span>
+                    <span>Scroll or Click to Jump</span>
+                  </div>
                 </div>
               </motion.div>
 
-              {/* RIGHT HALF (ESPRESSO BACKGROUND) */}
+              {/* RIGHT HALF (ESPRESSO BACKGROUND WITH DYNAMIC LIVE PREVIEW) */}
               <motion.div 
                 initial={{ x: '100%' }}
                 animate={{ x: 0 }}
                 exit={{ x: '100%' }}
                 transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-                className="bg-espresso-deep text-linen relative flex flex-col h-full z-10"
+                className="bg-[#1C140F] text-[#F5EFEB] relative flex flex-col h-full z-10 overflow-hidden"
               >
-                <div className="w-full max-w-2xl mx-auto px-8 lg:px-20 py-12 flex flex-col h-full justify-between overflow-y-auto">
-                  
-                  {/* Close Button at Top Right */}
-                  <div className="flex justify-between items-center mt-4">
-                    <div>
-                      <span className="font-display text-3xl lg:text-5xl tracking-[0.3em] text-linen block font-bold">
-                        HEAVEN
-                      </span>
-                      <span className="text-[10px] lg:text-xs tracking-[0.4em] text-bronze-light font-mono mt-2 block uppercase">
-                        FURNITURE MART
-                      </span>
-                    </div>
+                {(() => {
+                  const activeLink = navLinks[hoveredNavIndex] || navLinks[0];
+                  return (
+                    <div className="w-full max-w-2xl mx-auto px-8 lg:px-14 py-8 flex flex-col h-full justify-between overflow-y-auto space-y-6">
+                      
+                      {/* Top Bar: Brand, Tray & Close */}
+                      <div className="flex items-center justify-between pb-4 border-b border-[#C6A75E]/15">
+                        <div className="flex items-center gap-3">
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#C6A75E] animate-pulse" />
+                          <div>
+                            <span className="font-display text-2xl tracking-[0.25em] text-[#F5EFEB] font-bold block">
+                              HEAVEN
+                            </span>
+                            <span className="text-[9px] tracking-[0.35em] text-[#C6A75E] font-mono block uppercase">
+                              FURNITURE MART · ATELIER
+                            </span>
+                          </div>
+                        </div>
 
-                    <button
-                      onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase rounded-full border border-bronze bg-bronze/20 text-linen hover:bg-bronze hover:text-espresso transition-colors duration-300 px-5 py-2.5 cursor-pointer shadow-lg backdrop-blur-md"
-                      aria-label="Close Menu"
-                    >
-                      <span>Close</span>
-                      <X className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
+                        <div className="flex items-center gap-3">
+                          {/* Tray Button */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsMenuOpen(false);
+                              openDrawer();
+                            }}
+                            className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#C6A75E]/30 bg-[#C6A75E]/10 hover:bg-[#C6A75E] text-[#C6A75E] hover:text-[#241A14] font-mono text-[10px] uppercase tracking-wider transition-colors"
+                          >
+                            <ShoppingBag className="w-3.5 h-3.5" />
+                            <span>Tray {itemCount > 0 ? `(${itemCount})` : ''}</span>
+                          </button>
 
-                  {/* Contact Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10 my-8">
-                    <div className="flex flex-col gap-6">
-                      <div>
-                        <span className="block font-mono text-[10px] tracking-widest text-bronze uppercase mb-2 font-semibold">Location</span>
-                        <p className="font-body text-sm leading-relaxed text-linen-muted">
-                          Agrabad Access Road,<br/>
-                          Opposite RAK Ceramics,<br/>
-                          Chattogram, Bangladesh
-                        </p>
+                          {/* Close Button */}
+                          <button
+                            onClick={() => setIsMenuOpen(false)}
+                            className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase rounded-full border border-[#C6A75E]/40 bg-[#C6A75E]/10 text-[#F5EFEB] hover:bg-[#C6A75E] hover:text-[#241A14] transition-colors duration-300 px-4 py-2 cursor-pointer shadow-lg"
+                            aria-label="Close Menu"
+                          >
+                            <span>Close</span>
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
-                      <div>
-                        <span className="block font-mono text-[10px] tracking-widest text-bronze uppercase mb-2 font-semibold">Direct Contact</span>
-                        <a href="mailto:heavenfurnituremart@gmail.com" className="font-body text-sm text-linen-muted hover:text-linen transition-colors block mb-1">
-                          heavenfurnituremart@gmail.com
-                        </a>
-                        <a href="tel:+8801960481983" className="font-body text-sm text-linen-muted hover:text-linen transition-colors block">
-                          +880 1960-481983
-                        </a>
+
+                      {/* 1. Dynamic Live Architectural Preview Card */}
+                      <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden border border-[#C6A75E]/25 shadow-2xl bg-[#140D09]">
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={activeLink.image}
+                            initial={{ opacity: 0, scale: 1.04 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.98 }}
+                            transition={{ duration: 0.4, ease: 'easeOut' }}
+                            className="absolute inset-0"
+                          >
+                            <img
+                              src={activeLink.image}
+                              alt={activeLink.title}
+                              className="w-full h-full object-cover brightness-[0.88] contrast-105"
+                              width={1200}
+                              height={675}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                          </motion.div>
+                        </AnimatePresence>
+
+                        {/* Floating Caption on Card */}
+                        <div className="absolute bottom-0 inset-x-0 p-5 space-y-1 z-10">
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#C6A75E] font-semibold bg-black/60 px-2.5 py-0.5 rounded-full border border-[#C6A75E]/30">
+                              Preview · {activeLink.num}
+                            </span>
+                            <span className="font-mono text-[10px] text-[#F5EFEB]/70">
+                              {activeLink.tagline}
+                            </span>
+                          </div>
+                          <h4 className="font-display text-lg text-[#F5EFEB] font-normal">
+                            {activeLink.title}
+                          </h4>
+                          <p className="font-body text-xs text-[#F5EFEB]/80 font-light line-clamp-1">
+                            {activeLink.caption}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    
-                    <div className="flex flex-col gap-6">
-                      <div>
-                        <span className="block font-mono text-[10px] tracking-widest text-bronze uppercase mb-2 font-semibold">Showroom Hours</span>
-                        <p className="font-body text-sm leading-relaxed text-linen-muted">
-                          Sat–Thu: 9:00 AM – 9:30 PM<br/>
-                          Friday: Closed
-                        </p>
-                      </div>
-                      <div>
-                        <span className="block font-mono text-[10px] tracking-widest text-bronze uppercase mb-2 font-semibold">Social Atelier</span>
-                        <div className="flex flex-wrap gap-4">
-                          {COMPANY?.socials && Object.entries(COMPANY.socials).map(([platform, url]) => (
-                            <a key={platform} href={url} target="_blank" rel="noopener noreferrer" className="font-body text-sm text-linen-muted hover:text-linen transition-colors capitalize">
-                              {platform}
+
+                      {/* 2. Flagship Suite Portals (Quick Navigation) */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono text-[10px] uppercase tracking-widest text-[#C6A75E] font-semibold">
+                            Explore Dedicated Suites
+                          </span>
+                          <span className="font-mono text-[9px] text-[#F5EFEB]/40">
+                            4 Pieces Each
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2.5">
+                          {[
+                            { slug: 'living-room', name: 'Living Room', icon: '01' },
+                            { slug: 'master-bedroom', name: 'Master Bedroom', icon: '02' },
+                            { slug: 'royal-dining', name: 'Royal Dining', icon: '03' },
+                            { slug: 'executive-study', name: 'Executive Study', icon: '04' },
+                          ].map((suite) => (
+                            <a
+                              key={suite.slug}
+                              href={`/collections/${suite.slug}`}
+                              onClick={() => setIsMenuOpen(false)}
+                              className="p-3 rounded-xl bg-[#241A14] hover:bg-[#30231B] border border-[#C6A75E]/20 hover:border-[#C6A75E] transition-all flex items-center justify-between group"
+                            >
+                              <div>
+                                <span className="font-mono text-[8px] text-[#C6A75E] block">SUITE {suite.icon}</span>
+                                <span className="font-display text-xs text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors">{suite.name}</span>
+                              </div>
+                              <ArrowRight className="w-3.5 h-3.5 text-[#C6A75E]/60 group-hover:text-[#C6A75E] group-hover:translate-x-1 transition-all" />
                             </a>
                           ))}
                         </div>
                       </div>
-                    </div>
-                  </div>
 
-                  {/* Footer */}
-                  <div className="flex justify-between items-center border-t border-linen/10 pt-6 text-[10px] font-mono tracking-widest text-linen-muted/60 uppercase">
-                    <span>Agrabad Flagship</span>
-                    <span>© 2026 HFM</span>
-                  </div>
-                </div>
+                      {/* 3. Flagship Atelier & Concierge Block */}
+                      <div className="p-4 rounded-xl bg-[#140D09] border border-[#C6A75E]/20 space-y-3">
+                        <div className="grid grid-cols-2 gap-4 text-xs">
+                          <div>
+                            <span className="font-mono text-[9px] uppercase tracking-wider text-[#C6A75E] block mb-1">
+                              Agrabad Showroom
+                            </span>
+                            <p className="font-display text-xs text-[#F5EFEB]">
+                              Agrabad Access Road
+                            </p>
+                            <p className="text-[10px] text-[#F5EFEB]/60 font-mono">
+                              Opposite RAK Ceramics, Chattogram
+                            </p>
+                          </div>
+                          <div>
+                            <span className="font-mono text-[9px] uppercase tracking-wider text-[#C6A75E] block mb-1">
+                              Opening Hours
+                            </span>
+                            <p className="font-display text-xs text-[#F5EFEB]">
+                              Sat–Thu: 9:00 AM – 9:30 PM
+                            </p>
+                            <p className="text-[10px] text-[#F5EFEB]/60 font-mono">
+                              Fri: 3:00 PM – 9:30 PM
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-[#C6A75E]/15 flex items-center justify-between gap-3">
+                          <a
+                            href={getWhatsAppInquiryUrl()}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#25D366] hover:bg-[#20BE5C] text-[#112316] font-mono text-[10px] uppercase tracking-wider font-bold transition-all shadow-md"
+                          >
+                            <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                            <span>WhatsApp Concierge</span>
+                          </a>
+
+                          <a
+                            href={`tel:${COMPANY.phone}`}
+                            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg border border-[#C6A75E]/30 text-[#F5EFEB] hover:border-[#C6A75E] hover:text-[#C6A75E] font-mono text-[10px] uppercase tracking-wider transition-colors"
+                          >
+                            <Phone className="w-3.5 h-3.5 text-[#C6A75E]" />
+                            <span>Call Atelier</span>
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* 4. Footer */}
+                      <div className="flex justify-between items-center border-t border-[#C6A75E]/15 pt-3 text-[9px] font-mono tracking-widest text-[#F5EFEB]/40 uppercase">
+                        <span>Agrabad Flagship Studio</span>
+                        <span>© 2026 Heaven Furniture Mart</span>
+                      </div>
+                    </div>
+                  );
+                })()}
               </motion.div>
 
             </div>

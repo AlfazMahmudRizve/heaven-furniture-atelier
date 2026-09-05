@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Sofa, Bed, Utensils, Briefcase, Phone, MessageSquare, Check, Sparkles } from 'lucide-react';
+import { Sofa, Bed, Utensils, Briefcase, Phone, MessageSquare, Check, Sparkles, ShoppingBag } from 'lucide-react';
 import { ROOM_TYPES, TIMBER_OPTIONS, FABRIC_OPTIONS } from '../data/collections';
 import { buildBespokeWhatsAppUrl } from '../utils/whatsapp';
 import { supabase } from '../lib/supabase';
+import { useCart } from '../context/CartContext';
+import TimberLensModal from './TimberLensModal';
 
 const ROOM_ICONS = {
   living: Sofa,
@@ -12,6 +14,8 @@ const ROOM_ICONS = {
 };
 
 export default function BespokeStudio() {
+  const { addItem } = useCart();
+  const [isTimberLensOpen, setIsTimberLensOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState('living');
   const [selectedTimber, setSelectedTimber] = useState('burma-teak');
   const [selectedFabric, setSelectedFabric] = useState('velvet');
@@ -107,11 +111,21 @@ export default function BespokeStudio() {
 
             {/* Step 2: Timber Heartwood */}
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <span className="text-[10px] font-mono text-[#C6A75E] uppercase tracking-[0.25em] font-semibold">
-                  02 · Timber Heartwood Selection
-                </span>
-                <div className="h-px flex-1 bg-[#E8DCC8]/10" />
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-[10px] font-mono text-[#C6A75E] uppercase tracking-[0.25em] font-semibold">
+                    02 · Timber Heartwood Selection
+                  </span>
+                  <div className="h-px w-12 bg-[#E8DCC8]/10 hidden sm:block" />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsTimberLensOpen(true)}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#C6A75E]/30 bg-[#C6A75E]/10 hover:bg-[#C6A75E] text-[#C6A75E] hover:text-[#241A14] font-mono text-[10px] tracking-wider uppercase transition-colors cursor-pointer"
+                >
+                  <Sparkles className="w-3 h-3" />
+                  <span>Inspect Grain &amp; Luster Lens</span>
+                </button>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -236,8 +250,28 @@ export default function BespokeStudio() {
                 </p>
               </div>
 
-              {/* WhatsApp Action Button */}
+              {/* Actions */}
               <div className="space-y-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    addItem({
+                      id: `bespoke-${selectedRoom}-${selectedTimber}-${Date.now()}`,
+                      title: `Bespoke ${currentConfig.room} Commission`,
+                      category: 'Custom Atelier Blueprint',
+                      wood: currentConfig.timber,
+                      finish: currentConfig.fabric,
+                      dimensions: `${width}' W × ${depth}' D`,
+                      priceDisplay: 'Valuation on Blueprint',
+                      image: '/images/hero-craftsmanship.jpg',
+                    });
+                  }}
+                  className="flex items-center justify-center gap-2 border border-[#C6A75E] text-[#C6A75E] hover:bg-[#C6A75E] hover:text-[#241A14] w-full py-3.5 rounded-full text-xs font-mono uppercase tracking-widest font-semibold transition-colors duration-300 shadow-sm cursor-pointer"
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>Add Spec to Consultation Tray</span>
+                </button>
+
                 <a 
                   href={buildBespokeWhatsAppUrl(currentConfig)}
                   target="_blank"
@@ -279,6 +313,12 @@ export default function BespokeStudio() {
         </div>
 
       </div>
+
+      {/* Interactive Timber Grain & Luster Lens Modal */}
+      <TimberLensModal
+        isOpen={isTimberLensOpen}
+        onClose={() => setIsTimberLensOpen(false)}
+      />
     </section>
   );
 }

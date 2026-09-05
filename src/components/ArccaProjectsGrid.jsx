@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, MessageCircle, ShieldCheck, ArrowRight, ArrowUpRight, Check, SlidersHorizontal } from 'lucide-react';
+import { Sparkles, MessageCircle, ShieldCheck, ArrowRight, ArrowUpRight, Check, SlidersHorizontal, ShoppingBag } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { buildProductWhatsAppUrl } from '../utils/whatsapp';
+import { useCart } from '../context/CartContext';
 
 // Explicit mapping of each product slug to its unique photograph
 const PRODUCT_IMAGE_MAP = {
@@ -60,6 +61,7 @@ const CATEGORIES = [
 ];
 
 export default function ArccaProjectsGrid() {
+  const { addItem } = useCart();
   const [products, setProducts] = useState(HOMEPAGE_CURATED_PRODUCTS);
   const [activeCategory, setActiveCategory] = useState('all');
 
@@ -219,7 +221,28 @@ export default function ArccaProjectsGrid() {
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            addItem({
+                              id: product.id || product.slug,
+                              title: product.name,
+                              category: product.category_name,
+                              wood: product.timber_type,
+                              finish: product.upholstery,
+                              price: product.price_bdt,
+                              priceDisplay: `৳${Number(product.price_bdt).toLocaleString('en-IN')}`,
+                              image: product.image,
+                            });
+                          }}
+                          className="p-1.5 rounded-full border border-[#C6A75E] text-[#8F753A] hover:bg-[#C6A75E] hover:text-[#241A14] transition-colors"
+                          title="Add to Consultation Tray"
+                          aria-label={`Add ${product.name} to Consultation Tray`}
+                        >
+                          <ShoppingBag className="w-3.5 h-3.5" />
+                        </button>
+
                         <Link
                           to={`/collections/${product.category}`}
                           className="p-1.5 rounded-full border border-[#241A14]/20 hover:border-[#8F753A] text-[#241A14] hover:text-[#8F753A] transition-colors"

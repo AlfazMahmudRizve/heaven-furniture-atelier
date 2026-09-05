@@ -11,8 +11,12 @@ import ProductShowcase from './components/ProductShowcase';
 import ArccaProjectsGrid from './components/ArccaProjectsGrid';
 import BespokeStudio from './components/BespokeStudio';
 import Testimonials from './components/Testimonials';
+import Showroom from './components/Showroom';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
+import MobileActionBar from './components/MobileActionBar';
+import QuotationDrawer from './components/QuotationDrawer';
 import Footer from './components/Footer';
+import { CartProvider } from './context/CartContext';
 
 // Dedicated Suite Category Page
 import CategoryPage from './pages/CategoryPage';
@@ -72,45 +76,50 @@ function PublicWebsite() {
         <ArccaProjectsGrid />
         <BespokeStudio />
         <Testimonials />
+        <Showroom />
       </main>
       <Footer />
       <FloatingWhatsApp />
+      <MobileActionBar />
+      <QuotationDrawer />
     </div>
   );
 }
 
 export default function App() {
   return (
-    <AdminAuthProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          {/* Public Website */}
-          <Route path="/" element={<PublicWebsite />} />
+    <CartProvider>
+      <AdminAuthProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            {/* Public Website */}
+            <Route path="/" element={<PublicWebsite />} />
 
-          {/* Dedicated Category Suite Portals */}
-          <Route path="/collections/:slug" element={<CategoryPage />} />
+            {/* Dedicated Category Suite Portals */}
+            <Route path="/collections/:slug" element={<CategoryPage />} />
 
-          {/* Interactive Hackathon Innovation Demo */}
-          <Route path="/demo" element={<DesignDemoPage />} />
+            {/* Interactive Hackathon Innovation Demo */}
+            <Route path="/demo" element={<DesignDemoPage />} />
 
-          {/* Admin Authentication */}
-          <Route path="/admin/login" element={<AdminLogin />} />
+            {/* Admin Authentication */}
+            <Route path="/admin/login" element={<AdminLogin />} />
 
-          {/* Protected Store Manager CMS Routes */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<DashboardOverview />} />
-            <Route path="products" element={<ProductManager />} />
-            <Route path="orders" element={<OrderManager />} />
-            <Route path="inquiries" element={<InquiryManager />} />
-            <Route path="customers" element={<CustomerManager />} />
-            <Route path="staff" element={<StaffManager />} />
-          </Route>
+            {/* Protected Store Manager CMS Routes */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<DashboardOverview />} />
+              <Route path="products" element={<ProductManager />} />
+              <Route path="orders" element={<OrderManager />} />
+              <Route path="inquiries" element={<InquiryManager />} />
+              <Route path="customers" element={<CustomerManager />} />
+              <Route path="staff" element={<StaffManager />} />
+            </Route>
 
-          {/* Catch-all */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AdminAuthProvider>
+            {/* Catch-all */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AdminAuthProvider>
+    </CartProvider>
   );
 }

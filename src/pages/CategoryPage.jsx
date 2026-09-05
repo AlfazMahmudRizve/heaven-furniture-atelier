@@ -24,6 +24,8 @@ import {
 import { CATEGORY_DETAILS, HEIRLOOM_DELIVERY_WORKFLOW } from '../data/categoryDetails';
 import { buildProductWhatsAppUrl, buildWhatsAppUrl } from '../utils/whatsapp';
 import FloatingWhatsApp from '../components/FloatingWhatsApp';
+import MobileActionBar from '../components/MobileActionBar';
+import QuotationDrawer from '../components/QuotationDrawer';
 import Footer from '../components/Footer';
 
 const SUITE_TABS = [
@@ -487,6 +489,8 @@ export default function CategoryPage() {
 
       <Footer />
       <FloatingWhatsApp />
+      <MobileActionBar />
+      <QuotationDrawer />
 
     </div>
   );

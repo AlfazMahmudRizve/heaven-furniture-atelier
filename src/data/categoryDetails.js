@@ -499,7 +499,7 @@ export const HEIRLOOM_DELIVERY_WORKFLOW = [
     duration: 'Ongoing',
     icon: 'Video',
     description:
-      'You are never left in the dark. Your dedicated Showroom Concierge sends high-resolution video clips and photos via WhatsApp at 3 critical milestones: raw timber joinery, primer/staining, and final inspection.',
+      'You are never left in the dark. Your dedicated Showroom Support Specialist sends high-resolution video clips and photos via WhatsApp at 3 critical milestones: raw timber joinery, primer/staining, and final inspection.',
     points: [
       'Milestone 1: Structural frame and joinery dry-fit test',
       'Milestone 2: Timber staining and grain enhancement',

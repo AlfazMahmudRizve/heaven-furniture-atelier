@@ -49,17 +49,24 @@ export default function Header() {
 
   const navLinks = [
     { num: '1', title: 'Home', href: '#home', isExternal: false },
-    { num: '2', title: 'About Atelier', href: '#manifesto', isExternal: false },
-    { num: '3', title: 'Curated Collections', href: '#collections', isExternal: false },
-    { num: '4', title: 'Bespoke Studio', href: '#bespoke', isExternal: false },
-    { num: '5', title: 'Craftsmanship', href: '#craftsmanship', isExternal: false },
-    { num: '6', title: 'Flagship Showroom', href: '#showroom', isExternal: false },
-    { num: '7', title: 'WhatsApp Concierge', href: getWhatsAppInquiryUrl(), isExternal: true }
+    { num: '2', title: 'Real Room Settings', href: '#composition', isExternal: false },
+    { num: '3', title: 'Wood & Craftsmanship', href: '#manifesto', isExternal: false },
+    { num: '4', title: 'Furniture Collections', href: '#collections', isExternal: false },
+    { num: '5', title: 'Custom Furniture', href: '#bespoke', isExternal: false },
+    { num: '6', title: 'Room Suites', href: '#craftsmanship', isExternal: false },
+    { num: '7', title: 'Agrabad Showroom', href: '#showroom', isExternal: false },
+    { num: '8', title: 'WhatsApp Us', href: getWhatsAppInquiryUrl(), isExternal: true }
   ];
 
   const handleNavClick = useCallback((e, link) => {
     if (link.isExternal) {
       setIsMenuOpen(false);
+      return;
+    }
+
+    if (link.href.startsWith('/')) {
+      setIsMenuOpen(false);
+      window.location.href = link.href;
       return;
     }
 
@@ -88,7 +95,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-50 transition-transform transition-colors duration-500 ${
           isHidden ? '-translate-y-full' : 'translate-y-0'
         } ${isScrolled ? 'glass py-3' : 'bg-transparent py-5'}`}
       >
@@ -108,7 +115,7 @@ export default function Header() {
               }}
               className="flex items-center gap-3 cursor-pointer group"
             >
-              <span className="w-8 h-8 rounded-full border border-[#C6A75E]/60 flex items-center justify-center font-display text-xs font-bold text-[#E8DCC8] bg-[#160F0A]/80 transition-all group-hover:border-[#C6A75E]">
+              <span className="w-8 h-8 rounded-full border border-[#C6A75E]/60 flex items-center justify-center font-display text-xs font-bold text-[#E8DCC8] bg-[#241A14]/80 transition-colors group-hover:border-[#C6A75E]">
                 H
               </span>
               <div className="flex flex-col">
@@ -116,7 +123,7 @@ export default function Header() {
                   HEAVEN
                 </span>
                 <span className="text-[8px] tracking-[0.35em] text-[#C6A75E] font-mono uppercase">
-                  ATELIER · CHATTOGRAM
+                  FURNITURE MART · CHATTOGRAM
                 </span>
               </div>
             </a>
@@ -142,7 +149,7 @@ export default function Header() {
               }}
               className="hover:text-[#C6A75E] transition-colors duration-300"
             >
-              Philosophy
+              Craft
             </a>
             <a 
               href="#craftsmanship" 
@@ -162,7 +169,17 @@ export default function Header() {
               }}
               className="hover:text-[#C6A75E] transition-colors duration-300"
             >
-              Bespoke
+              Custom
+            </a>
+            <a 
+              href="#composition" 
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#composition')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="hover:text-[#C6A75E] transition-colors duration-300"
+            >
+              Rooms
             </a>
             <a 
               href="#showroom" 
@@ -176,15 +193,15 @@ export default function Header() {
             </a>
           </nav>
 
-          {/* Right: Enquire CTA & Menu Toggle */}
+          {/* Right: WhatsApp CTA & Menu Toggle */}
           <div className="flex items-center gap-5">
             <a
               href={getWhatsAppInquiryUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C6A75E]/40 hover:border-[#C6A75E] text-[#C6A75E] hover:text-[#160F0A] hover:bg-[#C6A75E] font-mono text-[10px] tracking-widest uppercase transition-all duration-300"
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C6A75E]/40 hover:border-[#C6A75E] text-[#C6A75E] hover:text-[#241A14] hover:bg-[#C6A75E] font-mono text-[10px] tracking-widest uppercase transition-colors duration-300"
             >
-              <span>Enquire</span>
+              <span>WhatsApp</span>
               <span className="text-xs">↗</span>
             </a>
 
@@ -213,10 +230,10 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="lg:hidden flex flex-col h-full bg-[#160F0A] text-linen overflow-y-auto"
+              className="lg:hidden flex flex-col h-full bg-[#241A14] text-linen overflow-y-auto"
             >
               {/* Sticky Top Bar with Close Button */}
-              <div className="sticky top-0 z-30 bg-[#160F0A]/95 backdrop-blur-md px-6 py-4 border-b border-linen/10 flex items-center justify-between">
+              <div className="sticky top-0 z-30 bg-[#241A14]/95 backdrop-blur-md px-6 py-4 border-b border-linen/10 flex items-center justify-between">
                 <div>
                   <span className="font-display text-lg tracking-[0.2em] text-linen block font-bold">
                     HEAVEN
@@ -255,7 +272,7 @@ export default function Header() {
                           {link.title}
                         </span>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-linen/40 group-hover:text-bronze group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="w-4 h-4 text-linen/40 group-hover:text-bronze group-hover:translate-x-1 transition-colors transition-transform" />
                     </a>
                   ))}
                 </nav>
@@ -334,9 +351,6 @@ export default function Header() {
                 {/* Mobile Menu Footer */}
                 <div className="pt-4 pb-8 border-t border-linen/10 flex justify-between items-center text-[10px] font-mono text-linen/40 uppercase">
                   <span>Chattogram, Bangladesh</span>
-                  <a href="/admin" onClick={() => setIsMenuOpen(false)} className="text-bronze underline">
-                    Store Manager Login ↗
-                  </a>
                 </div>
               </div>
             </motion.div>
@@ -369,9 +383,9 @@ export default function Header() {
                         {/* Content */}
                         <div className="relative z-10 flex items-center w-full transition-colors duration-400 group-hover:text-linen">
                           <span className="font-mono text-xs lg:text-sm mr-5 lg:mr-6 opacity-60">({link.num})</span>
-                          <h2 className="font-display uppercase tracking-widest text-lg lg:text-2xl transition-transform duration-400 group-hover:translate-x-3">
+                          <span className="font-display uppercase tracking-widest text-lg lg:text-2xl transition-transform duration-400 group-hover:translate-x-3">
                             {link.title}
-                          </h2>
+                          </span>
                         </div>
 
                         {/* Bronze Accent Line on Hover */}
@@ -405,7 +419,7 @@ export default function Header() {
 
                     <button
                       onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase rounded-full border border-bronze bg-bronze/20 text-linen hover:bg-bronze hover:text-espresso transition-all duration-300 px-5 py-2.5 cursor-pointer shadow-lg backdrop-blur-md"
+                      className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase rounded-full border border-bronze bg-bronze/20 text-linen hover:bg-bronze hover:text-espresso transition-colors duration-300 px-5 py-2.5 cursor-pointer shadow-lg backdrop-blur-md"
                       aria-label="Close Menu"
                     >
                       <span>Close</span>
@@ -459,9 +473,6 @@ export default function Header() {
                   {/* Footer */}
                   <div className="flex justify-between items-center border-t border-linen/10 pt-6 text-[10px] font-mono tracking-widest text-linen-muted/60 uppercase">
                     <span>Agrabad Flagship</span>
-                    <a href="/admin" className="hover:text-bronze transition-colors flex items-center gap-1">
-                      <span>Store CMS Portal ↗</span>
-                    </a>
                     <span>© 2026 HFM</span>
                   </div>
                 </div>

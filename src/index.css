@@ -8,10 +8,10 @@
 @theme {
   /* ── 60-30-10 Royal Wood, Beige & Gold System ────────────── */
   /* 60% Dominant Wood / Teak Heartwood */
-  --color-wood: #160F0A;
-  --color-wood-deep: #100A06;
-  --color-wood-surface: #23180F;
-  --color-wood-mid: #332216;
+  --color-wood: #241A14;
+  --color-wood-deep: #19120E;
+  --color-wood-surface: #30231B;
+  --color-wood-mid: #423227;
 
   /* 30% Secondary Warm Beige / Cream Alabaster */
   --color-beige: #E8DCC8;
@@ -26,9 +26,9 @@
   --color-gold-glow: rgba(198, 167, 94, 0.22);
 
   /* ── System Mappings & Backwards Compatibility ───────────── */
-  --color-espresso: #160F0A;
-  --color-espresso-deep: #100A06;
-  --color-espresso-mid: #23180F;
+  --color-espresso: #241A14;
+  --color-espresso-deep: #19120E;
+  --color-espresso-mid: #30231B;
   --color-linen: #F5EFEB;
   --color-linen-muted: #E8DCC8;
   --color-linen-dim: #C8BAA5;
@@ -37,9 +37,9 @@
   --color-bronze-glow: rgba(198, 167, 94, 0.22);
 
   /* Legacy Aliases */
-  --color-obsidian: #160F0A;
-  --color-surface: #23180F;
-  --color-surface-elevated: #2E1F14;
+  --color-obsidian: #241A14;
+  --color-surface: #30231B;
+  --color-surface-elevated: #3A2B21;
   --color-ivory: #F5EFEB;
   --color-ivory-muted: #E8DCC8;
   --color-teak: #8B5A2B;
@@ -90,10 +90,17 @@ body {
   color: var(--color-linen);
 }
 
+/* ─── Accessible Focus Ring ─────────────────────────── */
+:focus-visible {
+  outline: 2px solid #C6A75E;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 /* ─── Utility: Glass Card ──────────────────────────────── */
 
 .glass {
-  background: rgba(30, 16, 5, 0.65);
+  background: rgba(36, 26, 20, 0.75);
   backdrop-filter: blur(16px) saturate(1.3);
   -webkit-backdrop-filter: blur(16px) saturate(1.3);
   border: 1px solid rgba(156, 116, 67, 0.12);
@@ -254,4 +261,16 @@ body {
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+/* ─── Typography: Prevent Orphan Words ─────────────── */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+/* ─── Reduced Motion Support ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-ping { animation: none; }
+  .animated-line { animation: none; }
+  * { transition-duration: 0.01ms !important; }
 }

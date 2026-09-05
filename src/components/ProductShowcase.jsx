@@ -67,10 +67,10 @@ const SUITES = [
   {
     id: 'executive',
     number: '04',
-    label: 'EXECUTIVE STUDY SUITE',
-    title: 'Presidential Sanctum Desk',
-    subtitle: 'Commanding Architectural Workspace for Leaders',
-    description: 'Presidential desk featuring Italian full-grain leather writing inlay, concealed biometric drawers, wireless Qi charging surface, and architectural library match. Power meets artistry.',
+    label: 'EXECUTIVE STUDY',
+    title: 'Presidential Executive Desk',
+    subtitle: 'Solid Teak Executive Workspace',
+    description: 'Presidential solid Burma Teak desk featuring real leather writing pad, smooth-glide drawers, and neat internal cable channels. Built for focus and authority.',
     timber: 'Solid Burma Teak (বার্মা সেগুন)',
     upholstery: 'Tuscan Full-Grain Leather',
     dimensions: '2200mm W × 1000mm D × 760mm H',
@@ -103,18 +103,23 @@ export default function ProductShowcase() {
   };
 
   return (
-    <section id="craftsmanship" className="relative bg-[#160F0A] py-24 lg:py-32 px-6 lg:px-14 border-t border-[#E8DCC8]/15">
+    <section id="craftsmanship" className="relative bg-[#241A14] py-24 lg:py-32 px-6 lg:px-14 border-t border-[#E8DCC8]/15">
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Editorial Header & Minimalist Suite Switcher */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-6 border-b border-[#E8DCC8]/15">
           <div className="space-y-3">
-            <span className="font-mono text-[11px] text-[#C6A75E] uppercase tracking-[0.35em] block">
-              03 / ARCHITECTURAL SUITES
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-[11px] text-[#C6A75E] uppercase tracking-[0.35em] block font-semibold">
+                04 / COMPLETE ROOM SETS
+              </span>
+              <span className="font-mono text-[9px] px-2.5 py-0.5 rounded-full bg-[#C6A75E]/20 text-[#C6A75E] uppercase tracking-wider font-bold">
+                Solid Timber
+              </span>
+            </div>
             <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-[#F5EFEB] tracking-tight font-light leading-tight">
-              Systems of <br />
-              <span className="italic font-normal text-[#E8DCC8]">Day & Night.</span>
+              Suites Made for <br />
+              <span className="italic font-normal text-[#E8DCC8]">Every Room.</span>
             </h2>
           </div>
 
@@ -124,7 +129,7 @@ export default function ProductShowcase() {
               <button
                 key={s.id}
                 onClick={() => setActiveIdx(idx)}
-                className={`py-2 text-left transition-all duration-300 cursor-pointer whitespace-nowrap flex items-center gap-2 border-b-2 ${
+                className={`py-2 text-left transition-[color,border-color] duration-300 cursor-pointer whitespace-nowrap flex items-center gap-2 border-b-2 ${
                   activeIdx === idx
                     ? 'border-[#C6A75E] text-[#F5EFEB] font-bold'
                     : 'border-transparent text-[#E8DCC8]/50 hover:text-[#E8DCC8]'
@@ -148,16 +153,19 @@ export default function ProductShowcase() {
             className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center"
           >
             {/* Left: Expansive Architectural Suite Photograph */}
-            <div className="lg:col-span-7 relative aspect-[16/10] sm:aspect-[16/10] rounded-lg overflow-hidden bg-[#23180F] border border-[#E8DCC8]/15 group">
+            <div className="lg:col-span-7 relative aspect-[16/10] sm:aspect-[16/10] rounded-lg overflow-hidden bg-[#30231B] border border-[#E8DCC8]/15 group">
               <img 
                 src={suite.heroImage} 
                 alt={suite.title} 
+                width={1200}
+                height={750}
+                loading="lazy"
                 className="w-full h-full object-cover brightness-[0.9] transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#160F0A]/70 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#241A14]/70 via-transparent to-transparent pointer-events-none" />
 
               {/* Minimalist Floating Corner Spec */}
-              <div className="absolute bottom-4 left-4 bg-[#160F0A]/90 backdrop-blur-md px-3.5 py-1.5 rounded border border-[#E8DCC8]/15">
+              <div className="absolute bottom-4 left-4 bg-[#241A14]/90 backdrop-blur-md px-3.5 py-1.5 rounded border border-[#E8DCC8]/15">
                 <span className="text-[10px] font-mono text-[#C6A75E] uppercase tracking-widest block">
                   {suite.badge}
                 </span>
@@ -212,16 +220,16 @@ export default function ProductShowcase() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-6 py-3.5 rounded-full bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#160F0A] font-mono text-xs uppercase tracking-wider font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="px-6 py-3.5 rounded-full bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#241A14] font-mono text-xs uppercase tracking-wider font-bold transition-colors duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <MessageCircle className="w-3.5 h-3.5 text-[#160F0A]" />
-                  <span>Inquire Suite via Concierge</span>
+                  <MessageCircle className="w-3.5 h-3.5 text-[#241A14]" />
+                  <span>Inquire on WhatsApp</span>
                   <span>↗</span>
                 </a>
 
                 <a
                   href={`/collections/${suiteCategoryMap[suite.id] || 'living-room'}`}
-                  className="px-6 py-3.5 rounded-full border border-[#E8DCC8]/25 hover:border-[#C6A75E] text-[#E8DCC8] hover:text-[#C6A75E] font-mono text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 text-center"
+                  className="px-6 py-3.5 rounded-full border border-[#E8DCC8]/25 hover:border-[#C6A75E] text-[#E8DCC8] hover:text-[#C6A75E] font-mono text-xs uppercase tracking-wider transition-[color,border-color] duration-300 flex items-center justify-center gap-2 text-center"
                 >
                   <span>Explore 4-Piece Suite</span>
                   <ArrowRight className="w-3.5 h-3.5" />

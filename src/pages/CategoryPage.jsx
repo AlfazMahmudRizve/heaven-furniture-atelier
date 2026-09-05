@@ -90,7 +90,7 @@ export default function CategoryPage() {
             className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 bg-[#1E1005] hover:bg-bronze text-[#FBF0DA] hover:text-white rounded-lg text-xs font-mono uppercase tracking-wider transition-colors shadow-2xs"
           >
             <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Concierge</span>
+            <span>WhatsApp Support</span>
           </a>
         </div>
 
@@ -455,7 +455,7 @@ export default function CategoryPage() {
         </div>
       </section>
 
-      {/* ── SHOWROOM CONCIERGE FOOTER ── */}
+      {/* ── SHOWROOM SUPPORT FOOTER ── */}
       <section className="py-16 px-6 md:px-12 bg-[#FAF8F5] border-t border-[#E8DFD3]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">

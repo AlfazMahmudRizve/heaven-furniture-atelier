@@ -40,23 +40,28 @@ export default function BespokeStudio() {
   };
 
   return (
-    <section id="bespoke" className="relative bg-[#160F0A] py-24 lg:py-32 px-6 lg:px-14 border-t border-[#E8DCC8]/15">
+    <section id="bespoke" className="relative bg-[#241A14] py-24 lg:py-32 px-6 lg:px-14 border-t border-[#E8DCC8]/15">
       <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Editorial Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[#E8DCC8]/15">
           <div className="max-w-2xl space-y-3">
-            <span className="font-mono text-[11px] text-[#C6A75E] uppercase tracking-[0.35em] block">
-              05 / BESPOKE STUDIO
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-[11px] text-[#C6A75E] uppercase tracking-[0.35em] block font-semibold">
+                06 / BESPOKE STUDIO · CUSTOM FURNITURE
+              </span>
+              <span className="font-mono text-[9px] px-2.5 py-0.5 rounded-full bg-[#C6A75E]/20 text-[#C6A75E] uppercase tracking-wider font-bold">
+                Custom Orders
+              </span>
+            </div>
             <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-[#F5EFEB] tracking-tight font-light leading-tight">
               Design Your Own Piece · <br />
-              <span className="italic font-normal text-[#E8DCC8]">Bespoke Commissioning.</span>
+              <span className="italic font-normal text-[#E8DCC8]">Custom Made to Your Size.</span>
             </h2>
           </div>
 
           <p className="font-body text-sm sm:text-base text-[#E8DCC8]/80 max-w-md font-light leading-relaxed">
-            Tailor timber heartwood species, upholstery, and dimensions. We bring physical timber swatches and 3D laser measurement directly to your residence in Chattogram or Dhaka.
+            Choose your preferred wood, fabric, and room dimensions. We can visit your home in Chattogram or Dhaka with real wood samples and take exact measurements.
           </p>
         </div>
 
@@ -86,10 +91,10 @@ export default function BespokeStudio() {
                       key={room.id}
                       type="button"
                       onClick={() => setSelectedRoom(room.id)}
-                      className={`flex flex-col items-center justify-center p-4 rounded-lg border transition-all duration-300 cursor-pointer ${
+                      className={`flex flex-col items-center justify-center p-4 rounded-lg border transition-[background-color,border-color,color,box-shadow] duration-300 cursor-pointer ${
                         isSelected 
-                          ? 'bg-[#C6A75E] text-[#160F0A] border-[#C6A75E] font-bold shadow-md' 
-                          : 'bg-[#23180F]/40 border-[#E8DCC8]/15 text-[#E8DCC8] hover:border-[#C6A75E]'
+                          ? 'bg-[#C6A75E] text-[#241A14] border-[#C6A75E] font-bold shadow-md' 
+                          : 'bg-[#30231B]/40 border-[#E8DCC8]/15 text-[#E8DCC8] hover:border-[#C6A75E]'
                       }`}
                     >
                       <Icon className="w-5 h-5 mb-2" />
@@ -119,10 +124,10 @@ export default function BespokeStudio() {
                       key={timber.id}
                       type="button"
                       onClick={() => setSelectedTimber(timber.id)}
-                      className={`p-4 rounded-lg text-left border transition-all duration-300 cursor-pointer ${
+                      className={`p-4 rounded-lg text-left border transition-[background-color,border-color,color,box-shadow] duration-300 cursor-pointer ${
                         isSelected
-                          ? 'bg-[#23180F] border-2 border-[#C6A75E] text-[#F5EFEB] shadow-md'
-                          : 'bg-[#23180F]/30 border border-[#E8DCC8]/15 text-[#E8DCC8]/80 hover:border-[#C6A75E]'
+                          ? 'bg-[#30231B] border-2 border-[#C6A75E] text-[#F5EFEB] shadow-md'
+                          : 'bg-[#30231B]/30 border border-[#E8DCC8]/15 text-[#E8DCC8]/80 hover:border-[#C6A75E]'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1.5">
@@ -143,7 +148,7 @@ export default function BespokeStudio() {
             </div>
 
             {/* Step 3: Dimensions Slider */}
-            <div className="space-y-4 p-6 rounded-lg bg-[#23180F]/30 border border-[#E8DCC8]/15">
+            <div className="space-y-4 p-6 rounded-lg bg-[#30231B]/30 border border-[#E8DCC8]/15">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono text-[#C6A75E] uppercase tracking-[0.25em] font-semibold">
                   03 · Room Footprint (Feet)
@@ -162,7 +167,7 @@ export default function BespokeStudio() {
                     min="4" max="16" step="0.5"
                     value={width}
                     onChange={(e) => setWidth(Number(e.target.value))}
-                    className="w-full accent-[#C6A75E] h-1 bg-[#160F0A] rounded-lg appearance-none cursor-ew-resize"
+                    className="w-full accent-[#C6A75E] h-1 bg-[#241A14] rounded-lg appearance-none cursor-ew-resize"
                   />
                 </div>
                 
@@ -176,7 +181,7 @@ export default function BespokeStudio() {
                     min="3" max="12" step="0.5"
                     value={depth}
                     onChange={(e) => setDepth(Number(e.target.value))}
-                    className="w-full accent-[#C6A75E] h-1 bg-[#160F0A] rounded-lg appearance-none cursor-ew-resize"
+                    className="w-full accent-[#C6A75E] h-1 bg-[#241A14] rounded-lg appearance-none cursor-ew-resize"
                   />
                 </div>
               </div>
@@ -186,7 +191,7 @@ export default function BespokeStudio() {
 
           {/* Right: Architectural Commission Receipt (5 cols) */}
           <div className="lg:col-span-5">
-            <div className="bg-[#23180F]/60 border border-[#C6A75E]/30 rounded-lg p-6 sm:p-8 space-y-6 shadow-xl">
+            <div className="bg-[#30231B]/60 border border-[#C6A75E]/30 rounded-lg p-6 sm:p-8 space-y-6 shadow-xl">
               <div>
                 <span className="text-[10px] font-mono text-[#C6A75E] uppercase tracking-widest block font-semibold">
                   ARCHITECTURAL COMMISSION TICKET
@@ -207,27 +212,27 @@ export default function BespokeStudio() {
                   <span className="text-[#C6A75E] font-semibold">{currentConfig.timber}</span>
                 </div>
                 <div className="py-2.5 flex justify-between items-center">
-                  <span className="text-[#E8DCC8]/60">Dimension Footprint:</span>
+                  <span className="text-[#E8DCC8]/60">Size / Dimensions:</span>
                   <span className="text-[#F5EFEB] font-semibold">{width}' W × {depth}' D</span>
                 </div>
                 <div className="py-2.5 flex justify-between items-center">
-                  <span className="text-[#E8DCC8]/60">Equilibrium Moisture:</span>
-                  <span className="text-[#F5EFEB] font-semibold">8.5% Coastal Calibrated</span>
+                  <span className="text-[#E8DCC8]/60">Wood Moisture Level:</span>
+                  <span className="text-[#F5EFEB] font-semibold">8.5% Seasoned (Weatherproof)</span>
                 </div>
                 <div className="py-2.5 flex justify-between items-center">
                   <span className="text-[#E8DCC8]/60">Joinery Standard:</span>
-                  <span className="text-emerald-400 font-semibold">Mortise & Tenon (0% Nails)</span>
+                  <span className="text-emerald-400 font-semibold">Real Wood Joints (0% Nails)</span>
                 </div>
               </div>
 
               {/* Complimentary Service Banner */}
-              <div className="p-4 bg-[#160F0A] rounded border border-[#E8DCC8]/15 text-[11px] font-mono text-[#E8DCC8]/80 space-y-1">
+              <div className="p-4 bg-[#241A14] rounded border border-[#E8DCC8]/15 text-[11px] font-mono text-[#E8DCC8]/80 space-y-1">
                 <div className="flex items-center gap-1.5 text-[#C6A75E] font-bold">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>Complimentary Atelier Services:</span>
+                  <span>What's Included Free:</span>
                 </div>
                 <p className="leading-relaxed text-[#E8DCC8]/70">
-                  In-home 3D laser scanning + photorealistic CAD blueprint render + lifetime structural warranty certificate.
+                  Free home visit & measurement + 3D room preview + lifetime wood warranty certificate.
                 </p>
               </div>
 
@@ -253,9 +258,9 @@ export default function BespokeStudio() {
                       console.warn('[BespokeStudio] Lead log error:', err);
                     }
                   }}
-                  className="flex items-center justify-center gap-2 bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#160F0A] w-full py-4 rounded-full text-xs font-mono uppercase tracking-widest font-bold transition-all shadow-md cursor-pointer"
+                  className="flex items-center justify-center gap-2 bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#241A14] w-full py-4 rounded-full text-xs font-mono uppercase tracking-widest font-bold transition-colors duration-300 shadow-md cursor-pointer"
                 >
-                  <MessageSquare className="w-4 h-4 text-[#160F0A]" />
+                  <MessageSquare className="w-4 h-4 text-[#241A14]" />
                   <span>Send This Spec to WhatsApp</span>
                   <span>↗</span>
                 </a>

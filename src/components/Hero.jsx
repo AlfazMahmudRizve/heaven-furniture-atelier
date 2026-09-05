@@ -13,17 +13,17 @@ export default function Hero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   const suites = [
-    { num: '01', title: 'LIVING SYSTEMS', href: '#craftsmanship' },
-    { num: '02', title: 'SLEEP SANCTUARY', href: '#craftsmanship' },
+    { num: '01', title: 'LIVING ROOM', href: '#craftsmanship' },
+    { num: '02', title: 'BEDROOM SUITE', href: '#craftsmanship' },
     { num: '03', title: 'ROYAL DINING', href: '#craftsmanship' },
-    { num: '04', title: 'EXECUTIVE STUDY', href: '#craftsmanship' },
+    { num: '04', title: 'OFFICE DESKS', href: '#craftsmanship' },
   ];
 
   return (
     <section 
       id="home"
       ref={containerRef}
-      className="relative min-h-[100svh] flex flex-col justify-between pt-28 pb-8 px-6 lg:px-14 bg-[#160F0A] overflow-hidden"
+      className="relative min-h-[100svh] flex flex-col justify-between pt-28 pb-8 px-6 lg:px-14 bg-[#241A14] overflow-hidden"
     >
       {/* Cinematic Full-Bleed Architectural Photography with Smooth Ken Burns */}
       <motion.div 
@@ -32,12 +32,14 @@ export default function Hero() {
       >
         <img 
           src="/images/hero-living.jpg" 
-          alt="Heaven Atelier — Poliform-Inspired Minimalist Living Space in Chattogram"
+          alt="Heaven Furniture Mart — Living Room in Chattogram"
+          width={1920}
+          height={1080}
           className="w-full h-full object-cover brightness-[0.78] contrast-[1.05]"
         />
         {/* Subtle Architectural Wood Cove Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#160F0A] via-[#160F0A]/40 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#160F0A]/75 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#241A14] via-[#241A14]/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#241A14]/75 via-transparent to-transparent pointer-events-none" />
       </motion.div>
 
       {/* Top Spacer for Nav Alignment */}
@@ -54,21 +56,23 @@ export default function Hero() {
           }}
           className="max-w-3xl space-y-6"
         >
-          {/* Subtle Category Eyebrow */}
+          {/* Provenance Micro-Pill & Eyebrow */}
           <motion.div 
             variants={{
               hidden: { y: 20, opacity: 0 },
               visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } }
             }}
-            className="flex items-center gap-3"
+            className="flex flex-wrap items-center gap-2.5 sm:gap-3"
           >
-            <span className="font-mono text-[11px] text-[#C6A75E] uppercase tracking-[0.35em]">
-              01 — THE ARCHITECTURE OF LIVING
+            <span className="font-mono text-[10px] sm:text-[11px] px-3 py-1 rounded-full bg-[#C6A75E]/20 text-[#C6A75E] border border-[#C6A75E]/30 uppercase tracking-widest font-semibold">
+              KILN-DRIED IN AGRABAD, CHATTOGRAM · EST. 2020
             </span>
-            <div className="h-px w-12 bg-[#C6A75E]/40" />
+            <span className="font-mono text-[10px] text-[#E8DCC8]/70 uppercase tracking-widest">
+              01 — SOLID BURMA TEAK
+            </span>
           </motion.div>
           
-          {/* Main Monolithic Poliform Headline */}
+          {/* Main Headline — Easy to Read, Powerful */}
           <motion.h1
             variants={{
               hidden: { y: 30, opacity: 0 },
@@ -76,11 +80,11 @@ export default function Hero() {
             }}
             className="font-display text-4xl sm:text-6xl lg:text-7xl xl:text-8xl text-[#F5EFEB] tracking-tight font-light leading-[1.05]"
           >
-            Timeless <br />
-            <span className="font-normal italic text-[#E8DCC8]">Architectural</span> Woodcraft.
+            Solid Burma Teak. <br />
+            <span className="font-normal italic text-[#E8DCC8]">Handcrafted</span> to Last Generations.
           </motion.h1>
 
-          {/* Editorial Subheading */}
+          {/* Conversational Subheading — Plain Words */}
           <motion.p
             variants={{
               hidden: { y: 20, opacity: 0 },
@@ -88,10 +92,10 @@ export default function Hero() {
             }}
             className="font-body text-sm sm:text-base lg:text-lg text-[#E8DCC8]/85 leading-relaxed max-w-xl font-light pt-1"
           >
-            Handcrafted from 100% seasoned Burma Teak heartwood and Red Mahogany. Master mortise-and-tenon joinery with zero screws, calibrated to 8.5% equilibrium moisture for coastal homes.
+            Handcrafted from 100% seasoned Burma Teak and Mahogany. Built with traditional wood joints and zero nails — dried to 8.5% moisture so wood never bends or cracks in Chattogram's coastal weather.
           </motion.p>
 
-          {/* Primary Minimalist CTAs */}
+          {/* Primary Action Buttons */}
           <motion.div
             variants={{
               hidden: { y: 20, opacity: 0 },
@@ -99,26 +103,42 @@ export default function Hero() {
             }}
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4"
           >
-            {/* Soft Gold Action Button */}
+            {/* Primary Action Button */}
             <a 
               href={getWhatsAppInquiryUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#160F0A] font-mono text-xs uppercase tracking-widest font-bold inline-flex items-center justify-center gap-2.5 py-4 px-8 rounded-full shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+              className="bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#241A14] font-mono text-xs uppercase tracking-widest font-bold inline-flex items-center justify-center gap-2.5 py-4 px-8 rounded-full shadow-lg transition-[background-color,color,transform,box-shadow] duration-300 hover:scale-[1.02] cursor-pointer"
             >
-              <MessageCircle className="w-4 h-4 text-[#160F0A]" />
-              <span>Consult Atelier</span>
+              <MessageCircle className="w-4 h-4 text-[#241A14]" />
+              <span>Chat on WhatsApp</span>
               <span className="text-sm">↗</span>
             </a>
 
-            {/* Subtle Editorial Link */}
+            {/* In Situ Room Link */}
             <a 
-              href="#collections"
-              className="inline-flex items-center justify-center gap-2 text-[#E8DCC8] hover:text-[#C6A75E] text-xs font-mono uppercase tracking-widest py-4 px-6 rounded-full border border-[#E8DCC8]/20 hover:border-[#C6A75E] transition-all duration-300 backdrop-blur-sm"
+              href="#composition"
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#composition')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="inline-flex items-center justify-center gap-2 text-[#E8DCC8] hover:text-[#C6A75E] text-xs font-mono uppercase tracking-widest py-4 px-6 rounded-full border border-[#E8DCC8]/20 hover:border-[#C6A75E] transition-[color,border-color] duration-300 backdrop-blur-sm cursor-pointer"
             >
-              <span>Explore Suites</span>
+              <span>Explore Rooms & Prices</span>
               <ArrowDown className="w-3.5 h-3.5 text-[#C6A75E]" />
             </a>
+          </motion.div>
+
+          {/* Showroom Physical Trust Cue */}
+          <motion.div
+            variants={{
+              hidden: { y: 10, opacity: 0 },
+              visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } }
+            }}
+            className="pt-2 text-xs font-mono text-[#E8DCC8]/60 flex items-center gap-2"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C6A75E]" />
+            <span>Visit Showroom: Agrabad Access Road (Opposite RAK Ceramics), Chattogram</span>
           </motion.div>
         </motion.div>
       </div>

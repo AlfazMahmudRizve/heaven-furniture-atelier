@@ -103,21 +103,26 @@ export default function ArccaProjectsGrid() {
     : products.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="collections" className="bg-[#160F0A] text-[#E8DCC8] py-24 lg:py-32 px-6 lg:px-14 relative border-t border-[#E8DCC8]/15">
+    <section id="collections" className="bg-[#F5EFEB] text-[#241A14] py-24 lg:py-32 px-6 lg:px-14 relative border-t border-[#241A14]/10">
       <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Editorial Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[#E8DCC8]/15">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[#241A14]/10">
           <div className="max-w-2xl space-y-3">
-            <span className="font-mono text-[11px] text-[#C6A75E] uppercase tracking-[0.35em] block">
-              04 / ATELIER CATALOG
-            </span>
-            <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-[#F5EFEB] tracking-tight font-light leading-tight">
-              Curated <br />
-              <span className="italic font-normal text-[#E8DCC8]">Flagship Pieces.</span>
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-[11px] text-[#8F753A] uppercase tracking-[0.35em] block font-semibold">
+                05 / FURNITURE COLLECTION
+              </span>
+              <span className="font-mono text-[9px] px-2.5 py-0.5 rounded-full bg-[#C6A75E]/20 text-[#8F753A] uppercase tracking-wider font-bold">
+                Handmade in Chattogram
+              </span>
+            </div>
+            <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-[#241A14] tracking-tight font-light leading-tight">
+              Signature <br />
+              <span className="italic font-normal text-[#6B5344]">Wood Pieces.</span>
             </h2>
-            <p className="text-[#E8DCC8]/80 text-sm md:text-base font-body pt-1 leading-relaxed font-light">
-              Featuring 2 hallmark heirlooms from each architectural suite. Visit dedicated suite portals for complete product specifications, dimensional blueprints, and our white-glove commissioning protocol.
+            <p className="text-[#241A14]/75 text-sm md:text-base font-body pt-1 leading-relaxed font-light">
+              Browse our popular living, bedroom, dining, and office pieces. Tap any item to inspect wood details and inquire directly on WhatsApp.
             </p>
           </div>
 
@@ -130,14 +135,14 @@ export default function ArccaProjectsGrid() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`py-2 px-3.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                  className={`py-2 px-3.5 rounded-full transition-colors duration-300 cursor-pointer flex items-center gap-2 ${
                     isActive
-                      ? 'bg-[#C6A75E] text-[#160F0A] font-bold shadow-md'
-                      : 'border border-[#E8DCC8]/20 text-[#E8DCC8]/70 hover:border-[#C6A75E] hover:text-[#F5EFEB]'
+                      ? 'bg-[#C6A75E] text-[#241A14] font-bold shadow-md'
+                      : 'border border-[#241A14]/15 text-[#241A14]/70 hover:border-[#8F753A] hover:text-[#241A14]'
                   }`}
                 >
                   <span>{cat.label}</span>
-                  <span className={`text-[10px] ${isActive ? 'text-[#160F0A]' : 'text-[#C6A75E]'}`}>
+                  <span className={`text-[10px] ${isActive ? 'text-[#241A14]' : 'text-[#8F753A]'}`}>
                     ({cat.count})
                   </span>
                 </button>
@@ -166,25 +171,27 @@ export default function ArccaProjectsGrid() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.97 }}
                   transition={{ duration: 0.35 }}
-                  className="group flex flex-col justify-between space-y-4"
+                  className="group flex flex-col justify-between space-y-4 bg-[#FDFAF6] p-4 rounded-xl border border-[#241A14]/10 shadow-sm shadow-[0_2px_20px_rgba(36,26,20,0.06)] hover:shadow-xl transition-shadow duration-300"
                 >
                   {/* Clean Framed Photography Viewport */}
-                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-[#23180F] border border-[#E8DCC8]/15">
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-[#E8DCC8] border border-[#241A14]/10">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover brightness-[0.92] transition-transform duration-700 ease-out group-hover:scale-105"
+                      width={800}
+                      height={600}
+                      className="w-full h-full object-cover brightness-[0.96] transition-transform duration-700 ease-out group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#160F0A]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     {/* Minimal Category Eyebrow in Corner */}
-                    <div className="absolute top-3 left-3 bg-[#160F0A]/90 backdrop-blur-md text-[#C6A75E] text-[9px] font-mono uppercase tracking-widest px-2.5 py-1 rounded border border-[#E8DCC8]/15">
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-[#8F753A] text-[9px] font-mono uppercase tracking-widest px-2.5 py-1 rounded border border-[#241A14]/10 font-semibold shadow-sm">
                       {product.category_name}
                     </div>
 
                     {/* Stock pill */}
-                    <span className="absolute bottom-3 right-3 bg-[#160F0A]/85 backdrop-blur-md text-[#E8DCC8] border border-[#E8DCC8]/15 text-[9px] font-mono uppercase tracking-wider px-2 py-0.5 rounded">
+                    <span className="absolute bottom-3 right-3 bg-white/85 backdrop-blur-md text-[#241A14] border border-[#241A14]/10 text-[9px] font-mono uppercase tracking-wider px-2 py-0.5 rounded font-medium shadow-sm">
                       {product.stock_quantity > 0 ? `${product.stock_quantity} in Atelier` : 'Bespoke Order'}
                     </span>
                   </div>
@@ -192,22 +199,22 @@ export default function ArccaProjectsGrid() {
                   {/* Clean Editorial Meta Below Image */}
                   <div className="space-y-2 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 className="font-display text-lg text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors leading-snug">
+                      <h3 className="font-display text-lg text-[#241A14] group-hover:text-[#8F753A] transition-colors leading-snug font-medium">
                         {product.name}
                       </h3>
 
-                      <p className="text-xs font-mono text-[#E8DCC8]/70 mt-1 truncate">
+                      <p className="text-xs font-mono text-[#241A14]/65 mt-1 truncate">
                         {product.timber_type} {product.upholstery ? `· ${product.upholstery}` : ''}
                       </p>
                     </div>
 
                     {/* Pricing & Inquiry Row with Hairline */}
-                    <div className="pt-3 border-t border-[#E8DCC8]/15 flex items-center justify-between">
+                    <div className="pt-3 border-t border-[#241A14]/10 flex items-center justify-between">
                       <div className="flex flex-col">
-                        <span className="text-[9px] font-mono uppercase tracking-wider text-[#E8DCC8]/50">
+                        <span className="text-[9px] font-mono uppercase tracking-wider text-[#241A14]/50">
                           Investment
                         </span>
-                        <span className="font-display text-sm font-semibold text-[#C6A75E]">
+                        <span className="font-display text-sm font-semibold text-[#8F753A]">
                           ৳{Number(product.price_bdt).toLocaleString('en-IN')}
                         </span>
                       </div>
@@ -215,7 +222,7 @@ export default function ArccaProjectsGrid() {
                       <div className="flex items-center gap-2">
                         <Link
                           to={`/collections/${product.category}`}
-                          className="p-1.5 rounded-full border border-[#E8DCC8]/20 hover:border-[#C6A75E] text-[#E8DCC8] hover:text-[#C6A75E] transition-colors"
+                          className="p-1.5 rounded-full border border-[#241A14]/20 hover:border-[#8F753A] text-[#241A14] hover:text-[#8F753A] transition-colors"
                           title="View Category Suite"
                         >
                           <ArrowUpRight className="w-3.5 h-3.5" />
@@ -225,9 +232,9 @@ export default function ArccaProjectsGrid() {
                           href={whatsappUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-3 py-1.5 rounded-full bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#160F0A] transition-colors duration-300 flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold cursor-pointer"
+                          className="px-3 py-1.5 rounded-full bg-[#C6A75E] hover:bg-[#241A14] hover:text-[#F5EFEB] text-[#241A14] transition-colors duration-300 flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-bold cursor-pointer shadow-sm"
                         >
-                          <MessageCircle className="w-3 h-3 text-[#160F0A]" />
+                          <MessageCircle className="w-3 h-3 text-current" />
                           <span>Inquire</span>
                         </a>
                       </div>
@@ -240,32 +247,32 @@ export default function ArccaProjectsGrid() {
         </motion.div>
 
         {/* ── POLIFORM DEDICATED SUITE PORTALS STRIP ── */}
-        <div className="pt-16 border-t border-[#E8DCC8]/15 space-y-8">
+        <div className="pt-16 border-t border-[#241A14]/10 space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <span className="text-[11px] font-mono text-[#C6A75E] uppercase tracking-[0.3em] block mb-1 font-semibold">
-                COMPLETE RESIDENCE BLUEPRINTS
+              <span className="text-[11px] font-mono text-[#8F753A] uppercase tracking-[0.3em] block mb-1 font-semibold">
+                EXPLORE BY ROOM
               </span>
-              <h3 className="font-display text-2xl sm:text-3xl text-[#F5EFEB] font-light">
-                Explore Dedicated Suite Portals.
+              <h3 className="font-display text-2xl sm:text-3xl text-[#241A14] font-light">
+                Browse Full Room Sets.
               </h3>
             </div>
-            <p className="text-xs font-mono text-[#E8DCC8]/70 max-w-md">
-              Complete 4-piece catalog briefs, vacuum kiln-seasoning reports, and the 6-phase white-glove delivery system for each room.
+            <p className="text-xs font-mono text-[#241A14]/70 max-w-md">
+              Explore 4-piece matching sets for your entire home. Delivered and assembled carefully by our Chattogram workshop team.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link
               to="/collections/living-room"
-              className="p-6 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15 hover:border-[#C6A75E] transition-all group flex flex-col justify-between space-y-4"
+              className="p-6 rounded-xl bg-[#FDFAF6] border border-[#241A14]/10 hover:border-[#8F753A] hover:shadow-md transition-colors transition-shadow group flex flex-col justify-between space-y-4 shadow-sm"
             >
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#C6A75E] tracking-widest block mb-1">01 / SUITE</span>
-                <h4 className="font-display text-lg text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors font-medium">Living Room</h4>
-                <p className="text-[11px] text-[#E8DCC8]/70 font-mono mt-1">Sectionals, Chesterfields, Coffee Tables, TV Consoles</p>
+                <span className="text-[10px] font-mono uppercase text-[#8F753A] tracking-widest block mb-1 font-semibold">01 / SUITE</span>
+                <h4 className="font-display text-lg text-[#241A14] group-hover:text-[#8F753A] transition-colors font-medium">Living Room</h4>
+                <p className="text-[11px] text-[#241A14]/65 font-mono mt-1">Sectionals, Chesterfields, Coffee Tables, TV Consoles</p>
               </div>
-              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#C6A75E] uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#8F753A] uppercase tracking-wider font-semibold">
                 <span>View 4 Pieces</span>
                 <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
               </div>
@@ -273,14 +280,14 @@ export default function ArccaProjectsGrid() {
 
             <Link
               to="/collections/master-bedroom"
-              className="p-6 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15 hover:border-[#C6A75E] transition-all group flex flex-col justify-between space-y-4"
+              className="p-6 rounded-xl bg-[#FDFAF6] border border-[#241A14]/10 hover:border-[#8F753A] hover:shadow-md transition-colors transition-shadow group flex flex-col justify-between space-y-4 shadow-sm"
             >
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#C6A75E] tracking-widest block mb-1">02 / SUITE</span>
-                <h4 className="font-display text-lg text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors font-medium">Master Bedroom</h4>
-                <p className="text-[11px] text-[#E8DCC8]/70 font-mono mt-1">Hydraulic Beds, Wardrobes, Floating Frames, Vanities</p>
+                <span className="text-[10px] font-mono uppercase text-[#8F753A] tracking-widest block mb-1 font-semibold">02 / SUITE</span>
+                <h4 className="font-display text-lg text-[#241A14] group-hover:text-[#8F753A] transition-colors font-medium">Master Bedroom</h4>
+                <p className="text-[11px] text-[#241A14]/65 font-mono mt-1">Hydraulic Beds, Wardrobes, Floating Frames, Vanities</p>
               </div>
-              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#C6A75E] uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#8F753A] uppercase tracking-wider font-semibold">
                 <span>View 4 Pieces</span>
                 <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
               </div>
@@ -288,14 +295,14 @@ export default function ArccaProjectsGrid() {
 
             <Link
               to="/collections/royal-dining"
-              className="p-6 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15 hover:border-[#C6A75E] transition-all group flex flex-col justify-between space-y-4"
+              className="p-6 rounded-xl bg-[#FDFAF6] border border-[#241A14]/10 hover:border-[#8F753A] hover:shadow-md transition-colors transition-shadow group flex flex-col justify-between space-y-4 shadow-sm"
             >
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#C6A75E] tracking-widest block mb-1">03 / SUITE</span>
-                <h4 className="font-display text-lg text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors font-medium">Royal Dining</h4>
-                <p className="text-[11px] text-[#E8DCC8]/70 font-mono mt-1">8-Seater Trestles, Pedestals, Credenzas, Bouclé Chairs</p>
+                <span className="text-[10px] font-mono uppercase text-[#8F753A] tracking-widest block mb-1 font-semibold">03 / SUITE</span>
+                <h4 className="font-display text-lg text-[#241A14] group-hover:text-[#8F753A] transition-colors font-medium">Royal Dining</h4>
+                <p className="text-[11px] text-[#241A14]/65 font-mono mt-1">8-Seater Trestles, Pedestals, Credenzas, Bouclé Chairs</p>
               </div>
-              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#C6A75E] uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#8F753A] uppercase tracking-wider font-semibold">
                 <span>View 4 Pieces</span>
                 <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
               </div>
@@ -303,14 +310,14 @@ export default function ArccaProjectsGrid() {
 
             <Link
               to="/collections/executive-study"
-              className="p-6 rounded-lg bg-[#23180F]/40 border border-[#E8DCC8]/15 hover:border-[#C6A75E] transition-all group flex flex-col justify-between space-y-4"
+              className="p-6 rounded-xl bg-[#FDFAF6] border border-[#241A14]/10 hover:border-[#8F753A] hover:shadow-md transition-colors transition-shadow group flex flex-col justify-between space-y-4 shadow-sm"
             >
               <div>
-                <span className="text-[10px] font-mono uppercase text-[#C6A75E] tracking-widest block mb-1">04 / SUITE</span>
-                <h4 className="font-display text-lg text-[#F5EFEB] group-hover:text-[#C6A75E] transition-colors font-medium">Executive Study</h4>
-                <p className="text-[11px] text-[#E8DCC8]/70 font-mono mt-1">Conference Slabs, Library Walls, Biometric Desks</p>
+                <span className="text-[10px] font-mono uppercase text-[#8F753A] tracking-widest block mb-1 font-semibold">04 / SUITE</span>
+                <h4 className="font-display text-lg text-[#241A14] group-hover:text-[#8F753A] transition-colors font-medium">Executive Study</h4>
+                <p className="text-[11px] text-[#241A14]/65 font-mono mt-1">Conference Slabs, Library Walls, Biometric Desks</p>
               </div>
-              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#C6A75E] uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#8F753A] uppercase tracking-wider font-semibold">
                 <span>View 4 Pieces</span>
                 <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
               </div>

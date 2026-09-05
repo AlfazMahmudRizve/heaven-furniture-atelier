@@ -5,10 +5,12 @@ import Lenis from 'lenis';
 // Public Atelier Components
 import Header from './components/Header';
 import Hero from './components/Hero';
+import LivingComposition from './components/LivingComposition';
 import ArccaManifesto from './components/ArccaManifesto';
 import ProductShowcase from './components/ProductShowcase';
 import ArccaProjectsGrid from './components/ArccaProjectsGrid';
 import BespokeStudio from './components/BespokeStudio';
+import Testimonials from './components/Testimonials';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import Footer from './components/Footer';
 
@@ -54,13 +56,22 @@ function PublicWebsite() {
 
   return (
     <div className="min-h-screen bg-espresso text-linen font-body">
+      {/* Skip to content — accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[#C6A75E] focus:text-[#241A14] focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:rounded focus:shadow-lg"
+      >
+        Skip to main content
+      </a>
       <Header />
-      <main>
+      <main id="main-content">
         <Hero />
+        <LivingComposition />
         <ArccaManifesto />
         <ProductShowcase />
         <ArccaProjectsGrid />
         <BespokeStudio />
+        <Testimonials />
       </main>
       <Footer />
       <FloatingWhatsApp />

@@ -150,7 +150,7 @@ export default function InquiryManager() {
             Bespoke Customizer Leads Funnel
           </h1>
           <p className="text-xs font-mono text-[#7A6A5A] mt-1">
-            Real-time submissions from the 3D Atelier Configurator with one-click WhatsApp concierge & order conversion.
+            Real-time submissions from the 3D Customizer with one-click WhatsApp customer chat & order conversion.
           </p>
         </div>
 

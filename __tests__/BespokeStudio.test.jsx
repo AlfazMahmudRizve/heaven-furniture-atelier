@@ -36,6 +36,6 @@ describe('BespokeStudio Component', () => {
     render(<BespokeStudio />)
     const waLink = screen.getByRole('link', { name: /Send This Spec to WhatsApp/i })
     expect(waLink).toBeInTheDocument()
-    expect(waLink.getAttribute('href')).toContain('https://wa.me/8801800000000')
+    expect(waLink.getAttribute('href')).toContain('https://wa.me/8801991210347')
   })
 })

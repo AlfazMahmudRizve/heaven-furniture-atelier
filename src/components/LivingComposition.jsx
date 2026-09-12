@@ -22,7 +22,7 @@ const ROOM_COMPOSITIONS = [
     bangla: 'প্রধান লিভিং স্পেস',
     desc: 'Wide architectural view through floor-to-ceiling glass. Real daylight and warm perimeter illumination highlight hand-fluted Burma Teak, sintered Italian stone, and tailored velvet.',
     image: '/images/storefront-living.jpg',
-    location: 'Agrabad Flagship Atelier · Natural Daylight',
+    location: 'Atelier Flagship Studio · Natural Daylight',
     products: [
       {
         id: 'sofa',
@@ -201,7 +201,7 @@ const ROOM_COMPOSITIONS = [
     bangla: 'মাস্টার বেডরুম সুট',
     desc: 'Staged luxury bedroom chamber featuring acoustic fluted Burma Teak headboard, floating bedside pedestals, and concealed 800L hydraulic sub-bed storage.',
     image: '/images/hero-bedroom.jpg',
-    location: 'Agrabad Atelier · Chamber II',
+    location: 'Atelier Flagship · Chamber Suite',
     products: [
       {
         id: 'bed',
@@ -268,7 +268,7 @@ const ROOM_COMPOSITIONS = [
     bangla: 'রয়্যাল ডাইনিং গ্যালারি',
     desc: 'Solid single-slab 10-seater dining table with heavy wood pedestal base and comfortable bouclé chairs.',
     image: '/images/hero-dining.jpg',
-    location: 'Agrabad Showroom · Dining Suite',
+    location: 'Atelier Flagship Studio · Dining Gallery',
     products: [
       {
         id: 'dining-table',
@@ -371,11 +371,10 @@ export default function LivingComposition() {
   return (
     <section 
       id="composition"
-      className="relative bg-[#241A14] text-[#F5EFEB] py-24 lg:py-32 px-6 lg:px-14 border-t border-[#E8DCC8]/10 overflow-hidden"
+      className="relative bg-[#241A14] text-[#F5EFEB] py-20 lg:py-28 border-t border-[#E8DCC8]/10 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto space-y-12">
-        
-        {/* Section Editorial Header */}
+      {/* Section Editorial Header - Contained */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-10 sm:mb-12">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[#E8DCC8]/10">
           <div className="max-w-2xl space-y-3">
             <div className="flex items-center gap-3">
@@ -395,7 +394,7 @@ export default function LivingComposition() {
           </div>
 
           {/* Room Composition Switcher Tabs */}
-          <div className="flex items-center gap-2 p-1.5 rounded-full bg-[#18120D] border border-[#E8DCC8]/15 backdrop-blur-md">
+          <div className="flex items-center gap-2 p-1.5 rounded-full bg-[#18120D] border border-[#E8DCC8]/15 backdrop-blur-md shrink-0">
             {ROOM_COMPOSITIONS.map((zone) => {
               const isActive = zone.id === activeZoneId;
               return (
@@ -419,12 +418,13 @@ export default function LivingComposition() {
             })}
           </div>
         </div>
+      </div>
 
-        {/* The Interactive Photographic Staging Canvas */}
-        <div className="relative rounded-2xl overflow-hidden border border-[#E8DCC8]/15 bg-[#18120D] shadow-2xl">
-          
-          {/* Main Visual Staging Image */}
-          <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] max-h-[740px] overflow-hidden select-none">
+      {/* The Full-Bleed Interactive Photographic Staging Canvas (Edge-to-Edge, Zero Side Borders) */}
+      <div className="w-full relative overflow-hidden bg-[#18120D] border-y border-[#E8DCC8]/15 shadow-2xl">
+        
+        {/* Main Visual Staging Image - Full Viewport Width */}
+        <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[21/9] min-h-[520px] lg:min-h-[760px] max-h-[92vh] overflow-hidden select-none">
             <img 
               src={currentZone.image} 
               alt={currentZone.name}
@@ -557,7 +557,7 @@ export default function LivingComposition() {
           </div>
 
           {/* Bottom Floor Rail: Quick Horizontal Shelf of Placed Pieces */}
-          <div className="p-4 sm:p-6 bg-[#18120D]/95 border-t border-[#E8DCC8]/10">
+          <div className="p-4 sm:p-6 lg:px-12 bg-[#18120D]/95 border-t border-[#E8DCC8]/10 w-full">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-[10px] text-[#C6A75E] uppercase tracking-widest font-semibold">
@@ -621,8 +621,6 @@ export default function LivingComposition() {
             </div>
           </div>
         </div>
-
-      </div>
 
       {/* ── ARCHITECTURAL SPOTLIGHT DOSSIER MODAL ───────────────────── */}
       <AnimatePresence>

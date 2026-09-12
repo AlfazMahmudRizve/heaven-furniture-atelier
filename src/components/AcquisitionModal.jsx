@@ -37,7 +37,7 @@ export default function AcquisitionModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  const whatsappInquiryUrl = `https://wa.me/8801800000000?text=${encodeURIComponent(
+  const whatsappInquiryUrl = `https://wa.me/8801991210347?text=${encodeURIComponent(
     "Hello! I am interested in acquiring the Haven Atelier Luxury Interior & CMS Platform for my brand. Let's discuss pricing and turnkey deployment."
   )}`;
 

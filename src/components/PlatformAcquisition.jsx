@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 
 export default function PlatformAcquisition({ onOpenAcquisition }) {
-  const whatsappUrl = `https://wa.me/8801800000000?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/8801991210347?text=${encodeURIComponent(
     "Hello! I am interested in acquiring the Haven Atelier Luxury Interior & CMS Platform for my brand. Let's discuss pricing and deployment details."
   )}`;
 

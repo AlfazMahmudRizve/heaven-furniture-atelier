@@ -864,11 +864,11 @@ export default function DesignDemoPage() {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <a
-                          href="tel:+8801960481983"
+                          href="tel:+8801991210347"
                           className="py-3 px-4 rounded-full border border-[#E8DCC8]/25 hover:border-[#C6A75E] text-[#E8DCC8] hover:text-[#C6A75E] font-mono text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 text-center"
                         >
                           <Phone className="w-3.5 h-3.5 text-[#C6A75E]" />
-                          <span>Call: +880 1960-481983</span>
+                          <span>Call: +880 1991-210347</span>
                         </a>
 
                         <Link

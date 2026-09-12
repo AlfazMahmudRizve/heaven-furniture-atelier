@@ -8,11 +8,11 @@ describe('Company Data', () => {
   })
 
   it('has correct WhatsApp number without plus or spaces', () => {
-    expect(COMPANY.whatsappNumber).toBe('8801800000000')
+    expect(COMPANY.whatsappNumber).toBe('8801991210347')
   })
 
   it('has correct phone number', () => {
-    expect(COMPANY.phone).toBe('+880 1800-000000')
+    expect(COMPANY.phone).toBe('+880 1991-210347')
   })
 
   it('has founder info', () => {

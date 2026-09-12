@@ -8,7 +8,8 @@ import {
   Sliders, 
   Zap, 
   ExternalLink,
-  MessageSquare
+  MessageSquare,
+  Mail
 } from 'lucide-react';
 
 export default function PlatformAcquisition({ onOpenAcquisition }) {

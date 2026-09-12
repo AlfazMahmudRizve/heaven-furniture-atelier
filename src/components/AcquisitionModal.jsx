@@ -13,10 +13,13 @@ import {
   Code2,
   Database,
   Smartphone,
-  Sliders
+  Sliders,
+  Copy
 } from 'lucide-react';
 
 export default function AcquisitionModal({ isOpen, onClose }) {
+  const [copied, setCopied] = React.useState(false);
+
   // Close on escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -37,6 +40,18 @@ export default function AcquisitionModal({ isOpen, onClose }) {
   const whatsappInquiryUrl = `https://wa.me/8801800000000?text=${encodeURIComponent(
     "Hello! I am interested in acquiring the Haven Atelier Luxury Interior & CMS Platform for my brand. Let's discuss pricing and turnkey deployment."
   )}`;
+
+  const mailtoInquiryUrl = `mailto:contact@whoisalfaz.me?subject=${encodeURIComponent(
+    "Haven Atelier — Turnkey Platform Acquisition Inquiry"
+  )}&body=${encodeURIComponent(
+    "Hello Alfaz,\n\nI am interested in acquiring the Haven Atelier Luxury Interior & CMS platform for our design studio / brand.\n\nProject / Studio Name:\nDeployment Timeline:\nSpecific Requirements:\n\nLooking forward to hearing from you."
+  )}`;
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('contact@whoisalfaz.me');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
 
   return (
     <div 
@@ -148,15 +163,24 @@ export default function AcquisitionModal({ isOpen, onClose }) {
               </ul>
             </div>
 
-            <a
-              href={whatsappInquiryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full py-3 rounded-xl bg-[#2A1C10] hover:bg-[#1E1005] text-[#FAF3E8] font-mono text-xs uppercase tracking-wider font-semibold text-center transition-colors flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <MessageSquare className="w-3.5 h-3.5 text-[#C6A75E]" />
-              <span>Inquire Codebase License</span>
-            </a>
+            <div className="space-y-2">
+              <a
+                href={whatsappInquiryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 rounded-xl bg-[#2A1C10] hover:bg-[#1E1005] text-[#FAF3E8] font-mono text-xs uppercase tracking-wider font-semibold text-center transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-[#C6A75E]" />
+                <span>Inquire via WhatsApp</span>
+              </a>
+              <a
+                href={mailtoInquiryUrl}
+                className="w-full py-2 rounded-xl border border-[#D9C7AE] hover:border-[#1E1005] text-[#1E1005] font-mono text-[11px] uppercase tracking-wider font-medium text-center transition-colors flex items-center justify-center gap-2"
+              >
+                <Mail className="w-3.5 h-3.5 text-[#8C6D42]" />
+                <span>Email Developer Directly</span>
+              </a>
+            </div>
           </div>
 
           {/* Option 2: Done-For-You Turnkey Deployment */}
@@ -202,21 +226,65 @@ export default function AcquisitionModal({ isOpen, onClose }) {
               </ul>
             </div>
 
-            <a
-              href={whatsappInquiryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#C6A75E] to-[#B08D3E] hover:from-[#D4B66E] hover:to-[#C6A75E] text-[#1E1005] font-mono text-xs uppercase tracking-wider font-bold text-center transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
-            >
-              <MessageSquare className="w-3.5 h-3.5 text-[#1E1005]" />
-              <span>Request Turnkey Deployment</span>
-            </a>
+            <div className="space-y-2">
+              <a
+                href={whatsappInquiryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#C6A75E] to-[#B08D3E] hover:from-[#D4B66E] hover:to-[#C6A75E] text-[#1E1005] font-mono text-xs uppercase tracking-wider font-bold text-center transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-[#1E1005]" />
+                <span>Request Turnkey via WhatsApp</span>
+              </a>
+              <a
+                href={mailtoInquiryUrl}
+                className="w-full py-2 rounded-xl border border-[#C6A75E]/40 hover:bg-[#C6A75E]/10 text-[#E5CA85] font-mono text-[11px] uppercase tracking-wider font-medium text-center transition-colors flex items-center justify-center gap-2"
+              >
+                <Mail className="w-3.5 h-3.5 text-[#C6A75E]" />
+                <span>Email Developer (contact@whoisalfaz.me)</span>
+              </a>
+            </div>
           </div>
 
         </div>
 
+        {/* Direct Architect & Concierge Email Card */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#EDE4D6] border border-[#DECDB5] mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 text-left">
+            <div className="w-10 h-10 rounded-full bg-[#1E1005] text-[#C6A75E] flex items-center justify-center shrink-0">
+              <Mail className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="font-display text-sm text-[#1E1005] font-bold">
+                Direct Inquiries to Platform Engineer
+              </p>
+              <p className="text-xs text-[#705C48]">
+                Alfaz Mahmud · <span className="font-mono text-[#1E1005] font-semibold">contact@whoisalfaz.me</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+            <button
+              type="button"
+              onClick={handleCopyEmail}
+              className="flex-1 sm:flex-initial px-3.5 py-2 rounded-xl bg-white hover:bg-[#F5EFEB] border border-[#D9C7AE] text-[#1E1005] font-mono text-xs uppercase tracking-wider font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-[#8C6D42]" />}
+              <span>{copied ? 'Copied!' : 'Copy Email'}</span>
+            </button>
+            <a
+              href={mailtoInquiryUrl}
+              className="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-[#1E1005] hover:bg-[#2A1C10] text-white font-mono text-xs uppercase tracking-wider font-medium transition-colors flex items-center justify-center gap-1.5 shadow-xs"
+            >
+              <Mail className="w-3.5 h-3.5 text-[#C6A75E]" />
+              <span>Send Email</span>
+            </a>
+          </div>
+        </div>
+
         {/* Quick Back-Office Demo Link */}
-        <div className="p-4 rounded-xl bg-[#EDE4D6] border border-[#DECDB5] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+        <div className="p-4 rounded-xl bg-white border border-[#E8DFD3] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <div className="flex items-center gap-2.5">
             <ShieldCheck className="w-5 h-5 text-[#9C7443] shrink-0" />
             <span className="text-xs text-[#4A3B2C] font-mono">

@@ -23,7 +23,7 @@ export default function Hero() {
     <section 
       id="home"
       ref={containerRef}
-      className="relative min-h-[100svh] flex flex-col justify-between pt-28 pb-8 px-6 lg:px-14 bg-[#241A14] overflow-hidden"
+      className="relative min-h-[100svh] flex flex-col justify-between pt-36 sm:pt-44 lg:pt-48 pb-8 px-6 lg:px-14 bg-[#241A14] overflow-hidden"
     >
       {/* Cinematic Full-Bleed Architectural Photography with Smooth Ken Burns */}
       <motion.div 
@@ -35,7 +35,7 @@ export default function Hero() {
           alt="Haven Atelier — Architectural Living Room Suite"
           width={1920}
           height={1080}
-          className="w-full h-full object-cover brightness-[0.78] contrast-[1.05]"
+          className="w-full h-full object-cover brightness-[0.76] contrast-[1.06]"
         />
         {/* Subtle Architectural Wood Cove Gradients */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#241A14] via-[#241A14]/40 to-transparent pointer-events-none" />
@@ -46,7 +46,7 @@ export default function Hero() {
       <div className="relative z-10 w-full" />
 
       {/* Center/Bottom: Poliform Editorial Hero Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto my-auto py-12 lg:py-16">
+      <div className="relative z-10 w-full max-w-7xl mx-auto my-auto py-10 lg:py-14">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -69,6 +69,10 @@ export default function Hero() {
             </span>
             <span className="font-mono text-[10px] text-[#E8DCC8]/70 uppercase tracking-widest">
               01 — SOLID BURMA TEAK
+            </span>
+            <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-[#C6A75E] bg-black/40 px-2.5 py-0.5 rounded-full border border-[#C6A75E]/25">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>3D Room CAD in 24h</span>
             </span>
           </motion.div>
           
@@ -138,7 +142,7 @@ export default function Hero() {
             className="pt-2 text-xs font-mono text-[#E8DCC8]/60 flex items-center gap-2"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#C6A75E]" />
-            <span>Visit Showroom: Agrabad Access Road (Opposite RAK Ceramics), Chattogram</span>
+            <span>Visit Atelier: Flagship Studio & Materials Laboratory · 5-Year Humidity Stability Warranty</span>
           </motion.div>
         </motion.div>
       </div>

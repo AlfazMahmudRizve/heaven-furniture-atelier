@@ -241,13 +241,18 @@ export default function BespokeStudio() {
               </div>
 
               {/* Complimentary Service Banner */}
-              <div className="p-4 bg-[#241A14] rounded border border-[#E8DCC8]/15 text-[11px] font-mono text-[#E8DCC8]/80 space-y-1">
-                <div className="flex items-center gap-1.5 text-[#C6A75E] font-bold">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>What's Included Free:</span>
+              <div className="p-4 bg-[#241A14] rounded-lg border border-[#C6A75E]/30 text-[11px] font-mono text-[#E8DCC8]/90 space-y-1.5 shadow-inner">
+                <div className="flex items-center justify-between text-[#C6A75E] font-bold">
+                  <div className="flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Included With Every Blueprint:</span>
+                  </div>
+                  <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#C6A75E]/20 text-[#E5CA85]">
+                    Free / 24h
+                  </span>
                 </div>
-                <p className="leading-relaxed text-[#E8DCC8]/70">
-                  Free home visit & measurement + 3D room preview + lifetime wood warranty certificate.
+                <p className="leading-relaxed text-[#E8DCC8]/80 text-xs">
+                  Photorealistic 3D Spatial CAD Render within 24h + On-site moisture test & home measurement + 5-Year climate stability warranty.
                 </p>
               </div>
 

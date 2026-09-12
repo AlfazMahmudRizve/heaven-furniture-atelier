@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import LivingComposition from './components/LivingComposition';
 import ArccaManifesto from './components/ArccaManifesto';
+import WorkshopReels from './components/WorkshopReels';
 import ProductShowcase from './components/ProductShowcase';
 import ArccaProjectsGrid from './components/ArccaProjectsGrid';
 import BespokeStudio from './components/BespokeStudio';
@@ -34,7 +35,6 @@ import CustomerManager from './admin/CustomerManager';
 import StaffManager from './admin/StaffManager';
 
 // Turnkey Commercial Platform Components
-import TurnkeyPlatformBanner from './components/TurnkeyPlatformBanner';
 import PlatformAcquisition from './components/PlatformAcquisition';
 import AcquisitionModal from './components/AcquisitionModal';
 
@@ -67,9 +67,6 @@ function PublicWebsite() {
 
   return (
     <div className="min-h-screen bg-espresso text-linen font-body">
-      {/* Commercial Turnkey Indicator Banner */}
-      <TurnkeyPlatformBanner onOpenAcquisition={() => setIsAcquisitionOpen(true)} />
-
       {/* Skip to content — accessibility */}
       <a
         href="#main-content"
@@ -77,11 +74,12 @@ function PublicWebsite() {
       >
         Skip to main content
       </a>
-      <Header />
+      <Header onOpenAcquisition={() => setIsAcquisitionOpen(true)} />
       <main id="main-content">
         <Hero />
         <LivingComposition />
         <ArccaManifesto />
+        <WorkshopReels />
         <ProductShowcase />
         <ArccaProjectsGrid />
         <BespokeStudio />

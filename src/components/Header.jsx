@@ -2,12 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, Phone, MessageCircle, ShoppingBag } from 'lucide-react';
 import { COMPANY } from '../data/company';
-import { getWhatsAppInquiryUrl } from '../utils/whatsapp';
+import { getWhatsAppInquiryUrl, getPhoneUrl } from '../utils/whatsapp';
 import { useCart } from '../context/CartContext';
+import TurnkeyPlatformBanner from './TurnkeyPlatformBanner';
 
-export default function Header() {
+export default function Header({ onOpenAcquisition }) {
   const { itemCount, openDrawer } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showBanner, setShowBanner] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -193,163 +195,157 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 w-full z-50 transition-transform transition-colors duration-500 ${
+      <div
+        className={`fixed top-0 left-0 w-full z-50 transition-transform duration-500 ${
           isHidden ? '-translate-y-full' : 'translate-y-0'
-        } ${isScrolled ? 'glass py-3' : 'bg-transparent py-5'}`}
+        }`}
       >
-        <div className="container mx-auto px-6 lg:px-12 flex justify-between items-center">
-          
-          {/* Left: Brand Monogram & Title */}
-          <div className="flex items-center gap-4">
-            <a 
-              href="#home" 
-              onClick={(e) => {
-                e.preventDefault();
-                if (window.location.pathname !== '/') {
-                  window.location.href = '/#home';
-                } else {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-              }}
-              className="flex items-center gap-3 cursor-pointer group"
-            >
-              <span className="w-8 h-8 rounded-full border border-[#C6A75E]/60 flex items-center justify-center font-display text-xs font-bold text-[#E8DCC8] bg-[#241A14]/80 transition-colors group-hover:border-[#C6A75E]">
-                H
-              </span>
-              <div className="flex flex-col">
-                <span className="font-display text-lg lg:text-xl tracking-[0.25em] text-[#F5EFEB] font-bold">
-                  HAVEN
+        {showBanner && (
+          <TurnkeyPlatformBanner
+            onOpenAcquisition={onOpenAcquisition}
+            onClose={() => setShowBanner(false)}
+          />
+        )}
+        <header
+          className={`w-full transition-all duration-300 ${
+            isScrolled 
+              ? 'backdrop-blur-xl bg-[#1C140F]/90 border-b border-[#C6A75E]/20 py-3 shadow-2xl' 
+              : 'bg-gradient-to-b from-[#140B04]/90 via-[#140B04]/50 to-transparent py-3.5 sm:py-4'
+          }`}
+        >
+          <div className="container mx-auto px-6 lg:px-12 flex justify-between items-center">
+            
+            {/* Left: Brand Monogram & Title */}
+            <div className="flex items-center gap-4">
+              <a 
+                href="#home" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (window.location.pathname !== '/') {
+                    window.location.href = '/#home';
+                  } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="flex items-center gap-3 cursor-pointer group"
+              >
+                <span className="w-8 h-8 rounded-full border border-[#C6A75E]/60 flex items-center justify-center font-display text-xs font-bold text-[#E8DCC8] bg-[#241A14]/80 transition-all group-hover:border-[#C6A75E] group-hover:shadow-[0_0_15px_rgba(198,167,94,0.3)]">
+                  H
                 </span>
-                <span className="text-[8px] tracking-[0.35em] text-[#C6A75E] font-mono uppercase">
-                  ATELIER · ARCHITECTURAL INTERIORS
-                </span>
-              </div>
-            </a>
+                <div className="flex flex-col">
+                  <span className="font-display text-lg lg:text-xl tracking-[0.25em] text-[#F5EFEB] font-bold">
+                    HAVEN
+                  </span>
+                  <span className="text-[8px] tracking-[0.35em] text-[#C6A75E] font-mono uppercase">
+                    ATELIER · ARCHITECTURAL INTERIORS
+                  </span>
+                </div>
+              </a>
+            </div>
+
+            {/* Center: Poliform-Style Editorial Navigation Links (Desktop) */}
+            <nav className="hidden lg:flex items-center gap-7 xl:gap-8 font-mono text-[11px] tracking-[0.2em] uppercase text-[#E8DCC8]/75">
+              <a 
+                href="#collections" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#collections')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="hover:text-[#C6A75E] transition-colors duration-300"
+              >
+                Collections
+              </a>
+              <a 
+                href="#manifesto" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#manifesto')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="hover:text-[#C6A75E] transition-colors duration-300"
+              >
+                Craft
+              </a>
+              <a 
+                href="#craftsmanship" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#craftsmanship')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="hover:text-[#C6A75E] transition-colors duration-300"
+              >
+                Suites
+              </a>
+              <a 
+                href="#bespoke" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#bespoke')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="hover:text-[#C6A75E] transition-colors duration-300"
+              >
+                Custom 3D
+              </a>
+              <a 
+                href="#showroom" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#showroom')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="hover:text-[#C6A75E] transition-colors duration-300"
+              >
+                Showroom
+              </a>
+              <button 
+                type="button"
+                onClick={onOpenAcquisition}
+                className="text-[#E5CA85] hover:text-white font-semibold transition-colors duration-300 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C6A75E]/10 border border-[#C6A75E]/30 hover:border-[#C6A75E] cursor-pointer"
+              >
+                <span>Acquire Platform</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C6A75E] animate-pulse" />
+              </button>
+            </nav>
+
+            {/* Right: WhatsApp CTA, Consultation Tray & Menu Toggle */}
+            <div className="flex items-center gap-4 sm:gap-5">
+              <a
+                href={getWhatsAppInquiryUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#C6A75E]/40 hover:border-[#C6A75E] text-[#C6A75E] hover:text-[#241A14] hover:bg-[#C6A75E] font-mono text-[10px] tracking-widest uppercase transition-all duration-300"
+              >
+                <span>WhatsApp</span>
+                <span className="text-xs">↗</span>
+              </a>
+
+              {/* Consultation & Quotation Tray Button */}
+              <button
+                type="button"
+                onClick={openDrawer}
+                className="relative flex items-center justify-center w-9 h-9 rounded-full border border-[#C6A75E]/40 hover:border-[#C6A75E] text-[#C6A75E] hover:bg-[#C6A75E] hover:text-[#241A14] transition-colors"
+                aria-label={`Open Consultation Tray with ${itemCount} items`}
+              >
+                <ShoppingBag className="w-4 h-4" />
+                {itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-[#C6A75E] text-[#241A14] font-mono text-[9px] font-bold flex items-center justify-center shadow-md animate-pulse">
+                    {itemCount}
+                  </span>
+                )}
+              </button>
+
+              <button 
+                onClick={() => setIsMenuOpen(true)}
+                className="group flex flex-col justify-center items-end gap-1.5 h-10 w-10 cursor-pointer"
+                aria-label="Open Menu"
+              >
+                <div className="h-[1px] w-7 bg-[#E8DCC8] transition-transform origin-right group-hover:scale-x-75"></div>
+                <div className="h-[1px] w-7 bg-[#E8DCC8]"></div>
+                <div className="h-[1px] w-5 bg-[#C6A75E] transition-transform origin-right group-hover:w-7"></div>
+              </button>
+            </div>
+            
           </div>
-
-          {/* Center: Poliform-Style Editorial Navigation Links (Desktop) */}
-          <nav className="hidden lg:flex items-center gap-8 font-mono text-[11px] tracking-[0.2em] uppercase text-[#E8DCC8]/70">
-            <a 
-              href="#collections" 
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector('#collections')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="hover:text-[#C6A75E] transition-colors duration-300"
-            >
-              Collections
-            </a>
-            <a 
-              href="#manifesto" 
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector('#manifesto')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="hover:text-[#C6A75E] transition-colors duration-300"
-            >
-              Craft
-            </a>
-            <a 
-              href="#craftsmanship" 
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector('#craftsmanship')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="hover:text-[#C6A75E] transition-colors duration-300"
-            >
-              Suites
-            </a>
-            <a 
-              href="#bespoke" 
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector('#bespoke')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="hover:text-[#C6A75E] transition-colors duration-300"
-            >
-              Custom
-            </a>
-            <a 
-              href="#composition" 
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector('#composition')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="hover:text-[#C6A75E] transition-colors duration-300"
-            >
-              Rooms
-            </a>
-            <a 
-              href="#showroom" 
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector('#showroom')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="hover:text-[#C6A75E] transition-colors duration-300"
-            >
-              Showroom
-            </a>
-            <a 
-              href="#platform-acquisition" 
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector('#platform-acquisition')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="text-[#E5CA85] hover:text-white font-semibold transition-colors duration-300 flex items-center gap-1.5"
-            >
-              <span>Platform</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C6A75E] animate-pulse" />
-            </a>
-            <a 
-              href="/admin/login" 
-              className="hover:text-[#C6A75E] transition-colors duration-300"
-              title="Launch Store Operations CMS"
-            >
-              CMS Demo
-            </a>
-          </nav>
-
-          {/* Right: WhatsApp CTA & Menu Toggle */}
-          <div className="flex items-center gap-5">
-            <a
-              href={getWhatsAppInquiryUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C6A75E]/40 hover:border-[#C6A75E] text-[#C6A75E] hover:text-[#241A14] hover:bg-[#C6A75E] font-mono text-[10px] tracking-widest uppercase transition-colors duration-300"
-            >
-              <span>WhatsApp</span>
-              <span className="text-xs">↗</span>
-            </a>
-
-            {/* Consultation & Quotation Tray Button */}
-            <button
-              type="button"
-              onClick={openDrawer}
-              className="relative flex items-center justify-center w-9 h-9 rounded-full border border-[#C6A75E]/40 hover:border-[#C6A75E] text-[#C6A75E] hover:bg-[#C6A75E] hover:text-[#241A14] transition-colors"
-              aria-label={`Open Consultation Tray with ${itemCount} items`}
-            >
-              <ShoppingBag className="w-4 h-4" />
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-[#C6A75E] text-[#241A14] font-mono text-[9px] font-bold flex items-center justify-center shadow-md animate-pulse">
-                  {itemCount}
-                </span>
-              )}
-            </button>
-
-            <button 
-              onClick={() => setIsMenuOpen(true)}
-              className="group flex flex-col justify-center items-end gap-1.5 h-10 w-10 cursor-pointer"
-              aria-label="Open Menu"
-            >
-              <div className="h-[1px] w-7 bg-[#E8DCC8] transition-transform origin-right group-hover:scale-x-75"></div>
-              <div className="h-[1px] w-7 bg-[#E8DCC8]"></div>
-              <div className="h-[1px] w-5 bg-[#C6A75E] transition-transform origin-right group-hover:w-7"></div>
-            </button>
-          </div>
-          
-        </div>
-      </header>
+        </header>
+      </div>
 
       {/* FULLSCREEN RESPONSIVE OVERLAY MENU */}
       <AnimatePresence>
@@ -370,17 +366,17 @@ export default function Header() {
               {/* Sticky Top Bar with Close Button */}
               <div className="sticky top-0 z-30 bg-[#241A14]/95 backdrop-blur-md px-6 py-4 border-b border-linen/10 flex items-center justify-between">
                 <div>
-                  <span className="font-display text-lg tracking-[0.2em] text-linen block font-bold">
-                    HEAVEN
+                  <span className="font-display text-lg tracking-[0.25em] text-[#F5EFEB] block font-bold">
+                    HAVEN
                   </span>
-                  <span className="text-[8px] tracking-[0.3em] text-bronze font-mono uppercase block">
-                    FURNITURE MART
+                  <span className="text-[8px] tracking-[0.35em] text-[#C6A75E] font-mono uppercase block">
+                    ATELIER · ARCHITECTURAL INTERIORS
                   </span>
                 </div>
 
                 <button
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider rounded-full border border-bronze/40 bg-bronze/10 text-linen hover:bg-bronze hover:text-black px-4 py-2 transition-colors cursor-pointer shadow-md"
+                  className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider rounded-full border border-[#C6A75E]/40 bg-[#C6A75E]/10 text-linen hover:bg-[#C6A75E] hover:text-[#241A14] px-4 py-2 transition-colors cursor-pointer shadow-md"
                   aria-label="Close Menu"
                 >
                   <span>Close</span>
@@ -452,24 +448,24 @@ export default function Header() {
                 {/* Showroom & Contact Details */}
                 <div className="p-4 rounded-2xl bg-white/5 border border-linen/10 space-y-3 text-xs font-mono text-linen/70">
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-bronze tracking-widest block mb-1">
+                    <span className="text-[10px] font-mono uppercase text-[#C6A75E] tracking-widest block mb-1">
                       Flagship Showroom
                     </span>
                     <p className="text-linen leading-relaxed text-xs">
-                      Agrabad Access Road, Opposite RAK Ceramics, Chattogram
+                      {COMPANY.address} · {COMPANY.landmark}
                     </p>
                     <p className="text-[10px] text-linen/50 mt-0.5">
-                      Sat–Thu: 9:00 AM – 9:30 PM (Friday Closed)
+                      {COMPANY.hours}
                     </p>
                   </div>
 
                   <div className="pt-3 border-t border-linen/10 flex flex-col gap-2">
                     <a
-                      href="tel:+8801960481983"
-                      className="flex items-center gap-2 text-linen hover:text-bronze transition-colors text-xs"
+                      href={getPhoneUrl()}
+                      className="flex items-center gap-2 text-linen hover:text-[#C6A75E] transition-colors text-xs"
                     >
-                      <Phone className="w-3.5 h-3.5 text-bronze" />
-                      <span>+880 1960-481983</span>
+                      <Phone className="w-3.5 h-3.5 text-[#C6A75E]" />
+                      <span>{COMPANY.phoneDisplay}</span>
                     </a>
                     <a
                       href={getWhatsAppInquiryUrl()}
@@ -578,10 +574,10 @@ export default function Header() {
                           <span className="w-2.5 h-2.5 rounded-full bg-[#C6A75E] animate-pulse" />
                           <div>
                             <span className="font-display text-2xl tracking-[0.25em] text-[#F5EFEB] font-bold block">
-                              HEAVEN
+                              HAVEN
                             </span>
                             <span className="text-[9px] tracking-[0.35em] text-[#C6A75E] font-mono block uppercase">
-                              FURNITURE MART · ATELIER
+                              ATELIER · ARCHITECTURAL INTERIORS
                             </span>
                           </div>
                         </div>

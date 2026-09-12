@@ -106,10 +106,19 @@ export default function PlatformAcquisition({ onOpenAcquisition }) {
 
           <div className="flex flex-col sm:flex-row items-center gap-3.5 shrink-0 w-full lg:w-auto">
             <a
-              href="/admin/login"
-              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#2C190D] hover:bg-[#3D2312] text-[#FAF8F5] border border-[#614022] font-mono text-xs uppercase tracking-wider font-semibold transition-colors flex items-center justify-center gap-2"
+              href="mailto:contact@whoisalfaz.me?subject=Haven%20Atelier%20Turnkey%20Platform%20Acquisition%20Inquiry"
+              className="w-full sm:w-auto px-4 py-3 rounded-xl bg-[#2A1709] hover:bg-[#3D2312] text-[#E5CA85] hover:text-white border border-[#C6A75E]/30 font-mono text-xs uppercase tracking-wider font-medium transition-colors flex items-center justify-center gap-2"
+              title="Email platform engineer directly"
             >
-              <Shield className="w-4 h-4 text-[#C6A75E]" />
+              <Mail className="w-3.5 h-3.5 text-[#C6A75E]" />
+              <span>Email: contact@whoisalfaz.me</span>
+            </a>
+
+            <a
+              href="/admin/login"
+              className="w-full sm:w-auto px-4 py-3 rounded-xl bg-[#2C190D] hover:bg-[#3D2312] text-[#FAF8F5] border border-[#614022] font-mono text-xs uppercase tracking-wider font-semibold transition-colors flex items-center justify-center gap-2"
+            >
+              <Shield className="w-3.5 h-3.5 text-[#C6A75E]" />
               <span>Test CMS Demo</span>
             </a>
 

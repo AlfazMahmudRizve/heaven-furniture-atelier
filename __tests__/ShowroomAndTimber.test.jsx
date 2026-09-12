@@ -9,9 +9,9 @@ describe('Showroom Component', () => {
   it('renders section 08 heading, address, hours and map iframe', () => {
     render(<Showroom />);
     expect(screen.getByText(/08 \/ THE ATELIER/i)).toBeDefined();
-    expect(screen.getByText(/Experience True Timber in Chattogram/i)).toBeDefined();
+    expect(screen.getByText(/Experience Tactile Materiality/i)).toBeDefined();
     expect(screen.getAllByText(/Agrabad Access Road/i).length).toBeGreaterThan(0);
-    expect(screen.getByTitle(/Heaven Furniture Mart Flagship Atelier Location/i)).toBeDefined();
+    expect(screen.getByTitle(/Haven Atelier Flagship Location/i)).toBeDefined();
     expect(screen.getByText(/Book VIP Private Walkthrough/i)).toBeDefined();
   });
 });

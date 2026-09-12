@@ -33,6 +33,11 @@ import InquiryManager from './admin/InquiryManager';
 import CustomerManager from './admin/CustomerManager';
 import StaffManager from './admin/StaffManager';
 
+// Turnkey Commercial Platform Components
+import TurnkeyPlatformBanner from './components/TurnkeyPlatformBanner';
+import PlatformAcquisition from './components/PlatformAcquisition';
+import AcquisitionModal from './components/AcquisitionModal';
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -42,6 +47,8 @@ function ScrollToTop() {
 }
 
 function PublicWebsite() {
+  const [isAcquisitionOpen, setIsAcquisitionOpen] = React.useState(false);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -60,6 +67,9 @@ function PublicWebsite() {
 
   return (
     <div className="min-h-screen bg-espresso text-linen font-body">
+      {/* Commercial Turnkey Indicator Banner */}
+      <TurnkeyPlatformBanner onOpenAcquisition={() => setIsAcquisitionOpen(true)} />
+
       {/* Skip to content — accessibility */}
       <a
         href="#main-content"
@@ -77,11 +87,16 @@ function PublicWebsite() {
         <BespokeStudio />
         <Testimonials />
         <Showroom />
+        <PlatformAcquisition onOpenAcquisition={() => setIsAcquisitionOpen(true)} />
       </main>
       <Footer />
       <FloatingWhatsApp />
       <MobileActionBar />
       <QuotationDrawer />
+      <AcquisitionModal 
+        isOpen={isAcquisitionOpen} 
+        onClose={() => setIsAcquisitionOpen(false)} 
+      />
     </div>
   );
 }
@@ -99,7 +114,7 @@ export default function App() {
             {/* Dedicated Category Suite Portals */}
             <Route path="/collections/:slug" element={<CategoryPage />} />
 
-            {/* Interactive Hackathon Innovation Demo */}
+            {/* Interactive Material & Timber Innovation Demo */}
             <Route path="/demo" element={<DesignDemoPage />} />
 
             {/* Admin Authentication */}

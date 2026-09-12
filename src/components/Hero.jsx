@@ -32,7 +32,7 @@ export default function Hero() {
       >
         <img 
           src="/images/hero-living.jpg" 
-          alt="Heaven Furniture Mart — Living Room in Chattogram"
+          alt="Haven Atelier — Architectural Living Room Suite"
           width={1920}
           height={1080}
           className="w-full h-full object-cover brightness-[0.78] contrast-[1.05]"
@@ -65,7 +65,7 @@ export default function Hero() {
             className="flex flex-wrap items-center gap-2.5 sm:gap-3"
           >
             <span className="font-mono text-[10px] sm:text-[11px] px-3 py-1 rounded-full bg-[#C6A75E]/20 text-[#C6A75E] border border-[#C6A75E]/30 uppercase tracking-widest font-semibold">
-              KILN-DRIED IN AGRABAD, CHATTOGRAM · EST. 2020
+              KILN-DRIED HARDWOOD JOINERY · EST. 2020
             </span>
             <span className="font-mono text-[10px] text-[#E8DCC8]/70 uppercase tracking-widest">
               01 — SOLID BURMA TEAK
@@ -92,7 +92,7 @@ export default function Hero() {
             }}
             className="font-body text-sm sm:text-base lg:text-lg text-[#E8DCC8]/85 leading-relaxed max-w-xl font-light pt-1"
           >
-            Handcrafted from 100% seasoned Burma Teak and Mahogany. Built with traditional wood joints and zero nails — dried to 8.5% moisture so wood never bends or cracks in Chattogram's coastal weather.
+            Handcrafted from 100% seasoned Burma Teak, Gamari, and Mahogany. Built with traditional mortise-and-tenon interlocking joints — dried to 10% moisture so hardwood never bends or cracks across changing seasons.
           </motion.p>
 
           {/* Primary Action Buttons */}

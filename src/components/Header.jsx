@@ -130,21 +130,30 @@ export default function Header() {
     },
     {
       num: '07',
-      title: 'Agrabad Showroom',
-      tagline: 'Flagship Studio in Chattogram',
+      title: 'Atelier Showroom',
+      tagline: 'Flagship Studio & Materials Lab',
       href: '#showroom',
       isExternal: false,
       image: '/images/storefront-living.jpg',
-      caption: 'Agrabad Access Road (Opposite RAK Ceramics), Chattogram.',
+      caption: 'Explore seasoned timber specimens, fabric libraries, and bespoke mockups.',
     },
     {
       num: '08',
-      title: 'WhatsApp Us',
-      tagline: 'Instant Concierge & Quotes',
+      title: 'Acquire Platform',
+      tagline: 'Turnkey Interior Website & Full CMS',
+      href: '#platform-acquisition',
+      isExternal: false,
+      image: '/images/hero-craftsmanship.jpg',
+      caption: 'Deploy this exact luxury storefront and workshop operations CMS for your studio.',
+    },
+    {
+      num: '09',
+      title: 'WhatsApp Concierge',
+      tagline: 'Instant Quotes & Consultations',
       href: getWhatsAppInquiryUrl(),
       isExternal: true,
       image: '/images/warranty-handover.jpg',
-      caption: 'Direct showroom WhatsApp desk for availability and custom blueprints.',
+      caption: 'Direct studio WhatsApp desk for availability and custom commissions.',
     },
   ];
 
@@ -210,10 +219,10 @@ export default function Header() {
               </span>
               <div className="flex flex-col">
                 <span className="font-display text-lg lg:text-xl tracking-[0.25em] text-[#F5EFEB] font-bold">
-                  HEAVEN
+                  HAVEN
                 </span>
                 <span className="text-[8px] tracking-[0.35em] text-[#C6A75E] font-mono uppercase">
-                  FURNITURE MART · CHATTOGRAM
+                  ATELIER · ARCHITECTURAL INTERIORS
                 </span>
               </div>
             </a>
@@ -280,6 +289,24 @@ export default function Header() {
               className="hover:text-[#C6A75E] transition-colors duration-300"
             >
               Showroom
+            </a>
+            <a 
+              href="#platform-acquisition" 
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#platform-acquisition')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="text-[#E5CA85] hover:text-white font-semibold transition-colors duration-300 flex items-center gap-1.5"
+            >
+              <span>Platform</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C6A75E] animate-pulse" />
+            </a>
+            <a 
+              href="/admin/login" 
+              className="hover:text-[#C6A75E] transition-colors duration-300"
+              title="Launch Store Operations CMS"
+            >
+              CMS Demo
             </a>
           </nav>
 
@@ -664,24 +691,24 @@ export default function Header() {
                         <div className="grid grid-cols-2 gap-4 text-xs">
                           <div>
                             <span className="font-mono text-[9px] uppercase tracking-wider text-[#C6A75E] block mb-1">
-                              Agrabad Showroom
+                              Atelier Studio
                             </span>
                             <p className="font-display text-xs text-[#F5EFEB]">
-                              Agrabad Access Road
+                              Design District Flagship
                             </p>
                             <p className="text-[10px] text-[#F5EFEB]/60 font-mono">
-                              Opposite RAK Ceramics, Chattogram
+                              Material Lab & Joinery Workshop
                             </p>
                           </div>
                           <div>
                             <span className="font-mono text-[9px] uppercase tracking-wider text-[#C6A75E] block mb-1">
-                              Opening Hours
+                              Studio Hours
                             </span>
                             <p className="font-display text-xs text-[#F5EFEB]">
-                              Sat–Thu: 9:00 AM – 9:30 PM
+                              Mon–Sat: 10:00 AM – 8:00 PM
                             </p>
                             <p className="text-[10px] text-[#F5EFEB]/60 font-mono">
-                              Fri: 3:00 PM – 9:30 PM
+                              By Appointment & Walk-In
                             </p>
                           </div>
                         </div>
@@ -709,8 +736,8 @@ export default function Header() {
 
                       {/* 4. Footer */}
                       <div className="flex justify-between items-center border-t border-[#C6A75E]/15 pt-3 text-[9px] font-mono tracking-widest text-[#F5EFEB]/40 uppercase">
-                        <span>Agrabad Flagship Studio</span>
-                        <span>© 2026 Heaven Furniture Mart</span>
+                        <span>Haven Atelier Flagship</span>
+                        <span>© 2026 Haven Atelier. All rights reserved.</span>
                       </div>
                     </div>
                   );

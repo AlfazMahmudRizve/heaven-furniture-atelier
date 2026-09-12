@@ -20,28 +20,34 @@ export default function Footer() {
               </span>
               <div>
                 <p className="font-display text-2xl lg:text-3xl tracking-[0.25em] text-[#F5EFEB] font-bold">
-                  HEAVEN
+                  HAVEN
                 </p>
                 <span className="text-[9px] tracking-[0.35em] text-[#C6A75E] font-mono uppercase block">
-                  FURNITURE MART · CHATTOGRAM · EST. 2020
+                  ATELIER · ARCHITECTURAL INTERIORS
                 </span>
               </div>
             </div>
 
             <p className="font-body text-xs sm:text-sm text-[#E8DCC8]/80 leading-relaxed font-light max-w-sm">
-              Solid Burma Teak furniture handcrafted in Chattogram. Built with real wood interlocking joints, seasoned timber, and a lifetime guarantee.
+              Architectural luxury interiors and bespoke hardwood joinery. A turnkey digital flagship and back-office management system engineered for high-end design studios.
             </p>
 
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap gap-3">
               <a 
                 href={getWhatsAppInquiryUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#241A14] font-mono text-xs uppercase tracking-widest font-bold transition-colors duration-300 shadow-md cursor-pointer"
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#C6A75E] hover:bg-[#E8DCC8] text-[#241A14] font-mono text-xs uppercase tracking-widest font-bold transition-colors duration-300 shadow-md cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 text-[#241A14]" />
-                <span>Chat on WhatsApp</span>
+                <span>Concierge Desk</span>
                 <span className="text-sm">↗</span>
+              </a>
+              <a 
+                href="/admin/login"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[#C6A75E]/40 hover:border-[#C6A75E] text-[#E8DCC8] hover:text-[#C6A75E] font-mono text-xs uppercase tracking-widest transition-colors duration-300"
+              >
+                <span>CMS Demo</span>
               </a>
             </div>
           </div>
@@ -52,15 +58,15 @@ export default function Footer() {
             <div className="space-y-2.5 p-5 rounded-lg bg-[#30231B]/40 border border-[#E8DCC8]/15">
               <div className="flex items-center gap-2 text-[#C6A75E] font-semibold uppercase tracking-wider text-[10px]">
                 <MapPin className="w-3.5 h-3.5" />
-                <span>Flagship Showroom & Workshop</span>
+                <span>Atelier Studio & Workshop</span>
               </div>
               <p className="text-[#F5EFEB] leading-relaxed">
-                Agrabad Access Road,<br />
-                Opposite RAK Ceramics,<br />
-                Chattogram, Bangladesh
+                Design District Pavilion,<br />
+                Material Lab & Workshop,<br />
+                Available Worldwide
               </p>
               <span className="text-[10px] text-[#C6A75E] block pt-1">
-                Free Parking on Site
+                Private Walkthroughs by Appointment
               </span>
             </div>
 
@@ -70,35 +76,35 @@ export default function Footer() {
                 <span>Visiting Hours</span>
               </div>
               <p className="text-[#F5EFEB] leading-relaxed">
-                Saturday – Thursday<br />
-                9:00 AM – 9:30 PM<br />
-                <span className="text-[#C6A75E] text-[10px]">Friday: Closed</span>
+                Monday – Saturday<br />
+                10:00 AM – 8:00 PM<br />
+                <span className="text-[#C6A75E] text-[10px]">Sunday: By Special Appointment</span>
               </p>
             </div>
 
             <div className="space-y-2.5 p-5 rounded-lg bg-[#30231B]/40 border border-[#E8DCC8]/15">
               <div className="flex items-center gap-2 text-[#C6A75E] font-semibold uppercase tracking-wider text-[10px]">
                 <Phone className="w-3.5 h-3.5" />
-                <span>Direct Phone & WhatsApp</span>
+                <span>Direct Studio Concierge</span>
               </div>
-              <a href="tel:+8801960481983" className="text-[#F5EFEB] hover:text-[#C6A75E] transition-colors block text-sm font-bold">
-                +880 1960-481983
+              <a href={`tel:${COMPANY.phone}`} className="text-[#F5EFEB] hover:text-[#C6A75E] transition-colors block text-sm font-bold">
+                {COMPANY.phoneDisplay}
               </a>
               <span className="text-[10px] text-[#E8DCC8]/60 block">
-                Direct WhatsApp Available 24/7
+                Instant WhatsApp Inquiry Available
               </span>
             </div>
 
             <div className="space-y-2.5 p-5 rounded-lg bg-[#30231B]/40 border border-[#E8DCC8]/15">
               <div className="flex items-center gap-2 text-[#C6A75E] font-semibold uppercase tracking-wider text-[10px]">
                 <Mail className="w-3.5 h-3.5" />
-                <span>Email Us</span>
+                <span>Studio Inquiries</span>
               </div>
-              <a href="mailto:heavenfurnituremart@gmail.com" className="text-[#F5EFEB] hover:text-[#C6A75E] transition-colors block truncate">
-                heavenfurnituremart@gmail.com
+              <a href={`mailto:${COMPANY.email}`} className="text-[#F5EFEB] hover:text-[#C6A75E] transition-colors block truncate">
+                {COMPANY.email}
               </a>
               <span className="text-[10px] text-[#E8DCC8]/60 block">
-                Custom Design Inquiries & Orders
+                Commissions & Platform Inquiries
               </span>
             </div>
 
@@ -109,23 +115,23 @@ export default function Footer() {
         {/* Poliform Giant Typographic Signature */}
         <div className="pt-10 border-t border-[#E8DCC8]/15 text-center">
           <span className="font-display text-3xl sm:text-6xl lg:text-7xl tracking-[0.18em] text-[#E8DCC8]/10 font-bold block select-none">
-            HEAVEN FURNITURE MART
+            HAVEN ATELIER
           </span>
         </div>
 
         {/* Bottom Credits Bar */}
         <div className="pt-6 border-t border-[#E8DCC8]/10 flex flex-col sm:flex-row justify-between items-center text-[10px] font-mono tracking-widest text-[#E8DCC8]/50 uppercase gap-4 text-center sm:text-left">
-          <span>© 2026 HEAVEN FURNITURE MART</span>
+          <span>© 2026 HAVEN ATELIER · ALL RIGHTS RESERVED</span>
           <div className="flex items-center gap-6">
             <a href="/collections/living-room" className="hover:text-[#C6A75E] transition-colors">Suites</a>
-            <a href="#manifesto" className="hover:text-[#C6A75E] transition-colors">Craftsmanship</a>
-            <a href="#bespoke" className="hover:text-[#C6A75E] transition-colors">Bespoke</a>
+            <a href="#platform-acquisition" className="hover:text-[#C6A75E] transition-colors font-semibold text-[#C6A75E]">Platform</a>
+            <a href="/admin/login" className="hover:text-[#C6A75E] transition-colors">CMS</a>
           </div>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 sm:gap-3">
-            <span>CHATTOGRAM, BANGLADESH</span>
+            <span>TURNKEY INTERIOR COMMERCE PLATFORM</span>
             <span>·</span>
             <span>
-              Built by{' '}
+              Engineered by{' '}
               <a 
                 href="https://whoisalfaz.me" 
                 target="_blank" 

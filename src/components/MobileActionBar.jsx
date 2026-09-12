@@ -41,7 +41,7 @@ export default function MobileActionBar() {
         <a
           href={getPhoneUrl()}
           className="flex flex-col items-center justify-center gap-1 py-2 px-1 text-[#F5EFEB] hover:text-[#C6A75E] active:scale-95 transition-transform"
-          aria-label="Call Showroom"
+          aria-label="Call Atelier"
         >
           <Phone className="w-5 h-5 text-[#C6A75E]" />
           <span className="font-mono text-[9px] uppercase tracking-wider font-semibold">
@@ -69,12 +69,12 @@ export default function MobileActionBar() {
           </span>
         </button>
 
-        {/* 4. Flagship Showroom */}
+        {/* 4. Flagship Atelier */}
         <button
           type="button"
           onClick={handleScrollToShowroom}
           className="flex flex-col items-center justify-center gap-1 py-2 px-1 text-[#F5EFEB]/80 hover:text-[#C6A75E] active:scale-95 transition-transform"
-          aria-label="View Flagship Showroom"
+          aria-label="View Flagship Atelier"
         >
           <MapPin className="w-5 h-5 text-[#C6A75E]" />
           <span className="font-mono text-[9px] uppercase tracking-wider font-semibold">

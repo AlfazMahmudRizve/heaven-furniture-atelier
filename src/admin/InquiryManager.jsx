@@ -279,7 +279,7 @@ export default function InquiryManager() {
                         {inq.customer_phone && (
                           <a
                             href={buildWhatsAppUrl(
-                              `Hi ${inq.customer_name || 'Client'}! Thank you for customizing a bespoke ${inq.room_type} piece at Heaven Furniture Mart. We have reviewed your specification (${inquirySummaryText(inq)}) and would love to share your 3D render & quote.`
+                              `Hi ${inq.customer_name || 'Client'}! Thank you for customizing a bespoke ${inq.room_type} piece at Haven Atelier. We have reviewed your specification (${inquirySummaryText(inq)}) and would love to share your 3D render & quote.`
                             )}
                             target="_blank"
                             rel="noreferrer"

@@ -5,7 +5,7 @@ import { getPhoneUrl, buildWhatsAppUrl } from '../utils/whatsapp';
 
 export default function Showroom() {
   const appointmentWhatsAppUrl = buildWhatsAppUrl(
-    `Hello Heaven Furniture Mart! I would like to schedule a private showroom walkthrough and consultation at your Agrabad Access Road atelier.`
+    `Hello Haven Atelier! I would like to schedule a private studio walkthrough and consultation at your flagship atelier.`
   );
 
   return (
@@ -23,10 +23,10 @@ export default function Showroom() {
             <span className="w-12 h-px bg-[#C6A75E]/40" />
           </div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl text-[#F5EFEB] font-normal tracking-tight">
-            Experience True Timber in Chattogram.
+            Experience Tactile Materiality.
           </h2>
           <p className="text-[#F5EFEB]/70 text-base sm:text-lg max-w-2xl font-light leading-relaxed">
-            Walk our Agrabad Access Road studio to inspect kiln-dried Burma Teak in natural light, test silent German soft-close mechanisms, and consult directly with master joiners.
+            Visit our flagship studio to inspect kiln-dried Burma Teak, Gamari, and solid oak under natural daylight, test German soft-close joinery, and consult directly with architectural stylists.
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export default function Showroom() {
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Heaven Furniture Mart Flagship Atelier Location"
+              title="Haven Atelier Flagship Location"
               className="w-full h-full min-h-[380px] lg:min-h-[480px] opacity-85 contrast-125 saturate-75 hover:opacity-100 transition-opacity duration-500"
             />
 

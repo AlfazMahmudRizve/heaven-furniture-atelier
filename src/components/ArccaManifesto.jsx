@@ -12,7 +12,7 @@ export default function ArccaManifesto() {
       num: '01',
       title: '100% Solid Burma Teak Wood',
       subtitle: 'বার্মা সেগুন কাঠের বিশুদ্ধতা',
-      desc: 'Cut from mature Burma Teak logs. The wood naturally contains rich essential oils that protect it permanently from Chattogram\'s humid coastal air, rot, and termites.',
+      desc: 'Cut from mature Burma Teak logs. The wood naturally contains rich essential oils that protect it permanently from humidity, rot, and termites.',
       metric: '8.5% Seasoned',
       image: '/images/timber-macro.jpg',
     },
@@ -39,7 +39,7 @@ export default function ArccaManifesto() {
       num: '04',
       title: 'Lifetime Guarantee & Servicing',
       subtitle: 'আজীবন সত্যতা ও সার্ভিসিং সনদ',
-      desc: 'Every piece comes with an official guarantee card from our Agrabad workshop. We provide free periodic wood care and polishing for homes in Chattogram.',
+      desc: 'Every piece comes with an official guarantee certificate from our atelier workshop. We provide lifetime craftsmanship support and white-glove wood care guidance.',
       metric: '80+ Year Lifespan',
       image: '/images/warranty-handover.jpg',
     },
@@ -69,7 +69,7 @@ export default function ArccaManifesto() {
           </div>
 
           <p className="font-body text-sm sm:text-base text-[#241A14]/80 max-w-md font-light leading-relaxed">
-            While most modern furniture is made from cheap particle boards that bend and rot after a few rainy seasons, Heaven Furniture Mart builds with seasoned Burma Teak that you can pass down to your children.
+            While most commercial furniture is made from particle boards that bend and rot over time, Haven Atelier builds with seasoned Burma Teak and solid hardwoods that you can pass down across generations.
           </p>
         </div>
 
@@ -113,10 +113,10 @@ export default function ArccaManifesto() {
             {/* Quote */}
             <div className="p-6 rounded-lg bg-[#E8DCC8]/60 border-l-2 border-[#C6A75E] space-y-2">
               <p className="font-display text-base text-[#241A14] italic leading-relaxed">
-                “When seasoned properly down to 8.5% moisture, Burma Teak will never bend, crack, or rot in Chattogram's weather. It stays solid for generations.”
+                “When seasoned properly down to 10% moisture, solid timber will never bend, crack, or rot across changing seasons. It stays structural for generations.”
               </p>
               <span className="text-[10px] font-mono text-[#241A14]/60 uppercase tracking-widest block font-medium">
-                — Master Woodworker, Heaven Furniture Mart Agrabad Workshop
+                — Master Joiner, Haven Atelier Workshop
               </span>
             </div>
           </div>
@@ -198,7 +198,7 @@ export default function ArccaManifesto() {
               {COMPANY.founder}
             </h3>
             <p className="text-xs font-mono text-[#8F753A] font-semibold">
-              {COMPANY.founderTitle} · Heaven Furniture Mart
+              {COMPANY.founderTitle} · Haven Atelier
             </p>
           </div>
 
@@ -210,11 +210,11 @@ export default function ArccaManifesto() {
             <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[#241A14]/85 pt-2">
               <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 border border-[#241A14]/10 shadow-sm">
                 <Award className="w-3.5 h-3.5 text-[#8F753A]" />
-                <span>Member, Chattogram Chamber of Commerce</span>
+                <span>Architectural Woodcraft Guild</span>
               </div>
               <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 border border-[#241A14]/10 shadow-sm">
                 <Award className="w-3.5 h-3.5 text-[#8F753A]" />
-                <span>BFIOA Nationwide Recognition</span>
+                <span>Heirloom Joinery Certification</span>
               </div>
               <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 border border-[#241A14]/10 shadow-sm">
                 <span className="text-[#8F753A] font-bold">EST. 2020</span>

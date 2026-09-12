@@ -54,10 +54,10 @@ export default function AdminLogin() {
         <div className="text-center mb-8">
           <a href="/" className="inline-block group mb-3">
             <span className="font-display text-3xl tracking-[0.3em] text-[#1E1005] block group-hover:text-[#9C7443] transition-colors">
-              HEAVEN
+              HAVEN
             </span>
             <span className="text-[10px] tracking-[0.5em] text-[#8A7056] font-mono block mt-1 uppercase">
-              FURNITURE MART
+              ATELIER · ARCHITECTURAL CMS
             </span>
           </a>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DECDB5] text-[#8A6A45] text-xs font-mono tracking-wider uppercase shadow-xs">

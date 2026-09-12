@@ -4,27 +4,27 @@ import { COLLECTIONS, ROOM_TYPES, TIMBER_OPTIONS, FABRIC_OPTIONS } from '../src/
 
 describe('Company Data', () => {
   it('has correct brand name', () => {
-    expect(COMPANY.name).toBe('Heaven Furniture Mart')
+    expect(COMPANY.name).toBe('Haven Atelier')
   })
 
   it('has correct WhatsApp number without plus or spaces', () => {
-    expect(COMPANY.whatsappNumber).toBe('8801960481983')
+    expect(COMPANY.whatsappNumber).toBe('8801800000000')
   })
 
   it('has correct phone number', () => {
-    expect(COMPANY.phone).toBe('+880 1960-481983')
+    expect(COMPANY.phone).toBe('+880 1800-000000')
   })
 
   it('has founder info', () => {
-    expect(COMPANY.founder).toBe('Abul Kalam Bhuiyan')
-    expect(COMPANY.founderTitle).toBe('Managing Director')
+    expect(COMPANY.founder).toBe('Haven Design Guild')
+    expect(COMPANY.founderTitle).toBe('Principal Architects & Master Joiners')
     expect(COMPANY.founderQuote).toBeTruthy()
   })
 
   it('has all social links', () => {
-    expect(COMPANY.socials.facebook).toContain('HeavenFurnitureMart')
-    expect(COMPANY.socials.instagram).toContain('heaven_furniture_ltd')
-    expect(COMPANY.socials.youtube).toContain('HeavenFurnitureMart')
+    expect(COMPANY.socials.facebook).toContain('facebook.com')
+    expect(COMPANY.socials.instagram).toContain('instagram.com')
+    expect(COMPANY.socials.youtube).toContain('youtube.com')
   })
 })
 

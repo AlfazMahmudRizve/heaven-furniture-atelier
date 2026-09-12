@@ -84,7 +84,7 @@ export function CartProvider({ children }) {
 
   const generateWhatsAppMessage = () => {
     if (items.length === 0) {
-      return `Hi Heaven Furniture Mart! I would like to inquire about your bespoke furniture collections.`;
+      return `Hello ${COMPANY.name}! I would like to inquire about your bespoke architectural furniture collections.`;
     }
 
     const itemLines = items.map((item, index) => {
@@ -100,14 +100,14 @@ export function CartProvider({ children }) {
       : '';
 
     return [
-      `🏛️ *Quotation & Consultation Request — Heaven Furniture Mart*`,
-      `Flagship Atelier: Agrabad Access Road, Chattogram`,
+      `🏛️ *Quotation & Consultation Request — ${COMPANY.name}*`,
+      `Flagship Atelier & Materials Studio`,
       ``,
       `*Selected Pieces:*`,
       itemLines,
       totalText,
       ``,
-      `I would like to verify timber availability, delivery timelines, and schedule an in-person showroom consultation.`,
+      `I would like to verify timber availability, delivery timelines, and schedule a private consultation.`,
     ].join('\n');
   };
 

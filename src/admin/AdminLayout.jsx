@@ -123,10 +123,10 @@ export default function AdminLayout() {
         <div className="p-6 border-b border-[#E8DFD3]">
           <Link to="/admin" className="block group">
             <span className="font-display text-xl tracking-[0.25em] text-[#1E1005] block group-hover:text-[#9C7443] transition-colors">
-              HEAVEN
+              HAVEN
             </span>
             <span className="text-[9px] tracking-[0.35em] text-[#8A7056] font-mono block mt-1 uppercase">
-              STORE MANAGER CMS
+              ATELIER WORKSHOP CMS
             </span>
           </Link>
         </div>
@@ -225,7 +225,7 @@ export default function AdminLayout() {
       {/* ── MOBILE HEADER ── */}
       <header className="lg:hidden bg-white border-b border-[#E8DFD3] p-4 flex items-center justify-between sticky top-0 z-40">
         <Link to="/admin" className="block">
-          <span className="font-display text-base tracking-[0.2em] text-[#1E1005]">HEAVEN CMS</span>
+          <span className="font-display text-base tracking-[0.2em] text-[#1E1005]">HAVEN ATELIER CMS</span>
         </Link>
         <div className="flex items-center gap-2">
           {getRoleBadge()}

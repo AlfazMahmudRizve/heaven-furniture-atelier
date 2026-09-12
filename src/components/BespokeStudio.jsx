@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Sofa, Bed, Utensils, Briefcase, Phone, MessageSquare, Check, Sparkles, ShoppingBag } from 'lucide-react';
 import { ROOM_TYPES, TIMBER_OPTIONS, FABRIC_OPTIONS } from '../data/collections';
-import { buildBespokeWhatsAppUrl } from '../utils/whatsapp';
+import { buildBespokeWhatsAppUrl, getPhoneUrl } from '../utils/whatsapp';
+import { COMPANY } from '../data/company';
 import { supabase } from '../lib/supabase';
 import { useCart } from '../context/CartContext';
 import TimberLensModal from './TimberLensModal';
@@ -300,11 +301,11 @@ export default function BespokeStudio() {
                 </a>
 
                 <a 
-                  href="tel:+8801960481983"
+                  href={getPhoneUrl()}
                   className="flex items-center justify-center gap-2 text-xs font-mono text-[#E8DCC8]/70 hover:text-[#C6A75E] transition-colors py-2 text-center"
                 >
                   <Phone className="w-3.5 h-3.5 text-[#C6A75E]" />
-                  <span>Or Call Direct Atelier: +880 1960-481983</span>
+                  <span>Or Call Direct Atelier: {COMPANY.phoneDisplay}</span>
                 </a>
               </div>
             </div>

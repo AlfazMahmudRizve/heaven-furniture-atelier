@@ -15,7 +15,7 @@ export function buildWhatsAppUrl(message = '') {
  */
 export function getWhatsAppInquiryUrl() {
   return buildWhatsAppUrl(
-    `Hi Heaven Furniture Mart! I'm interested in your bespoke furniture. I'd like to learn more about your collections and design consultation.`
+    `Hello ${COMPANY.name}! I am interested in your bespoke architectural furniture and interior design collections. I would like to schedule a consultation.`
   )
 }
 
@@ -24,14 +24,14 @@ export function getWhatsAppInquiryUrl() {
  */
 export function buildBespokeWhatsAppUrl({ room, timber, fabric, width, depth }) {
   const msg = [
-    `🏠 *Bespoke Project Inquiry — Heaven Furniture Mart*`,
+    `🏠 *Bespoke Project Inquiry — ${COMPANY.name}*`,
     ``,
     `*Room:* ${room}`,
     `*Timber:* ${timber}`,
     `*Fabric:* ${fabric}`,
     `*Dimensions:* ${width} ft × ${depth} ft`,
     ``,
-    `I'd like to schedule a free design consultation for this project. Please share availability.`,
+    `I would like to schedule a design consultation for this commission. Please share availability.`,
   ].join('\n')
 
   return buildWhatsAppUrl(msg)
@@ -42,7 +42,7 @@ export function buildBespokeWhatsAppUrl({ room, timber, fabric, width, depth }) 
  */
 export function buildProductWhatsAppUrl(productName, material) {
   return buildWhatsAppUrl(
-    `Hi! I'm interested in the *${productName}* (${material}) from Heaven Furniture Mart. Can I get more details and pricing?`
+    `Hello! I am interested in the *${productName}* (${material}) from ${COMPANY.name}. Can I get more details and pricing?`
   )
 }
 

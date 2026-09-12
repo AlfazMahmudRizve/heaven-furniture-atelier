@@ -78,15 +78,15 @@ export default function CategoryPage() {
 
           <Link to="/" className="text-center">
             <span className="font-display text-lg tracking-[0.2em] text-[#1E1005] font-semibold block">
-              HEAVEN FURNITURE
+              HAVEN ATELIER
             </span>
             <span className="font-mono text-[9px] tracking-[0.35em] text-bronze uppercase">
-              AGRABAD · CHATTOGRAM
+              ARCHITECTURAL SUITES
             </span>
           </Link>
 
           <a
-            href={buildWhatsAppUrl(`Hi Heaven Furniture Mart! I am exploring the ${category.name} collection and would like to discuss bespoke measurements.`)}
+            href={buildWhatsAppUrl(`Hello Haven Atelier! I am exploring the ${category.name} collection and would like to discuss bespoke measurements.`)}
             target="_blank"
             rel="noreferrer"
             className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 bg-[#1E1005] hover:bg-bronze text-[#FBF0DA] hover:text-white rounded-lg text-xs font-mono uppercase tracking-wider transition-colors shadow-2xs"
@@ -444,7 +444,7 @@ export default function CategoryPage() {
             </div>
 
             <a
-              href={buildWhatsAppUrl(`Hello Heaven Furniture Mart! I would like to schedule an in-home laser measurement consultation for the ${category.name}.`)}
+              href={buildWhatsAppUrl(`Hello Haven Atelier! I would like to schedule an in-home laser measurement consultation for the ${category.name}.`)}
               target="_blank"
               rel="noreferrer"
               className="px-6 py-3.5 bg-bronze hover:bg-[#C5A880] text-[#1E1005] hover:text-black rounded-xl font-mono text-xs uppercase tracking-widest font-bold whitespace-nowrap transition-colors shadow-md flex items-center gap-2"
